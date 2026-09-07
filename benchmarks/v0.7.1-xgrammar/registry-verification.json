@@ -1,0 +1,18 @@
+{
+  "anonymous_pull_verified": true,
+  "repository": "tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx",
+  "tags": {
+    "v0.7.1": {
+      "index_digest": "sha256:fc6615ac0386dd03f3ef6380fba01489f48f7619b064157d5b95431989fd9ddc",
+      "manifest_digest": "sha256:0463bfa7385920b37575eb78e1286fe2d2b9d40ab8ab2e616be3a970faf957b2",
+      "config_digest": "sha256:f7b176ff4784d499c14af261627727d5433d6a541c1499e2f8761239c733da7a",
+      "source_revision": "9c35641652670bd216a4ad29495c3edd41f0828c"
+    },
+    "latest": {
+      "index_digest": "sha256:fc6615ac0386dd03f3ef6380fba01489f48f7619b064157d5b95431989fd9ddc",
+      "manifest_digest": "sha256:0463bfa7385920b37575eb78e1286fe2d2b9d40ab8ab2e616be3a970faf957b2",
+      "config_digest": "sha256:f7b176ff4784d499c14af261627727d5433d6a541c1499e2f8761239c733da7a",
+      "source_revision": "9c35641652670bd216a4ad29495c3edd41f0828c"
+    }
+  }
+}

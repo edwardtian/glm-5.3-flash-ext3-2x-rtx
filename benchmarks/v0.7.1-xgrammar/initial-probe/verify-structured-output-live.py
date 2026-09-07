@@ -3,10 +3,7 @@
 
 Stores synthetic test requests and final responses, not credentials or private
 prompts. Tests the exact upstream trigger plus concurrent thinking on/off and
-complete strict JSON with ordinary EOS or ignore_eos plus an explicit stop.
-The verbatim 500-token upstream requests are retained as budget diagnostics;
-they are not counted as complete-JSON passes when thinking exhausts that budget.
-Run with DFlash2 enabled on the server.
+complete strict JSON with ignore_eos. Run with DFlash2 enabled on the server.
 """
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
@@ -46,29 +43,26 @@ def check_ci(value):
     assert all(isinstance(k, str) and isinstance(v, str) for k, v in value['env'].items()), 'CI env types'
 
 
-def make_case(model, name, thinking=None, strict_schema=False, ignore_eos=False, max_tokens=500):
+def make_case(model, name, thinking=None, ignore_eos=False):
     payload = {'model': model, 'messages': [{'role': 'user', 'content': PROMPT}],
-               'response_format': {'type': 'json_object'}, 'max_tokens': max_tokens,
+               'response_format': {'type': 'json_object'}, 'max_tokens': 500,
                'temperature': 0, 'stream': False}
     if thinking is not None:
         payload['chat_template_kwargs'] = {'enable_thinking': thinking}
         payload['max_tokens'] = 2048
-    if strict_schema:
+    if ignore_eos:
         payload['messages'][0]['content'] = 'Return exactly this JSON object: {"ok":true,"count":7}'
         payload['response_format'] = {'type': 'json_schema', 'json_schema': {
             'name': 'termination_probe', 'strict': True, 'schema': {
                 'type': 'object', 'properties': {'ok': {'type': 'boolean'}, 'count': {'type': 'integer'}},
                 'required': ['ok', 'count'], 'additionalProperties': False}}}
+        payload['ignore_eos'] = True
         payload['max_tokens'] = 256
-        if ignore_eos:
-            payload['ignore_eos'] = True
-            payload['stop'] = ['}']
-            payload['include_stop_str_in_output'] = True
-    return name, payload, strict_schema
+    return name, payload, ignore_eos
 
 
 def run_case(base_url, case):
-    name, payload, strict_schema = case
+    name, payload, ignore_eos = case
     started = time.monotonic()
     record = {'name': name, 'request': payload, 'ok': False}
     try:
@@ -88,7 +82,7 @@ def run_case(base_url, case):
         assert choice.get('finish_reason') == 'stop', 'incomplete finish state'
         assert not message.get('tool_calls'), 'unexpected tool call'
         value = json.loads(message['content'])
-        if strict_schema:
+        if ignore_eos:
             assert value == {'ok': True, 'count': 7}, 'strict JSON values'
             assert type(value['ok']) is bool and type(value['count']) is int, 'strict JSON types'
         else:
@@ -112,42 +106,31 @@ def main():
         parser.error('concurrency must be positive')
     started = datetime.now(timezone.utc).isoformat()
     metrics_before = speculation_metrics(args.base_url)
-    diagnostics = [run_case(args.base_url, make_case(args.model, f'exact-upstream-{i}')) for i in range(3)]
-    for item in diagnostics:
-        item['budget_limited'] = (item.get('http_status') == 200
-            and item.get('finish_reason') == 'length'
-            and (item.get('usage') or {}).get('completion_tokens') == 500)
-    results = [run_case(args.base_url, make_case(args.model, f'upstream-2048-{i}',
-               max_tokens=2048)) for i in range(3)]
+    results = [run_case(args.base_url, make_case(args.model, f'exact-upstream-{i}')) for i in range(3)]
     cases = [make_case(args.model, f'concurrent-thinking-{i}', thinking=bool(i % 2)) for i in range(16)]
     with ThreadPoolExecutor(max_workers=args.concurrency) as pool:
         results.extend(pool.map(lambda case: run_case(args.base_url, case), cases))
-    results.extend(run_case(args.base_url, make_case(args.model, f'strict-json-normal-eos-{i}',
-                   thinking=False, strict_schema=True)) for i in range(5))
-    results.extend(run_case(args.base_url, make_case(args.model, f'ignore-eos-explicit-stop-{i}',
-                   thinking=False, strict_schema=True, ignore_eos=True)) for i in range(5))
+    results.extend(run_case(args.base_url, make_case(args.model, f'ignore-eos-complete-{i}',
+                   thinking=False, ignore_eos=True)) for i in range(5))
     # Let the asynchronous metrics publisher flush the last request counters.
     time.sleep(6)
     metrics_after = speculation_metrics(args.base_url)
     metrics_delta = {name: metrics_after[name] - value for name, value in metrics_before.items()}
     speculation_active = all(value > 0 for value in metrics_delta.values())
-    report = {'schema_version': 2, 'started_at': started,
+    report = {'schema_version': 1, 'started_at': started,
               'finished_at': datetime.now(timezone.utc).isoformat(),
               'model': args.model, 'concurrency': args.concurrency,
-              'expected_cases': 29, 'completed_cases': len(results),
+              'expected_cases': 24, 'completed_cases': len(results),
               'failed_cases': sum(not item['ok'] for item in results), 'results': results,
-              'upstream_500_token_diagnostics': diagnostics,
-              'diagnostic_budget_limited_cases': sum(item['budget_limited'] for item in diagnostics),
               'speculation_metrics_before': metrics_before,
               'speculation_metrics_after': metrics_after,
               'speculation_metrics_delta': metrics_delta,
               'speculation_active': speculation_active,
-              'scope': '29 complete JSON/schema/stop checks plus 3 separate verbatim 500-token diagnostics; ignore-EOS complete cases use explicit stop; server log audit is separate'}
-    diagnostics_ok = all(item['ok'] or item['budget_limited'] for item in diagnostics)
-    report['status'] = 'PASS' if report['failed_cases'] == 0 and len(results) == 29 and speculation_active and diagnostics_ok else 'FAIL'
+              'scope': 'JSON parsing, schema/value checks, and stop finish state; server log audit is separate'}
+    report['status'] = 'PASS' if report['failed_cases'] == 0 and len(results) == 24 and speculation_active else 'FAIL'
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2) + '\n')
-    print(json.dumps({k: v for k, v in report.items() if k not in ('results', 'upstream_500_token_diagnostics')}))
+    print(json.dumps({k: v for k, v in report.items() if k != 'results'}))
     return 0 if report['status'] == 'PASS' else 1
 
 

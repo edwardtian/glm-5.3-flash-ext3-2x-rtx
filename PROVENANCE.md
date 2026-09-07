@@ -48,16 +48,48 @@ serving parameters change. The launcher now selects the versioned image to
 avoid silently reusing an older cached `latest`.
 
 Focused live qualification uses `scripts/verify-structured-output-live.py`
-(the upstream JSON trigger, C16 thinking on/off, and complete ignore-EOS JSON)
+(the upstream JSON trigger, C16 thinking on/off, normal strict JSON, and
+ignore-EOS JSON with an explicit stop)
 and the 145-case `scripts/verify-issue136-xgrammar-live.py` matrix at C8.
 The latter retains its original, weaker ignore-EOS transport-only lane; the
-former separately requires complete valid JSON and a `stop` finish state.
+former separately requires complete valid JSON and a `stop` finish state for
+29 cases. Three verbatim upstream 500-token requests are additional diagnostics:
+GLM can exhaust that budget on thinking, so truncated responses are recorded
+explicitly rather than counted as complete-JSON passes. Five normal strict-JSON
+requests and five ignore-EOS requests with an explicit closing-brace stop check
+complete bodies. `ignore_eos=true` without a stop can continue after the grammar
+terminates; the initial probe documenting that limitation is retained.
 Performance/needle/vision/full tool-eval results are retained as historical
 v0.7.0 measurements, not represented as newly rerun results.
 
+The exact v0.7.1 image passed 14/14 installed-method CPU checks, 145/145 live
+canary cases at C8, and 29/29 complete-JSON checks including C16 thinking
+on/off. The final three verbatim upstream requests also completed. The server
+remained healthy with zero FSM errors, tracebacks, ERROR lines, HTTP errors,
+or post-ready JIT over all 201 requests including the retained initial probe.
+See [the focused report](benchmarks/v0.7.1-xgrammar/README.md) for the initial
+500-token truncation and ignore-EOS continuation caveats.
+
+## Published v0.7.1 release artifacts
+
+Both `v0.7.1` and `latest` were verified through anonymous GHCR reads against
+the exact image used for live qualification:
+
+| Artifact | Immutable identity |
+|---|---|
+| Image index | `sha256:fc6615ac0386dd03f3ef6380fba01489f48f7619b064157d5b95431989fd9ddc` |
+| Linux/amd64 manifest | `sha256:0463bfa7385920b37575eb78e1286fe2d2b9d40ab8ab2e616be3a970faf957b2` |
+| Image config | `sha256:f7b176ff4784d499c14af261627727d5433d6a541c1499e2f8761239c733da7a` |
+| Image source revision | `9c35641652670bd216a4ad29495c3edd41f0828c` |
+
+[Registry verification](benchmarks/v0.7.1-xgrammar/registry-verification.json)
+binds both tags to those identities. The release tag additionally contains the
+post-build live-test receipts, test-harness refinements, and documentation;
+the runtime patches and Dockerfile remain identical to the image source.
+
 ## Historical v0.7.0 release artifacts
 
-The public `v0.7.0` and `latest` container tags resolve to the same immutable
+At v0.7.0 publication, the `v0.7.0` and `latest` tags resolved to the same immutable
 OCI index:
 
 | Artifact | Immutable identity |

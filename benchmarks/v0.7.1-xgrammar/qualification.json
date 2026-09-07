@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-09-07T13:06:10.388924+00:00",
+  "status": "PASS",
+  "checks": {
+    "same_container": true,
+    "same_image": true,
+    "same_model_artifact": true,
+    "same_command": true,
+    "same_environment": true,
+    "healthy_before_after": true,
+    "still_running": true,
+    "400w_per_gpu": true,
+    "json_suite": true,
+    "canary": true,
+    "speculation_used": true,
+    "no_server_failures": true
+  },
+  "container_id": "17678933b25bad8c34fac5d05e4ae2d1eaf29f32b26c20921aa02c742e3ca033",
+  "image_id": "sha256:fc6615ac0386dd03f3ef6380fba01489f48f7619b064157d5b95431989fd9ddc",
+  "image_reference": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx:v0.7.1",
+  "source_revision": "9c35641652670bd216a4ad29495c3edd41f0828c",
+  "server_log_sha256": "44cbfe383169cf7c4378cfc734f3a7c5a2b3970d2c7a25d0f20992910f2c2ae7",
+  "counts": {
+    "fsm_failures": 0,
+    "tracebacks": 0,
+    "error_lines": 0,
+    "post_ready_http_errors": 0,
+    "post_ready_jit": 0
+  },
+  "receipt_sha256": {
+    "environment-before.json": "611245b41ad0db988b403db8c7b585daa1d0089e5fcae71afb2d0b879f51720d",
+    "environment-after.json": "d53652c1398e3dfeebe7422d5f6155e82dd845f62dc3aca30b2bf655ca6fc772",
+    "json-reasoning.json": "60a4616b989f0a4c65c3a7ec6261bb08e31cbd032eaf2d7f9e419d0201669c6c",
+    "grammar-canary.json": "5b1ba582f818c8b63b72eb2b57f2cfe3e572ea09cbea5455e1d4687fbee19bb2"
+  },
+  "scope": "Focused structured-output qualification only; historical benchmark numbers are not refreshed"
+}

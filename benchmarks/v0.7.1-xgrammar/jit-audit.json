@@ -1,0 +1,32 @@
+{
+  "schema": "glm53-release-startup-jit-audit.v1",
+  "container": "glm53-xgrammar-release-20260907",
+  "image": "ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx:v0.7.1",
+  "image_id": "sha256:fc6615ac0386dd03f3ef6380fba01489f48f7619b064157d5b95431989fd9ddc",
+  "container_state": "running",
+  "health_status_at_audit": "healthy",
+  "container_stopped_after_test": false,
+  "ready_marker": "2026-09-07T13:02:41.634962942Z GLM release startup warmup complete; container is ready.",
+  "pre_ready_jit_count": 13,
+  "pre_ready_jit_kernels": [
+    "DSAFusedIndexerKernel",
+    "DSAPagedStreamLogitsKernel",
+    "StableTopKFromGatheredCandidatesKernel",
+    "_TopKOwnerStageLaunch",
+    "_compute_local_logits_stats_kernel",
+    "_gather_dcp_topk_scores_and_globalize_kernel",
+    "_gumbel_sample_kernel",
+    "_kpool_tail_seed_kernel",
+    "_pack_dcp_topk_candidates_triton_kernel",
+    "_prepare_dflash_inputs_kernel",
+    "_rejection_kernel",
+    "_resample_kernel",
+    "_topk_topp_kernel"
+  ],
+  "post_ready_request_count": 201,
+  "post_ready_health_200_count": 12,
+  "post_ready_http_404_count": 0,
+  "post_ready_jit_count": 0,
+  "post_ready_jit_kernels": [],
+  "passed": true
+}

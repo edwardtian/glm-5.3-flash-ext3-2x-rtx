@@ -18,6 +18,8 @@ vision, long-context, and full tool-eval numbers below remain prior-release
 measurements, not new v0.7.1 benchmarks.
 The launcher pins `v0.7.1` so an older locally cached `latest` cannot silently
 keep these fixes out of your server. Explicit `IMAGE=...` overrides still work.
+Focused qualification: **145/145 grammar/tool cases and 29/29 complete-JSON
+checks**, with zero FSM/server errors. [Results and caveats](benchmarks/v0.7.1-xgrammar/README.md).
 
 ## The fun numbers
 
