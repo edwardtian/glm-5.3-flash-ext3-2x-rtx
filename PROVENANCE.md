@@ -28,7 +28,34 @@ This recipe consumes finished Hugging Face target and draft checkpoints and comp
 | Dynamic-MTP graph fix | vLLM PR `#49652`, ported onto the pinned vLLM commit |
 | Runtime stack | Torch 2.13, CUDA 13, CUTLASS DSL 4.6.2 |
 
-## Published release artifacts
+## v0.7.1 structured-output fixes
+
+Two source-locked Python backports address distinct speculative grammar edges:
+
+- vLLM [`c6e19b3be243` / #53046](https://github.com/vllm-project/vllm/commit/c6e19b3be243):
+  validate speculative tokens after the reasoning-end marker before advancing
+  the grammar. Real constrained-token failures outside that window still raise.
+- vLLM [#52805](https://github.com/vllm-project/vllm/pull/52805), carried from
+  our MIA and single-Spark GLM recipes: stop accept/validation batches at
+  termination, make subsequent accepts no-ops, and clear termination on reset.
+
+The source anchors match the installed v0.7.0 files exactly. Patchers reject
+unknown input and validate already-patched content. The image build runs 14
+CPU regressions against the installed methods; the original v0.7.0 image fails
+five checks (three termination, two reasoning-window checks). No quantization,
+attention, MTP/DFlash numerical kernels, dependency versions, model pins, or
+serving parameters change. The launcher now selects the versioned image to
+avoid silently reusing an older cached `latest`.
+
+Focused live qualification uses `scripts/verify-structured-output-live.py`
+(the upstream JSON trigger, C16 thinking on/off, and complete ignore-EOS JSON)
+and the 145-case `scripts/verify-issue136-xgrammar-live.py` matrix at C8.
+The latter retains its original, weaker ignore-EOS transport-only lane; the
+former separately requires complete valid JSON and a `stop` finish state.
+Performance/needle/vision/full tool-eval results are retained as historical
+v0.7.0 measurements, not represented as newly rerun results.
+
+## Historical v0.7.0 release artifacts
 
 The public `v0.7.0` and `latest` container tags resolve to the same immutable
 OCI index:

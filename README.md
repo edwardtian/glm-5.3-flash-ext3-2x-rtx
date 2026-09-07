@@ -10,6 +10,15 @@ The default profile is DFlash2 K5, FP8 MLA cache, TP2+EP2, target DCP2, a replic
 large-cache index fixes, and a repaired DFlash2/ReplaySSM path. Uniform K3 and
 K4 remain selectable and retain their fixed-tier runtime path.
 
+`v0.7.1` fixes two speculative structured-output edge cases: invalid draft
+tokens immediately after thinking ends, and XGrammar termination/reset state.
+It keeps the numerical kernels, model pins, and serving settings unchanged.
+Qualification is limited to focused grammar/JSON/tool checks; the performance,
+vision, long-context, and full tool-eval numbers below remain prior-release
+measurements, not new v0.7.1 benchmarks.
+The launcher pins `v0.7.1` so an older locally cached `latest` cannot silently
+keep these fixes out of your server. Explicit `IMAGE=...` overrides still work.
+
 ## The fun numbers
 
 | DFlash2 + FP8 release highlight | Measured result |

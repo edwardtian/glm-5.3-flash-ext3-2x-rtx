@@ -616,3 +616,14 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=30m --retries=5 \
   CMD ["python3", "-c", "import pathlib,urllib.request; assert pathlib.Path('/tmp/glm53-release-ready').is_file(); urllib.request.urlopen('http://127.0.0.1:8001/health', timeout=3).read()"]
 
 ENTRYPOINT ["/usr/local/bin/glm53-entrypoint"]
+
+# Narrow structured-output corrections; keep the qualified numerical stack.
+COPY patches/port-xgrammar-termination.py /tmp/port-xgrammar-termination.py
+COPY patches/port-structured-output-reasoning.py /tmp/port-structured-output-reasoning.py
+RUN python3 /tmp/port-xgrammar-termination.py /usr/local/lib/python3.12/dist-packages/vllm \
+ && python3 /tmp/port-structured-output-reasoning.py /usr/local/lib/python3.12/dist-packages/vllm
+LABEL io.tpurtell.structured-output.reasoning-fix="c6e19b3be243" \
+      io.tpurtell.structured-output.termination-fix="vllm-pr-52805"
+COPY scripts/test-xgrammar-termination.py scripts/test-structured-output-reasoning.py /opt/glm53-tests/
+RUN python3 /opt/glm53-tests/test-xgrammar-termination.py \
+ && python3 /opt/glm53-tests/test-structured-output-reasoning.py
