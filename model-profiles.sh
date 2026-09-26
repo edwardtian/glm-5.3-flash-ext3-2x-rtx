@@ -59,7 +59,9 @@ resolve_glm53_context_limit() {
   local default_max_model_len=1048576
   case "${MODEL_ID:-}" in
     brandonmusic/GLM-5.3-Flash-tr3-4bpw|brandonmusic/GLM-5.3-Flash-EXL3-4bpw)
-      default_max_model_len=262144
+      # v0.8.0's layer ownership, compact records and draft slot sharing fit
+      # a 2M-token pool with 1M requests on the uniform-K4 target.
+      default_max_model_len=1048576
       ;;
   esac
   MAX_MODEL_LEN="${MAX_MODEL_LEN:-${default_max_model_len}}"

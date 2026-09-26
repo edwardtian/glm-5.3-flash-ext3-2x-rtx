@@ -806,6 +806,7 @@ LABEL org.opencontainers.image.source="https://github.com/tpurtell/glm-5.3-flash
       io.tpurtell.b12x.commit="${B12X_COMMIT}" \
       io.tpurtell.replayssm.mixed-graph-fix="c51c3856f7f8ba50af3b3a60ff48e7d6a1fa303c"
 
+COPY templates/glm53-zai-a5b45eb.jinja /opt/glm53/templates/glm53-zai-a5b45eb.jinja
 COPY container/glm53-entrypoint.sh /usr/local/bin/glm53-entrypoint
 COPY container/glm53-release-warmup.py /usr/local/bin/glm53-release-warmup.py
 RUN chmod 0755 /usr/local/bin/glm53-entrypoint

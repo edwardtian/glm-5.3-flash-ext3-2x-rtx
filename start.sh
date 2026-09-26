@@ -25,19 +25,40 @@ else
   MODEL_MOUNT_TARGET=/model-repo
   MODEL_CONTAINER_DIR="/model-repo/snapshots/${MODEL_REVISION}"
 fi
-IMAGE="${IMAGE:-ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx:v0.7.1}"
+IMAGE="${IMAGE:-ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx:v0.8.0}"
 CONTAINER_NAME="${CONTAINER_NAME:-glm53-flash-exl3-b12x-vllm}"
 SERVED_MODEL_NAME="${SERVED_MODEL_NAME:-${MODEL_ID}}"
 PORT="${PORT:-8001}"
 TENSOR_PARALLEL_SIZE="${TENSOR_PARALLEL_SIZE:-2}"
 ENABLE_EXPERT_PARALLEL="${ENABLE_EXPERT_PARALLEL:-1}"
-DECODE_CONTEXT_PARALLEL_SIZE="${DECODE_CONTEXT_PARALLEL_SIZE:-2}"
+DECODE_CONTEXT_PARALLEL_SIZE="${DECODE_CONTEXT_PARALLEL_SIZE:-1}"
 DCP_COMM_BACKEND="${DCP_COMM_BACKEND:-ag_rs}"
+# MLA layer ownership replaces DCP: layers 3-23 live on GPU 0 and 27-43 on
+# GPU 1, each unsharded on its owner. KDA layers and experts stay TP/EP.
+if (( DECODE_CONTEXT_PARALLEL_SIZE > 1 )); then
+  GLM53_MLA_OWNERS="${GLM53_MLA_OWNERS:-tp}"
+else
+  GLM53_MLA_OWNERS="${GLM53_MLA_OWNERS:-split:25}"
+fi
+if [[ "${GLM53_MLA_OWNERS}" != tp ]] && (( DECODE_CONTEXT_PARALLEL_SIZE > 1 )); then
+  echo "GLM53_MLA_OWNERS=${GLM53_MLA_OWNERS} replaces DCP; use DECODE_CONTEXT_PARALLEL_SIZE=1" >&2
+  exit 2
+fi
+# Uneven token-embedding rows balance the per-GPU KV pools: GPU 0 owns six
+# MLA layers and GPU 1 five, so GPU 1 keeps 83% of the embedding table.
+if [[ "${GLM53_MLA_OWNERS}" == split:25 ]]; then
+  GLM53_EMBED_SPLIT="${GLM53_EMBED_SPLIT:-0.17}"
+else
+  GLM53_EMBED_SPLIT="${GLM53_EMBED_SPLIT:-tp}"
+fi
+DRAFT_SLOT_SHARING="${DRAFT_SLOT_SHARING:-$(( DECODE_CONTEXT_PARALLEL_SIZE == 1 ? 1 : 0 ))}"
+GRAPH_MEMORY_PROFILING="${GRAPH_MEMORY_PROFILING:-0}"
+CHAT_TEMPLATE="${CHAT_TEMPLATE:-zai}"
 MAX_MODEL_LEN="${MAX_MODEL_LEN:-}"
 MAX_NUM_BATCHED_TOKENS="${MAX_NUM_BATCHED_TOKENS:-}"
 MAX_NUM_SEQS="${MAX_NUM_SEQS:-16}"
 SPECULATIVE_METHOD="${SPECULATIVE_METHOD:-dflash2}"
-DFLASH_TOKENS="${DFLASH_TOKENS:-5}"
+DFLASH_TOKENS="${DFLASH_TOKENS:-3}"
 # DFlash2 uses ordinary non-causal attention, not the target model's MLA
 # cache.  Keep its tiny draft cache in BF16 when the target cache is FP8 MLA.
 DFLASH_KV_CACHE_DTYPE="${DFLASH_KV_CACHE_DTYPE:-bfloat16}"
@@ -56,7 +77,7 @@ else
   USE_REPLAYSSM=0
 fi
 REPLAYSSM_BUFFER_LEN="${REPLAYSSM_BUFFER_LEN:-10}"
-LANGUAGE_MODEL_ONLY="${LANGUAGE_MODEL_ONLY:-0}"
+LANGUAGE_MODEL_ONLY="${LANGUAGE_MODEL_ONLY:-1}"
 LIMIT_MM_PER_PROMPT="${LIMIT_MM_PER_PROMPT:-{\"image\":16}}"
 ENABLE_PREFIX_CACHING="${ENABLE_PREFIX_CACHING:-1}"
 MAX_CUDAGRAPH_CAPTURE_SIZE="${MAX_CUDAGRAPH_CAPTURE_SIZE:-}"
@@ -71,13 +92,17 @@ fi
 case "${KV_CACHE_PROFILE}" in
   nvfp4)
     PROFILE_KV_CACHE_DTYPE=nvfp4_ds_mla
-    PROFILE_GPU_MEMORY_UTILIZATION=0.950
+    PROFILE_GPU_MEMORY_UTILIZATION=0.970
     PROFILE_MAX_NUM_BATCHED_TOKENS=2048
+    PROFILE_NOPE_RECORD=0
     ;;
   fp8)
     PROFILE_KV_CACHE_DTYPE=fp8_ds_mla
-    PROFILE_GPU_MEMORY_UTILIZATION=0.950
+    PROFILE_GPU_MEMORY_UTILIZATION=0.970
     PROFILE_MAX_NUM_BATCHED_TOKENS=2048
+    # GLM-5.3 MLA is NoPE: store 512 E4M3 + 4 FP32 scales (528 B) instead of
+    # the 656 B DeepSeek record with an unused RoPE tail. DCP=1 only.
+    PROFILE_NOPE_RECORD=$(( DECODE_CONTEXT_PARALLEL_SIZE == 1 ? 1 : 0 ))
     ;;
   *)
     echo "KV_CACHE_PROFILE must be nvfp4 or fp8; got: ${KV_CACHE_PROFILE}" >&2
@@ -92,6 +117,24 @@ if [[ "${KV_CACHE_DTYPE}" != "${PROFILE_KV_CACHE_DTYPE}" ]]; then
   exit 2
 fi
 GPU_MEMORY_UTILIZATION="${GPU_MEMORY_UTILIZATION:-${PROFILE_GPU_MEMORY_UTILIZATION}}"
+NOPE_RECORD="${NOPE_RECORD:-${PROFILE_NOPE_RECORD}}"
+if [[ "${NOPE_RECORD}" == 1 && "${KV_CACHE_DTYPE}" != fp8_ds_mla ]]; then
+  echo "NOPE_RECORD=1 supports KV_CACHE_PROFILE=fp8 only" >&2
+  exit 2
+fi
+if [[ "${NOPE_RECORD}" == 1 ]] && (( DECODE_CONTEXT_PARALLEL_SIZE > 1 )); then
+  echo "NOPE_RECORD=1 requires DECODE_CONTEXT_PARALLEL_SIZE=1" >&2
+  exit 2
+fi
+case "${CHAT_TEMPLATE}" in
+  zai) CHAT_TEMPLATE_ARGS=(--chat-template /opt/glm53/templates/glm53-zai-a5b45eb.jinja) ;;
+  checkpoint) CHAT_TEMPLATE_ARGS=() ;;
+  *) echo "CHAT_TEMPLATE must be zai or checkpoint; got: ${CHAT_TEMPLATE}" >&2; exit 2 ;;
+esac
+DCP_ARGS=(--decode-context-parallel-size "${DECODE_CONTEXT_PARALLEL_SIZE}")
+if (( DECODE_CONTEXT_PARALLEL_SIZE > 1 )); then
+  DCP_ARGS+=(--dcp-comm-backend "${DCP_COMM_BACKEND}")
+fi
 ATTENTION_BACKEND="${ATTENTION_BACKEND:-B12X_MLA_SPARSE}"
 USE_B12X_SPARSE_INDEXER="${USE_B12X_SPARSE_INDEXER:-1}"
 USE_B12X_KPOOL_INDEXER="${USE_B12X_KPOOL_INDEXER:-1}"
@@ -447,11 +490,11 @@ docker run --detach \
   --env VLLM_PCIE_ONESHOT_ALLREDUCE_MAX_SIZE="${PCIE_ONESHOT_MAX_SIZE}" \
   --env VLLM_B12X_PCIE_EAGER="${VLLM_B12X_PCIE_EAGER:-0}" \
   --env VLLM_B12X_DCP_A2A="${VLLM_B12X_DCP_A2A:-1}" \
-  --env VLLM_GLM53_MLA_OWNERS="${GLM53_MLA_OWNERS:-tp}" \
-  --env VLLM_GLM53_EMBED_SPLIT="${GLM53_EMBED_SPLIT:-tp}" \
-  --env VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS="${GRAPH_MEMORY_PROFILING:-0}" \
-  --env VLLM_GLM53_DRAFT_SLOT_SHARING="${DRAFT_SLOT_SHARING:-1}" \
-  --env VLLM_GLM53_NOPE_RECORD="${NOPE_RECORD:-0}" \
+  --env VLLM_GLM53_MLA_OWNERS="${GLM53_MLA_OWNERS}" \
+  --env VLLM_GLM53_EMBED_SPLIT="${GLM53_EMBED_SPLIT}" \
+  --env VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS="${GRAPH_MEMORY_PROFILING}" \
+  --env VLLM_GLM53_DRAFT_SLOT_SHARING="${DRAFT_SLOT_SHARING}" \
+  --env VLLM_GLM53_NOPE_RECORD="${NOPE_RECORD}" \
   --env VLLM_USE_B12X_SPARSE_INDEXER="${USE_B12X_SPARSE_INDEXER}" \
   --env VLLM_USE_B12X_KPOOL_INDEXER="${USE_B12X_KPOOL_INDEXER}" \
   --env VLLM_DCP_GLOBAL_TOPK="${VLLM_DCP_GLOBAL_TOPK:-1}" \
@@ -485,8 +528,7 @@ docker run --detach \
   --port 8001 \
   --tensor-parallel-size "${TENSOR_PARALLEL_SIZE}" \
   "${EXPERT_PARALLEL_ARGS[@]}" \
-  --decode-context-parallel-size "${DECODE_CONTEXT_PARALLEL_SIZE}" \
-  --dcp-comm-backend "${DCP_COMM_BACKEND}" \
+  "${DCP_ARGS[@]}" \
   "${CUSTOM_ALL_REDUCE_ARGS[@]}" \
   "${SPECULATIVE_ARGS[@]}" \
   "${MODEL_MODE_ARGS[@]}" \
@@ -502,6 +544,7 @@ docker run --detach \
   --enable-auto-tool-choice \
   --tool-call-parser glm47 \
   --reasoning-parser glm45 \
+  "${CHAT_TEMPLATE_ARGS[@]}" \
   "${PROFILER_SERVE_ARGS[@]}"
 
 printf 'Started %s on http://127.0.0.1:%s/v1. Initial B12x/CuTe compilation can take several minutes.\n' \
