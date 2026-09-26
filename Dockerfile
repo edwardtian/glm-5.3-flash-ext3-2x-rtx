@@ -9,7 +9,7 @@ FROM ${EXL3_SOURCE_IMAGE} AS exl3_source
 FROM ${GLM_BASE_IMAGE}
 
 ARG B12X_REPOSITORY=https://github.com/tpurtell/sparkinfer-glmrt
-ARG B12X_COMMIT=fe054789069579e19ae5ec21f880b397bcf6575b
+ARG B12X_COMMIT=7fcc094edcc93af61fdfbe14300100e3204363ea
 ARG DFLASH2_VLLM_COMMIT=b389ac29465b33f9e9c534df221ea3c129e9793f
 
 SHELL ["/bin/bash", "-c"]
@@ -39,6 +39,10 @@ shutil.move(sources[0], "/opt/b12x")
 archive.unlink()
 PY
 RUN python3 -m pip install --no-cache-dir --no-deps -e /opt/b12x
+# The fork registers vLLM general plugins (FP6, direct-I/O loader) written for
+# a newer vLLM than this GLM base. The recipe uses neither; load only vLLM's
+# own LoRA resolvers so those entry points never import.
+ENV VLLM_PLUGINS=lora_filesystem_resolver,lora_hf_hub_resolver
 
 # Carry only the proven EXL3 quantization implementation into the GLM vLLM
 # tree, then adapt its narrow registration/model-recognition surface.
@@ -94,6 +98,12 @@ COPY patches/port-dflash2-glm53.py /tmp/port-dflash2-glm53.py
 COPY patches/port-dflash2-glm-eagle3.py /tmp/port-dflash2-glm-eagle3.py
 COPY patches/port-dflash2-glm-kv.py /tmp/port-dflash2-glm-kv.py
 COPY patches/port-dflash2-replicated-dcp.py /tmp/port-dflash2-replicated-dcp.py
+COPY patches/port-b12x-latest-api.py /tmp/port-b12x-latest-api.py
+COPY patches/port-glm53-layer-owner.py /tmp/port-glm53-layer-owner.py
+COPY patches/port-glm53-graph-memory.py /tmp/port-glm53-graph-memory.py
+COPY patches/port-glm53-draft-slots.py /tmp/port-glm53-draft-slots.py
+COPY patches/port-glm53-breakable-capture-sync.py /tmp/port-glm53-breakable-capture-sync.py
+COPY patches/port-b12x-glm-next-records.py /tmp/port-b12x-glm-next-records.py
 RUN python3 /tmp/port-exl3-glm53.py \
     /usr/local/lib/python3.12/dist-packages/vllm \
  && python3 /tmp/port-exl3-ep-glm53.py \
@@ -174,6 +184,18 @@ RUN python3 /tmp/port-dflash2-glm53.py \
       /usr/local/lib/python3.12/dist-packages/vllm \
  && python3 /tmp/port-dflash2-replicated-dcp.py \
       /usr/local/lib/python3.12/dist-packages/vllm \
+ && python3 /tmp/port-b12x-latest-api.py \
+      /usr/local/lib/python3.12/dist-packages/vllm \
+ && python3 /tmp/port-glm53-layer-owner.py \
+      /usr/local/lib/python3.12/dist-packages/vllm \
+ && python3 /tmp/port-glm53-graph-memory.py \
+      /usr/local/lib/python3.12/dist-packages/vllm \
+ && python3 /tmp/port-glm53-draft-slots.py \
+      /usr/local/lib/python3.12/dist-packages/vllm \
+ && python3 /tmp/port-glm53-breakable-capture-sync.py \
+      /usr/local/lib/python3.12/dist-packages/vllm \
+ && python3 /tmp/port-b12x-glm-next-records.py \
+      /usr/local/lib/python3.12/dist-packages/vllm \
  && python3 -m compileall -q /usr/local/lib/python3.12/dist-packages/vllm
 
 ENV PYTHONPATH=/opt/b12x:/usr/local/lib/python3.12/dist-packages \
@@ -203,17 +225,30 @@ import torch
 import vllm
 from b12x.moe import ep_moe, fused_moe
 from b12x.moe.fused_moe._impl import _projection_mixed_route_map
+from b12x.moe.fused_moe._tuning import MoeDecodeConfig
 from b12x.moe._shared.kernels.w4a16.mixed_trellis import (
     build_projection_tiered_maps,
 )
 from b12x.moe.fused_moe.trellis import ProjectionTrellisTierWeights
 from b12x.attention import dsa_indexer, sparse_mla
-from b12x.gemm import mla_query_projection
+from b12x.attention.dsa_indexer.paged import index_topk_fp8
+from b12x.attention.dsa_indexer.scratch import (
+    INDEXER_SOURCE_LAYOUT_PAGED,
+    B12XIndexerScratchCaps,
+    plan_indexer_scratch,
+)
+from b12x.gemm import bf16_gemv, mla_query_projection
+from b12x.preparation import PreparedCall, prepare_default
 from vllm.model_executor.layers.sparse_attn_indexer import SparseAttnIndexer
 from vllm.model_executor.layers.quantization import get_quantization_config
 from vllm.model_executor.layers.quantization.exl3 import (
     Exl3Config,
     _exl3_moe_weight_loader,
+    _load_b12x_fused_moe,
+)
+from vllm.model_executor.layers.b12x_preparation import (
+    prepare_b12x_plan,
+    retain_b12x_programs,
 )
 from vllm.model_executor.layers.mamba.mamba_utils import MambaStateShapeCalculator
 from vllm.model_executor.models.qwen3_dflash import DFlashQwen3Model
@@ -244,7 +279,9 @@ sparse_indexer_source = Path(
     "sparse_attn_indexer.py"
 ).read_text()
 assert "b12x.attention.nsa_indexer" not in sparse_indexer_source
-assert sparse_indexer_source.count("b12x.attention.dsa_indexer") == 13
+assert sparse_indexer_source.count("b12x.attention.dsa_indexer") == 9
+assert "SOURCE_LAYOUT_PAGED as INDEXER_SOURCE_LAYOUT_PAGED" not in sparse_indexer_source
+assert "_b12x_dcp_topk_owner_stage(" in sparse_indexer_source
 
 # ReplaySSM's request-index metadata must remain safe for both rolling mixed
 # batches and non-contiguous block-table columns.  The former matches the
@@ -358,13 +395,19 @@ assert "scheduler_config.max_num_seqs" in Path(
     "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/"
     "quantization/exl3.py"
 ).read_text()
-assert callable(fused_moe.plan_weights)
-assert callable(fused_moe.prepare_weights)
-assert callable(fused_moe.plan)
+# Current B12x removed the vLLM fused-MoE compatibility shim; the ported
+# EXL3 adapter binds the scratch-planned _impl layer through the same names.
+assert callable(fused_moe.plan_execution)
 assert callable(fused_moe.bind)
 assert callable(fused_moe.run)
+exl3_moe = _load_b12x_fused_moe()
+for exl3_moe_entry in (
+    "plan_weights", "prepare_weights", "Caps", "plan", "bind", "run",
+    "required_nbytes",
+):
+    assert callable(getattr(exl3_moe, exl3_moe_entry)), exl3_moe_entry
 assert ProjectionTrellisTierWeights is not None
-projection_plan = fused_moe.plan_weights(
+projection_plan = exl3_moe.plan_weights(
     quant_modes="w4a16",
     source_format="exl3_trellis_mcg",
     activation="silu",
@@ -379,7 +422,7 @@ projection_plan = fused_moe.plan_weights(
     trellis_rate_granularity="per_expert_projection",
 )
 assert projection_plan.trellis_tile_config is None
-projection_caps = fused_moe.Caps(
+projection_caps = exl3_moe.Caps(
     max_tokens=1,
     num_topk=6,
     route_num_experts=288,
@@ -388,13 +431,19 @@ projection_caps = fused_moe.Caps(
     quant_mode="w4a16",
     full_rotation_output_dtype=torch.bfloat16,
 )
-assert fused_moe.required_nbytes(projection_caps) > 0
-projection_scratch_plan = fused_moe.plan(projection_caps)
+assert projection_caps.decode_config == MoeDecodeConfig(
+    backend="w4a16",
+    route_planner="internal",
+    max_active_clusters=None,
+    w4a16_route_mode="packed",
+)
+assert exl3_moe.required_nbytes(projection_caps) > 0
+projection_scratch_plan = exl3_moe.plan(projection_caps)
 assert (
     projection_scratch_plan._core_workspace_plan.full_rotation_output_dtype
     == torch.bfloat16
 )
-glm_projection_plan = fused_moe.plan_weights(
+glm_projection_plan = exl3_moe.plan_weights(
     quant_modes="w4a16",
     source_format="exl3_trellis_mcg",
     activation="silu",
@@ -408,7 +457,7 @@ glm_projection_plan = fused_moe.plan_weights(
     trellis_codebook="mcg",
     trellis_rate_granularity="per_expert_projection",
 )
-assert fused_moe.required_nbytes(fused_moe.Caps(
+assert exl3_moe.required_nbytes(exl3_moe.Caps(
     max_tokens=1,
     num_topk=8,
     route_num_experts=288,
@@ -433,11 +482,11 @@ assert _projection_mixed_route_map(
     route_num_experts=288,
     device=torch.device("cpu"),
 ).data_ptr() == precomposed_map.data_ptr()
-trellis_plan = fused_moe.plan_weights(
+trellis_plan = exl3_moe.plan_weights(
     quant_modes="w4a16",
     source_format="b12x_trellis",
     activation="silu",
-    params_dtype=torch.float16,
+    params_dtype=torch.bfloat16,
     num_experts=2,
     hidden_size=128,
     intermediate_size=128,
@@ -447,13 +496,18 @@ trellis_plan = fused_moe.plan_weights(
 )
 assert trellis_plan.source_format == "b12x_trellis"
 assert trellis_plan.trellis_codebook == "mcg"
-assert ep_moe.Caps(
+assert trellis_plan.io_dtype == "bfloat16"
+# Uniform Trellis EP now uses the fused route-map path (current ep_moe no
+# longer compiles full-rotation Trellis).
+uniform_ep_caps = exl3_moe.Caps(
     max_tokens=1,
     num_topk=1,
-    global_num_experts=2,
+    route_num_experts=4,
     device="cpu",
     weight_plan=trellis_plan,
-).full_rotation
+    quant_mode="w4a16",
+)
+assert exl3_moe.required_nbytes(uniform_ep_caps) > 0
 assert callable(ep_moe.prepare_expert_map)
 assert callable(ep_moe.plan)
 assert callable(ep_moe.bind)
@@ -490,24 +544,65 @@ uniform_end = exl3_source.index(
     "    def get_fused_moe_quant_config(", uniform_start
 )
 assert exl3_source[uniform_start:uniform_end].count(
-    "params_dtype=torch.float16,"
+    "params_dtype=layer.exl3_params_dtype,"
 ) == 2
 assert "local_expert_id = param.map_global_expert_id(expert_id)" in exl3_source
 assert "if local_expert_id < 0:" in exl3_source
-assert "layer.exl3_prepared_ep_map" in exl3_source
+assert "layer.exl3_prepared_ep_map" not in exl3_source
+assert 'kwargs["route_expert_map"] = layer.exl3_projection_route_map' in exl3_source
+assert "b12x-latest-api: scratch-planned fused MoE" in exl3_source
+assert "bf16_gemv.mm(x_2d, weight, plan=plan)" in exl3_source
 assert 'source_format="b12x_trellis"' in exl3_source
 assert 'trellis_codebook="mcg"' in exl3_source
 assert "marker_value = int(marker.item()) & 0xFFFFFFFF" in exl3_source
 assert 'source_format="exl3_trellis_mcg"' in exl3_source
 assert callable(sparse_mla.plan)
 assert callable(sparse_mla.bind)
-assert callable(sparse_mla.run_decode)
-assert callable(sparse_mla.run_extend)
+assert callable(sparse_mla.run)
+assert "run_decode" not in sparse_mla.META.entry_points
+glm_mla_caps = sparse_mla.Caps(
+    device="cpu",
+    num_q_heads=64,
+    max_q_rows=96,
+    max_width=2176,
+    softmax_scale=576**-0.5,
+    kv_dtype=torch.uint8,
+    head_dim=576,
+    v_head_dim=512,
+    model_type=int(sparse_mla.ModelType.GLM_NSA),
+    cache_record_bytes=656,
+    mode="decode",
+    max_chunks_per_row=34,
+    page_size=64,
+    head_major_output=True,
+    return_lse=True,
+    lse_scale="natural",
+)
+assert glm_mla_caps.cache_record_bytes == 656
+assert glm_mla_caps.scale_format == 1 and not glm_mla_caps.fp8_rope
+assert sparse_mla.plan(glm_mla_caps).component_id == "attention.sparse_mla"
 assert callable(dsa_indexer.plan)
-assert callable(dsa_indexer.index_topk_fp8)
+assert callable(index_topk_fp8)
+assert INDEXER_SOURCE_LAYOUT_PAGED == "paged"
+assert plan_indexer_scratch(B12XIndexerScratchCaps(
+    device="cpu",
+    source_layout=INDEXER_SOURCE_LAYOUT_PAGED,
+    num_q_heads=32,
+    max_q_rows=8,
+    max_page_table_width=34,
+    topk=2176,
+    mode="decode",
+    shared_page_table=False,
+)).shapes_and_dtypes()
+assert callable(prepare_default) and PreparedCall is not None
+assert callable(prepare_b12x_plan) and callable(retain_b12x_programs)
+assert callable(bf16_gemv.plan) and callable(bf16_gemv.query_from_call)
+assert "plan" in __import__("inspect").signature(bf16_gemv.mm).parameters
 assert callable(mla_query_projection.run_glm_h64_bf16)
 from b12x.norm import mhc
 assert callable(mhc.run_post_pre)
+assert callable(mhc.plan)
+assert "plan" in __import__("inspect").signature(mhc.run_post_pre).parameters
 assert "nope" in __import__("inspect").signature(
     mla_query_projection.prewarm_glm_h64_bf16
 ).parameters
@@ -517,6 +612,15 @@ from b12x.comm.pcie.pcie_dcp_a2a import PCIeDCPA2APool
 from vllm.distributed.device_communicators.b12x_pcie_all_reduce import (
     B12xPcieAllReduce,
 )
+from b12x.comm.pcie import plan as pcie_plan
+from b12x.comm.pcie import query_from_runtime as pcie_query_from_runtime
+assert callable(pcie_plan) and callable(pcie_query_from_runtime)
+assert "plan" in __import__("inspect").signature(
+    OneshotAllReducePool.all_reduce
+).parameters
+assert "plan" in __import__("inspect").signature(
+    PCIeDCPA2APool.lse_reduce_scatter
+).parameters
 assert callable(OneshotAllReducePool.from_exchange_group)
 assert callable(DcpTopKOwnerExchange.from_exchange_group)
 assert callable(PCIeDCPA2APool.from_exchange_group)
@@ -527,6 +631,21 @@ sparse_backend_source = Path(
     "b12x_mla_sparse.py"
 ).read_text()
 assert "int(layer.impl.topk_tokens)" in sparse_backend_source
+assert "_prepare_b12x_sparse_mla_plan(" in sparse_backend_source
+assert "run_decode" not in sparse_backend_source
+assert "lse = lse_base2 * _LN2" in sparse_backend_source
+pcie_adapter_source = Path(
+    "/usr/local/lib/python3.12/dist-packages/vllm/distributed/"
+    "device_communicators/b12x_pcie_all_reduce.py"
+).read_text()
+assert "self.runtime.all_reduce(inp, plan=self._plan_for(inp))" in pcie_adapter_source
+dcp_a2a_source = Path(
+    "/usr/local/lib/python3.12/dist-packages/vllm/distributed/"
+    "device_communicators/b12x_dcp_a2a.py"
+).read_text()
+assert "plan=self.gather_plan" in dcp_a2a_source
+assert "plan=self.combine_plan" in dcp_a2a_source
+assert "self.pool.prepare_graph_" not in dcp_a2a_source
 indexer_backend_source = Path(
     "/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/"
     "indexer.py"
@@ -558,6 +677,85 @@ assert B12xMLASparseBackend.get_kv_cache_shape(1, 64, 1, 576, "fp8_ds_mla") == (
     64,
     656,
 )
+# GLM_NEXT 528-byte records are opt-in: the default build keeps 656 bytes for
+# GLM's 512-wide MLA spec, and VLLM_GLM53_NOPE_RECORD=1 switches every layer.
+assert B12xMLASparseBackend.get_kv_cache_shape(1, 64, 1, 512, "fp8_ds_mla") == (
+    1,
+    64,
+    656,
+)
+from vllm.model_executor.layers.mla_cache_format import (
+    GLM53_NOPE_RECORD,
+    NVFP4_MLA_CACHE_FORMAT,
+)
+assert not GLM53_NOPE_RECORD
+assert NVFP4_MLA_CACHE_FORMAT.record_abi("fp8_ds_mla") == "vllm-default-v1"
+import subprocess
+import sys
+glm_next_probe = subprocess.run(
+    [sys.executable, "-c", '''
+import torch
+from b12x.attention import sparse_mla
+from vllm.config.cache import CacheConfig
+from vllm.model_executor.layers.mla_cache_format import (
+    GLM53_NOPE_RECORD,
+    NVFP4_MLA_CACHE_FORMAT,
+)
+from vllm.v1.attention.backends.mla.b12x_mla_sparse import B12xMLASparseBackend
+from vllm.v1.kv_cache_interface import MLAAttentionSpec
+
+assert GLM53_NOPE_RECORD
+assert NVFP4_MLA_CACHE_FORMAT.record_abi("fp8_ds_mla") == (
+    "fp8_ds_mla:glm-next-nope-528:v1"
+)
+assert B12xMLASparseBackend.get_kv_cache_shape(1, 64, 1, 512, "fp8_ds_mla") == (
+    1, 64, 528,
+)
+assert B12xMLASparseBackend.get_kv_cache_shape(1, 64, 1, 576, "fp8_ds_mla") == (
+    1, 64, 656,
+)
+assert MLAAttentionSpec(
+    block_size=4352, num_kv_heads=1, head_size=512, dtype=torch.uint8,
+    cache_dtype_str="fp8_ds_mla",
+).real_page_size_bytes == 4352 * 528
+caps = sparse_mla.Caps(
+    device="cpu", num_q_heads=64, max_q_rows=96, max_width=2176,
+    softmax_scale=256**-0.5, kv_dtype=torch.uint8, head_dim=512,
+    v_head_dim=512, model_type=int(sparse_mla.ModelType.GLM_NEXT),
+    cache_record_bytes=528, mode="decode", max_chunks_per_row=34,
+    page_size=64, head_major_output=True,
+)
+assert caps.cache_record_bytes == 528 and caps.scale_format == 1
+assert not caps.fp8_rope
+assert sparse_mla.plan(caps).component_id == "attention.sparse_mla"
+assert callable(sparse_mla.plan_cache_writer)
+assert callable(sparse_mla.concat_and_cache_glm_next_mla)
+assert CacheConfig(cache_dtype="fp8_ds_mla").compute_hash() != ""
+print("GLM_NEXT record probe passed")
+'''],
+    env={**__import__("os").environ, "VLLM_GLM53_NOPE_RECORD": "1"},
+    capture_output=True,
+    text=True,
+)
+assert glm_next_probe.returncode == 0, glm_next_probe.stderr[-4000:]
+assert "GLM_NEXT record probe passed" in glm_next_probe.stdout
+glm_next_backend_source = Path(
+    "/usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/"
+    "b12x_mla_sparse.py"
+).read_text()
+assert "concat_and_cache_glm_next_mla(" in glm_next_backend_source
+assert "VLLM_GLM53_NOPE_RECORD=1 requires DCP=1" in glm_next_backend_source
+assert "glm53-nope-record" in Path(
+    "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/"
+    "attention/mla_attention.py"
+).read_text()
+assert Path(
+    "/usr/local/lib/python3.12/dist-packages/vllm/models/glm5next/nvidia/"
+    "placement.py"
+).is_file()
+assert "_glm53_slot_shared_draft_specs" in Path(
+    "/usr/local/lib/python3.12/dist-packages/vllm/v1/core/kv_cache_utils.py"
+).read_text()
 assert MLAAttentionSpec(
     block_size=64,
     num_kv_heads=1,
@@ -589,6 +787,7 @@ mhc_source = Path(
     "/usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/mhc.py"
 ).read_text()
 assert "Using B12x fused GLM H4096 mHC post+pre for decode M=1." in mhc_source
+assert "plan=b12x_mhc_plan," in mhc_source
 assert Path(b12x.__file__).is_relative_to(Path("/opt/b12x")), b12x.__file__
 assert torch.__version__.startswith("2.13."), torch.__version__
 assert vllm.__version__ == "0.1.dev20051+g487ecf187", vllm.__version__
