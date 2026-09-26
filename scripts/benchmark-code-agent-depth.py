@@ -37,6 +37,17 @@ def main() -> None:
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--inter-run-seconds", type=float, default=1.0)
     parser.add_argument("--timeout", type=float, default=3600)
+    parser.add_argument(
+        "--dflash-tokens",
+        type=int,
+        default=5,
+        help="draft length recorded in the receipt (informational; the server decides)",
+    )
+    parser.add_argument(
+        "--kv-cache",
+        default="fp8_ds_mla",
+        help="KV cache dtype recorded in the receipt (informational)",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
@@ -133,8 +144,8 @@ def main() -> None:
             "task; first-to-last streamed-token decode excludes TTFT"
         ),
         "model": args.model,
-        "kv_cache": "fp8_ds_mla",
-        "dflash_tokens": 5,
+        "kv_cache": args.kv_cache,
+        "dflash_tokens": args.dflash_tokens,
         "output_tokens": args.output_tokens,
         "warmup_runs": args.warmup_runs,
         "runs": args.runs,
