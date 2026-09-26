@@ -43,8 +43,8 @@ with about 96 GiB each, a CUDA 13-capable driver, about 170 GiB of model
 storage, and the Hugging Face `hf` CLI.
 
 ```bash
-git clone https://github.com/tpurtell/glm-5.3-flash-ext3-4-bit-2x-rtx.git
-cd glm-5.3-flash-ext3-4-bit-2x-rtx
+git clone https://github.com/tpurtell/glm-5.3-flash-ext3-2x-rtx.git
+cd glm-5.3-flash-ext3-2x-rtx
 ./download.sh
 ./start.sh
 docker logs -f glm53-flash-exl3-b12x-vllm
