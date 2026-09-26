@@ -24,7 +24,7 @@ resolve_glm53_model_profile() {
     return
   fi
 
-  MODEL_PROFILE="${MODEL_PROFILE:-k325}"
+  MODEL_PROFILE="${MODEL_PROFILE:-k4}"
   case "${MODEL_PROFILE}" in
     k325)
       MODEL_ID=wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1
@@ -35,8 +35,11 @@ resolve_glm53_model_profile() {
       MODEL_REVISION=1e4abd26e4e1e8d58d81fbd557d6c4099352fe63
       ;;
     k4)
+      # Brandon renamed GLM-5.3-Flash-EXL3-4bpw to GLM-5.3-Flash-tr3-4bpw; the
+      # Hub redirects the old name. a5fee92 serves the same 120 weight shards
+      # as the old 4739eb1 snapshot and changes only license/card metadata.
       MODEL_ID=brandonmusic/GLM-5.3-Flash-tr3-4bpw
-      MODEL_REVISION=aba59d2175e1ee2887ae0ae1300ba848b1deed84
+      MODEL_REVISION=a5fee929cf4888b1824323e33e8a19b60129e025
       ;;
     custom)
       echo "MODEL_PROFILE=custom requires MODEL_ID and MODEL_REVISION." >&2

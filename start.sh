@@ -374,6 +374,16 @@ if [[ "${SPECULATIVE_METHOD}" == dflash2 ]]; then
   DRAFT_MOUNT_ARGS+=(--volume "${DFLASH_REPO_DIR}:/draft-repo:ro")
 fi
 
+# Local diagnostics only: CUDA_LOG_FILE=stderr surfaces the failing CUDA API.
+DEBUG_ENV_ARGS=()
+if [[ -n "${CUDA_LOG_FILE:-}" ]]; then
+  DEBUG_ENV_ARGS+=(--env "CUDA_LOG_FILE=${CUDA_LOG_FILE}")
+fi
+# DEBUG_ENV="KEY=VALUE KEY=VALUE" forwards extra diagnostic variables.
+for debug_assignment in ${DEBUG_ENV:-}; do
+  DEBUG_ENV_ARGS+=(--env "${debug_assignment}")
+done
+
 PROFILER_MOUNT_ARGS=()
 PROFILER_SERVE_ARGS=()
 if [[ -n "${TORCH_PROFILER_DIR}" ]]; then
@@ -437,6 +447,9 @@ docker run --detach \
   --env VLLM_PCIE_ONESHOT_ALLREDUCE_MAX_SIZE="${PCIE_ONESHOT_MAX_SIZE}" \
   --env VLLM_B12X_PCIE_EAGER="${VLLM_B12X_PCIE_EAGER:-0}" \
   --env VLLM_B12X_DCP_A2A="${VLLM_B12X_DCP_A2A:-1}" \
+  --env VLLM_GLM53_MLA_OWNERS="${GLM53_MLA_OWNERS:-tp}" \
+  --env VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS="${GRAPH_MEMORY_PROFILING:-0}" \
+  --env VLLM_GLM53_DRAFT_SLOT_SHARING="${DRAFT_SLOT_SHARING:-1}" \
   --env VLLM_USE_B12X_SPARSE_INDEXER="${USE_B12X_SPARSE_INDEXER}" \
   --env VLLM_USE_B12X_KPOOL_INDEXER="${USE_B12X_KPOOL_INDEXER}" \
   --env VLLM_DCP_GLOBAL_TOPK="${VLLM_DCP_GLOBAL_TOPK:-1}" \
@@ -460,6 +473,7 @@ docker run --detach \
   --env VLLM_USE_B12X_MHC="${VLLM_USE_B12X_MHC:-auto}" \
   --volume "${MODEL_MOUNT_SOURCE}:${MODEL_MOUNT_TARGET}:ro" \
   "${DRAFT_MOUNT_ARGS[@]}" \
+  "${DEBUG_ENV_ARGS[@]}" \
   "${PROFILER_MOUNT_ARGS[@]}" \
   --volume "${CACHE_DIR}:/root/.cache" \
   "${IMAGE}" \
