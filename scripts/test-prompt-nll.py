@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import subprocess
 import json
 import math
 import time
@@ -33,11 +34,22 @@ def post(base: str, path: str, body: dict, timeout: float) -> dict:
         return json.load(response)
 
 
-def documents(long_tokens_hint: int) -> dict[str, str]:
+# Frozen document revision: the first commit containing all three files.
+DOC_REVISION = "4df1873"
+
+
+def _at_revision(path: str, revision: str) -> str:
+    return subprocess.run(
+        ["git", "-C", str(ROOT), "show", f"{revision}:{path}"],
+        check=True, capture_output=True, text=True,
+    ).stdout
+
+
+def documents(long_tokens_hint: int, revision: str = DOC_REVISION) -> dict[str, str]:
     docs = {
-        "prose-provenance": (ROOT / "PROVENANCE.md").read_text()[:24000],
-        "code-start-sh": (ROOT / "start.sh").read_text()[:24000],
-        "code-benchmark": (ROOT / "scripts" / "benchmark-reasoning-coding.py").read_text()[:24000],
+        "prose-provenance": _at_revision("PROVENANCE.md", revision)[:24000],
+        "code-start-sh": _at_revision("start.sh", revision)[:24000],
+        "code-benchmark": _at_revision("scripts/benchmark-reasoning-coding.py", revision)[:24000],
     }
     # Long document: numbered facts whose later lines refer back to earlier
     # ones, so accurate prediction needs long-range attention.
@@ -80,17 +92,20 @@ def main() -> None:
     parser.add_argument("--base-url", default="http://127.0.0.1:8001")
     parser.add_argument("--model", required=True)
     parser.add_argument("--long-tokens", type=int, default=16000)
+    parser.add_argument("--doc-revision", default=DOC_REVISION,
+                        help="git revision the prose/code documents are read from")
     parser.add_argument("--label", default="")
     parser.add_argument("--timeout", type=float, default=1800)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
     results = {}
-    for name, text in documents(args.long_tokens).items():
+    for name, text in documents(args.long_tokens, args.doc_revision).items():
         results[name] = score(args.base_url.rstrip("/"), args.model, text, args.timeout)
         print(json.dumps({"doc": name, **results[name]}), flush=True)
     total_tokens = sum(r["tokens"] for r in results.values())
     weighted = sum(r["mean_nll"] * r["tokens"] for r in results.values()) / total_tokens
-    summary = {"label": args.label, "model": args.model, "documents": results,
+    summary = {"label": args.label, "model": args.model, "doc_revision": args.doc_revision,
+               "documents": results,
                "token_weighted_mean_nll": weighted}
     args.output.write_text(json.dumps(summary, indent=2) + "\n")
     print(json.dumps({"label": args.label, "token_weighted_mean_nll": round(weighted, 5)}))

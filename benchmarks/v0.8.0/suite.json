@@ -1,0 +1,67 @@
+{
+  "schema": "glm53-benchmark-suite-v1",
+  "started_at": "2026-09-26T11:46:20.593513+00:00",
+  "recipe_revision": "d14b6374dcf296eaf6acbcca74ecaba13d1e530e",
+  "recipe_branch": "release/v0.8.0-layer-split",
+  "recipe_dirty": true,
+  "base_url": "http://127.0.0.1:8001",
+  "model": "brandonmusic/GLM-5.3-Flash-tr3-4bpw",
+  "part": "all",
+  "spec_method": "dflash2",
+  "spec_tokens": 3,
+  "kv_cache_profile": "fp8",
+  "vision": false,
+  "max_model_len": 1048576,
+  "boundary_slack": 32,
+  "clients": [
+    1,
+    2,
+    4,
+    8,
+    16
+  ],
+  "reasoning_concurrency": [
+    1,
+    2,
+    4
+  ],
+  "reasoning_max_tokens": 2048,
+  "prefill_tokens": [
+    2048,
+    8192,
+    32768,
+    65536,
+    131072,
+    262144,
+    524288
+  ],
+  "context_depths": [
+    2048,
+    8192,
+    32768,
+    131072,
+    262144,
+    524288
+  ],
+  "retrieval_filler": [
+    8192,
+    240000,
+    1000000
+  ],
+  "retrieval_positions": [
+    0.05,
+    0.5,
+    0.95
+  ],
+  "multi_needle": true,
+  "multi_needle_tokens": 1000000,
+  "coding_depths": [
+    0,
+    8192,
+    32768,
+    65536,
+    128000
+  ],
+  "container": "glm53-flash-exl3-b12x-vllm",
+  "telemetry": true
+}

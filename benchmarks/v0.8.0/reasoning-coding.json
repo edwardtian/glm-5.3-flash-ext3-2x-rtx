@@ -1,0 +1,942 @@
+{
+  "schema": "glm53-reasoning-coding.v1",
+  "model": "brandonmusic/GLM-5.3-Flash-tr3-4bpw",
+  "reasoning_coding_score": 108.5855849634983,
+  "score_definition": "mean of the C1, C2 and C4 median per-request decode tokens/s",
+  "score_components": {
+    "C1": 140.94206538126338,
+    "C2": 107.8388182862598,
+    "C4": 76.97587122297176
+  },
+  "method": "chat completions, thinking enabled (template default effort unless reasoning_effort is set), fixed per-request seeds; C simultaneous independent clients per batch released by a barrier; per-request decode = (N-1) tokens over that request's first-to-last streamed token window, counting reasoning and content tokens; aggregate = sum(N-1) over the batch's global first-to-last window; reasoning/content split at the </think> token; prompts repeat across batches so prefix caching may shorten TTFT; spec-decode deltas bracket each measured batch with an idle metrics wait outside the timed window",
+  "args": {
+    "base_url": "http://127.0.0.1:8001",
+    "model": "brandonmusic/GLM-5.3-Flash-tr3-4bpw",
+    "concurrency": [
+      1,
+      2,
+      4
+    ],
+    "warmup_batches": 1,
+    "batches": 3,
+    "max_tokens": 2048,
+    "temperature": 1.0,
+    "top_p": 0.95,
+    "reasoning_effort": null,
+    "seed": 20260926,
+    "no_spec_metrics": false,
+    "metrics_wait": 2.0,
+    "inter_batch_seconds": 1.0,
+    "timeout": 3600,
+    "keep_text": false,
+    "output": "/home/tj/Developer/brandon-glm-5.3-flash/recipe/benchmarks/v0.8.0/reasoning-coding.json"
+  },
+  "tasks": [
+    {
+      "id": "lru-ttl-cache",
+      "prompt": "Implement a thread-safe LRU cache with per-entry TTL in Python 3.12. Requirements: class TTLCache[K, V] with get(key) -> V | None, set(key, value, ttl_seconds: float | None = None), delete(key) -> bool, __len__, and a configurable max_size; expired entries must never be returned and must be evicted lazily on access and eagerly when the cache is full; LRU order must be O(1) per operation; the clock must be injectable for testing. Then write a pytest test module that covers eviction order, TTL expiry with a fake clock, overwrite semantics, delete, max_size=1, and concurrent access from several threads. Return the implementation and the tests as two Python code blocks."
+    },
+    {
+      "id": "async-task-runner-fix",
+      "prompt": "You are editing an async Python task runner. Fix the cancellation and\nexception-handling bugs in this implementation, preserve result ordering, and add precise type\nhints. Return only the complete replacement Python module.\n\n```python\nimport asyncio\n\nasync def run_all(factories, limit=8):\n    sem = asyncio.Semaphore(limit)\n    results = []\n    async def one(factory):\n        async with sem:\n            results.append(await factory())\n    tasks = [asyncio.create_task(one(factory)) for factory in factories]\n    try:\n        await asyncio.gather(*tasks)\n    except Exception:\n        for task in tasks:\n            task.cancel()\n    return results\n```\n"
+    },
+    {
+      "id": "sql-migration-rollback",
+      "prompt": "We run PostgreSQL 16. The table orders(id bigserial primary key, customer_email text not null, status text not null, total_cents integer not null, created_at timestamptz not null default now()) has 40 million rows. Write a zero-downtime migration that: introduces a customers table (id bigserial, email citext unique not null, created_at timestamptz), backfills it from distinct orders.customer_email, adds orders.customer_id bigint referencing customers(id), backfills it in batches of 10,000 without long locks, converts status to an enum type order_status with values pending, paid, shipped, cancelled, and adds an index on (customer_id, created_at desc) concurrently. Provide the forward migration as ordered SQL steps (marking which cannot run inside a transaction), a matching rollback migration that restores the original schema without data loss, and a short verification query for each step."
+    },
+    {
+      "id": "typed-refactor",
+      "prompt": "Refactor this Python function into small, fully typed, testable units. Preserve behaviour exactly (including the order of the returned list and the handling of malformed rows), use dataclasses and typing (no Any), replace the magic numbers with named constants, and explain each behaviour-preserving decision briefly after the code.\n\n```python\ndef process(rows, cfg=None):\n    out = []\n    seen = {}\n    cfg = cfg or {}\n    for r in rows:\n        try:\n            uid = int(r.get('user') or r['uid'])\n        except Exception:\n            continue\n        amt = float(r.get('amount', 0)) * (1.2 if r.get('region') == 'EU' else 1)\n        if cfg.get('skip_small') and amt < 5:\n            continue\n        if uid in seen:\n            seen[uid]['total'] += amt\n            seen[uid]['n'] += 1\n        else:\n            seen[uid] = {'uid': uid, 'total': amt, 'n': 1}\n            out.append(seen[uid])\n    for s in out:\n        s['avg'] = round(s['total'] / s['n'], 2)\n        if s['total'] > cfg.get('vip', 1000):\n            s['tier'] = 'vip'\n        elif s['total'] > 100:\n            s['tier'] = 'regular'\n        else:\n            s['tier'] = 'new'\n    return sorted(out, key=lambda s: -s['total'])\n```"
+    }
+  ],
+  "think_close_token_ids": [
+    154842
+  ],
+  "points": [
+    {
+      "concurrency": 1,
+      "per_request_decode_tokens_per_second": {
+        "median": 140.94206538126338,
+        "min": 126.57052443706566,
+        "max": 141.31978814982597,
+        "n": 3
+      },
+      "aggregate_decode_tokens_per_second": {
+        "median": 140.94206538126338,
+        "min": 126.57052443706566,
+        "max": 141.31978814982597,
+        "n": 3
+      },
+      "ttft_seconds": {
+        "median": 0.10615976100962143,
+        "min": 0.10611199900449719,
+        "max": 0.10917056299513206,
+        "n": 3
+      },
+      "reasoning_tokens": {
+        "median": 2048,
+        "min": 2048,
+        "max": 2048,
+        "n": 3
+      },
+      "content_tokens": {
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "n": 3
+      },
+      "completion_tokens": {
+        "median": 2048,
+        "min": 2048,
+        "max": 2048,
+        "n": 3
+      },
+      "finish_reasons": {
+        "length": 3
+      },
+      "spec_decode": {
+        "drafts": 2478,
+        "draft_tokens": 7434,
+        "accepted_tokens": 3664,
+        "acceptance_rate": 0.4928705945655098,
+        "mean_acceptance_length": 2.47861178369653
+      },
+      "batches": [
+        {
+          "concurrency": 1,
+          "batch": 0,
+          "aggregate_decode_tokens": 2047,
+          "aggregate_decode_seconds": 14.484878775998368,
+          "aggregate_decode_tokens_per_second": 141.31978814982597,
+          "sum_of_request_rates": 141.31978814982597,
+          "peak_overlapping_streams": 1,
+          "requests": [
+            {
+              "task": "lru-ttl-cache",
+              "seed": 20271026,
+              "finish_reason": "length",
+              "ttft_seconds": 0.10611199900449719,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 168,
+              "decode_tokens": 2047,
+              "decode_seconds": 14.484878775998368,
+              "decode_tokens_per_second": 141.31978814982597,
+              "post_burst_decode_tokens_per_second": 141.31978814982597,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 8267,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "The user wants a thread-safe LRU cache with per-entry TTL in Python 3.12. Let me carefully work through the requirements:\n\n1. `class TTLCache[K, V]` — Python 3.12 generic syntax (PEP 695).\n2. Methods:\n   - `get(key) -> V | None`\n   - `set(key, value, ttl_seconds: float | None = None)`\n   - `delete(key) -> bool`\n   - `__len__`\n   - configurable `max_size`\n3. Expired entries must never be returned; ",
+              "started_perf_seconds": 86817.612336188,
+              "first_token_offset_seconds": 0.10611199900449719,
+              "last_token_offset_seconds": 14.590990775002865,
+              "request_seconds": 14.591044956992846
+            }
+          ],
+          "spec_decode": {
+            "drafts": 790,
+            "draft_tokens": 2370,
+            "accepted_tokens": 1257,
+            "acceptance_rate": 0.5303797468354431,
+            "mean_acceptance_length": 2.591139240506329,
+            "per_position_acceptance_rate": {
+              "0": 0.7253164556962025,
+              "1": 0.5126582278481012,
+              "2": 0.3531645569620253
+            }
+          }
+        },
+        {
+          "concurrency": 1,
+          "batch": 1,
+          "aggregate_decode_tokens": 2047,
+          "aggregate_decode_seconds": 14.523698049000814,
+          "aggregate_decode_tokens_per_second": 140.94206538126338,
+          "sum_of_request_rates": 140.94206538126338,
+          "peak_overlapping_streams": 1,
+          "requests": [
+            {
+              "task": "async-task-runner-fix",
+              "seed": 20271126,
+              "finish_reason": "length",
+              "ttft_seconds": 0.10615976100962143,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 147,
+              "decode_tokens": 2047,
+              "decode_seconds": 14.523698049000814,
+              "decode_tokens_per_second": 140.94206538126338,
+              "post_burst_decode_tokens_per_second": 140.94206538126338,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9239,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me analyze the bugs in the given implementation:\n\n```python\nimport asyncio\n\nasync def run_all(factories, limit=8):\n    sem = asyncio.Semaphore(limit)\n    results = []\n    async def one(factory):\n        async with sem:\n            results.append(await factory())\n    tasks = [asyncio.create_task(one(factory)) for factory in factories]\n    try:\n        await asyncio.gather(*tasks)\n    except Exc",
+              "started_perf_seconds": 86837.21477276,
+              "first_token_offset_seconds": 0.10615976100962143,
+              "last_token_offset_seconds": 14.629857810010435,
+              "request_seconds": 14.62991232200875
+            }
+          ],
+          "spec_decode": {
+            "drafts": 798,
+            "draft_tokens": 2394,
+            "accepted_tokens": 1249,
+            "acceptance_rate": 0.5217209690893901,
+            "mean_acceptance_length": 2.5651629072681708,
+            "per_position_acceptance_rate": {
+              "0": 0.6979949874686717,
+              "1": 0.506265664160401,
+              "2": 0.3609022556390977
+            }
+          }
+        },
+        {
+          "concurrency": 1,
+          "batch": 2,
+          "aggregate_decode_tokens": 2047,
+          "aggregate_decode_seconds": 16.172801756998524,
+          "aggregate_decode_tokens_per_second": 126.57052443706566,
+          "sum_of_request_rates": 126.57052443706566,
+          "peak_overlapping_streams": 1,
+          "requests": [
+            {
+              "task": "sql-migration-rollback",
+              "seed": 20271226,
+              "finish_reason": "length",
+              "ttft_seconds": 0.10917056299513206,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 201,
+              "decode_tokens": 2047,
+              "decode_seconds": 16.172801756998524,
+              "decode_tokens_per_second": 126.57052443706566,
+              "post_burst_decode_tokens_per_second": 126.57052443706566,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9043,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me think carefully about this task. The user wants a zero-downtime migration for PostgreSQL 16 on a 40M row table `orders`. The migration includes:\n\n1. Create `customers` table (id bigserial, email citext unique not null, created_at timestamptz)\n2. Backfill customers from distinct orders.customer_email\n3. Add orders.customer_id bigint referencing customers(id)\n4. Backfill customer_id in batche",
+              "started_perf_seconds": 86856.857681216,
+              "first_token_offset_seconds": 0.10917056299513206,
+              "last_token_offset_seconds": 16.281972319993656,
+              "request_seconds": 16.282061063000583
+            }
+          ],
+          "spec_decode": {
+            "drafts": 890,
+            "draft_tokens": 2670,
+            "accepted_tokens": 1158,
+            "acceptance_rate": 0.4337078651685393,
+            "mean_acceptance_length": 2.3011235955056177,
+            "per_position_acceptance_rate": {
+              "0": 0.6426966292134831,
+              "1": 0.40561797752808987,
+              "2": 0.25280898876404495
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concurrency": 2,
+      "per_request_decode_tokens_per_second": {
+        "median": 107.8388182862598,
+        "min": 100.2735251864406,
+        "max": 112.04390876924722,
+        "n": 6
+      },
+      "aggregate_decode_tokens_per_second": {
+        "median": 205.62176348260377,
+        "min": 200.5470503728812,
+        "max": 211.29962096414434,
+        "n": 3
+      },
+      "ttft_seconds": {
+        "median": 0.1711629645069479,
+        "min": 0.10631130899128038,
+        "max": 0.26363931999367196,
+        "n": 6
+      },
+      "reasoning_tokens": {
+        "median": 2048.0,
+        "min": 2048,
+        "max": 2048,
+        "n": 6
+      },
+      "content_tokens": {
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "n": 6
+      },
+      "completion_tokens": {
+        "median": 2048.0,
+        "min": 2048,
+        "max": 2048,
+        "n": 6
+      },
+      "finish_reasons": {
+        "length": 6
+      },
+      "spec_decode": {
+        "drafts": 4937,
+        "draft_tokens": 14811,
+        "accepted_tokens": 7351,
+        "acceptance_rate": 0.49632030247788805,
+        "mean_acceptance_length": 2.4889609074336643
+      },
+      "batches": [
+        {
+          "concurrency": 2,
+          "batch": 0,
+          "aggregate_decode_tokens": 4094,
+          "aggregate_decode_seconds": 19.91034378200129,
+          "aggregate_decode_tokens_per_second": 205.62176348260377,
+          "sum_of_request_rates": 215.50265412726566,
+          "peak_overlapping_streams": 2,
+          "requests": [
+            {
+              "task": "lru-ttl-cache",
+              "seed": 20281026,
+              "finish_reason": "length",
+              "ttft_seconds": 0.2308298330026446,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 168,
+              "decode_tokens": 2047,
+              "decode_seconds": 19.785664255992742,
+              "decode_tokens_per_second": 103.45874535801842,
+              "post_burst_decode_tokens_per_second": 103.45874535801842,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 8474,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "The user wants a thread-safe LRU cache with per-entry TTL in Python 3.12. Let me carefully think through the requirements:\n\n1. `class TTLCache[K, V]` — generic type parameters using PEP 695 syntax (Python 3.12 feature: `class TTLCache[K, V]:`).\n2. Methods:\n   - `get(key) -> V | None`\n   - `set(key, value, ttl_seconds: float | None = None)`\n   - `delete(key) -> bool`\n   - `__len__`\n   - configurabl",
+              "started_perf_seconds": 86899.12896539,
+              "first_token_offset_seconds": 0.2308298330026446,
+              "last_token_offset_seconds": 20.016494088995387,
+              "request_seconds": 20.016584704993875
+            },
+            {
+              "task": "async-task-runner-fix",
+              "seed": 20281027,
+              "finish_reason": "length",
+              "ttft_seconds": 0.10631130899128038,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 147,
+              "decode_tokens": 2047,
+              "decode_seconds": 18.269623244006652,
+              "decode_tokens_per_second": 112.04390876924722,
+              "post_burst_decode_tokens_per_second": 112.04390876924722,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9136,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me analyze the given code carefully to identify all the bugs:\n\n```python\nimport asyncio\n\nasync def run_all(factories, limit=8):\n    sem = asyncio.Semaphore(limit)\n    results = []\n    async def one(factory):\n        async with sem:\n            results.append(await factory())\n    tasks = [asyncio.create_task(one(factory)) for factory in factories]\n    try:\n        await asyncio.gather(*tasks)\n ",
+              "started_perf_seconds": 86899.128804388,
+              "first_token_offset_seconds": 0.10631130899128038,
+              "last_token_offset_seconds": 18.375934552997933,
+              "request_seconds": 18.376012880995404
+            }
+          ],
+          "spec_decode": {
+            "drafts": 1645,
+            "draft_tokens": 4935,
+            "accepted_tokens": 2451,
+            "acceptance_rate": 0.4966565349544073,
+            "mean_acceptance_length": 2.489969604863222,
+            "per_position_acceptance_rate": {
+              "0": 0.6948328267477204,
+              "1": 0.46990881458966566,
+              "2": 0.3252279635258359
+            }
+          }
+        },
+        {
+          "concurrency": 2,
+          "batch": 1,
+          "aggregate_decode_tokens": 4094,
+          "aggregate_decode_seconds": 20.414162124987342,
+          "aggregate_decode_tokens_per_second": 200.5470503728812,
+          "sum_of_request_rates": 211.49236379552377,
+          "peak_overlapping_streams": 2,
+          "requests": [
+            {
+              "task": "sql-migration-rollback",
+              "seed": 20281126,
+              "finish_reason": "length",
+              "ttft_seconds": 0.10871210500772577,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 201,
+              "decode_tokens": 2047,
+              "decode_seconds": 20.414162124987342,
+              "decode_tokens_per_second": 100.2735251864406,
+              "post_burst_decode_tokens_per_second": 100.2735251864406,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9319,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me think carefully about this. The user wants a zero-downtime migration for PostgreSQL 16 on a 40M row table `orders`. Requirements:\n\n1. Introduce `customers` table (id bigserial, email citext unique not null, created_at timestamptz)\n2. Backfill from distinct orders.customer_email\n3. Add orders.customer_id bigint referencing customers(id)\n4. Backfill it in batches of 10,000 without long locks\n",
+              "started_perf_seconds": 86924.158559352,
+              "first_token_offset_seconds": 0.10871210500772577,
+              "last_token_offset_seconds": 20.522874229995068,
+              "request_seconds": 20.522963594004977
+            },
+            {
+              "task": "typed-refactor",
+              "seed": 20281127,
+              "finish_reason": "length",
+              "ttft_seconds": 0.26363931999367196,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 332,
+              "decode_tokens": 2047,
+              "decode_seconds": 18.405155328000546,
+              "decode_tokens_per_second": 111.21883860908316,
+              "post_burst_decode_tokens_per_second": 111.21883860908316,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 7972,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me analyze this function carefully to understand its behavior, then refactor it.\n\nOriginal behavior:\n\n```python\ndef process(rows, cfg=None):\n    out = []\n    seen = {}\n    cfg = cfg or {}\n    for r in rows:\n        try:\n            uid = int(r.get('user') or r['uid'])\n        except Exception:\n            continue\n```\n\nWait, careful: `r.get('user') or r['uid']` — if `r.get('user')` is falsy (N",
+              "started_perf_seconds": 86924.158383959,
+              "first_token_offset_seconds": 0.26363931999367196,
+              "last_token_offset_seconds": 18.66879464799422,
+              "request_seconds": 18.668878693992156
+            }
+          ],
+          "spec_decode": {
+            "drafts": 1665,
+            "draft_tokens": 4995,
+            "accepted_tokens": 2431,
+            "acceptance_rate": 0.4866866866866867,
+            "mean_acceptance_length": 2.46006006006006,
+            "per_position_acceptance_rate": {
+              "0": 0.6810810810810811,
+              "1": 0.46606606606606604,
+              "2": 0.3129129129129129
+            }
+          }
+        },
+        {
+          "concurrency": 2,
+          "batch": 2,
+          "aggregate_decode_tokens": 4094,
+          "aggregate_decode_seconds": 19.37533054398955,
+          "aggregate_decode_tokens_per_second": 211.29962096414434,
+          "sum_of_request_rates": 215.6776365725196,
+          "peak_overlapping_streams": 2,
+          "requests": [
+            {
+              "task": "lru-ttl-cache",
+              "seed": 20281226,
+              "finish_reason": "length",
+              "ttft_seconds": 0.11149609601125121,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 168,
+              "decode_tokens": 2047,
+              "decode_seconds": 19.37533054398955,
+              "decode_tokens_per_second": 105.64981048207217,
+              "post_burst_decode_tokens_per_second": 105.64981048207217,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 8696,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "The user wants a thread-safe LRU cache with per-entry TTL in Python 3.12. Let me carefully design this.\n\nRequirements:\n1. `TTLCache[K, V]` generic class\n2. Methods:\n   - `get(key) -> V | None`\n   - `set(key, value, ttl_seconds: float | None = None)`\n   - `delete(key) -> bool`\n   - `__len__`\n   - configurable `max_size`\n3. Expired entries must never be returned\n4. Expired entries evicted lazily on ",
+              "started_perf_seconds": 86949.694406495,
+              "first_token_offset_seconds": 0.11149609601125121,
+              "last_token_offset_seconds": 19.4868266400008,
+              "request_seconds": 19.48687847801193
+            },
+            {
+              "task": "async-task-runner-fix",
+              "seed": 20281227,
+              "finish_reason": "length",
+              "ttft_seconds": 0.23236577000352554,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 147,
+              "decode_tokens": 2047,
+              "decode_seconds": 18.60438466099731,
+              "decode_tokens_per_second": 110.02782609044743,
+              "post_burst_decode_tokens_per_second": 110.02782609044743,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9221,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me analyze the bugs in this implementation:\n\n```python\nimport asyncio\n\nasync def run_all(factories, limit=8):\n    sem = asyncio.Semaphore(limit)\n    results = []\n    async def one(factory):\n        async with sem:\n            results.append(await factory())\n    tasks = [asyncio.create_task(one(factory)) for factory in factories]\n    try:\n        await asyncio.gather(*tasks)\n    except Exceptio",
+              "started_perf_seconds": 86949.69421006,
+              "first_token_offset_seconds": 0.23236577000352554,
+              "last_token_offset_seconds": 18.836750431000837,
+              "request_seconds": 18.836884332005866
+            }
+          ],
+          "spec_decode": {
+            "drafts": 1627,
+            "draft_tokens": 4881,
+            "accepted_tokens": 2469,
+            "acceptance_rate": 0.505838967424708,
+            "mean_acceptance_length": 2.5175169022741244,
+            "per_position_acceptance_rate": {
+              "0": 0.6988322065150584,
+              "1": 0.4861708666256915,
+              "2": 0.3325138291333743
+            }
+          }
+        }
+      ]
+    },
+    {
+      "concurrency": 4,
+      "per_request_decode_tokens_per_second": {
+        "median": 76.97587122297176,
+        "min": 69.71885015219027,
+        "max": 81.84579308771364,
+        "n": 12
+      },
+      "aggregate_decode_tokens_per_second": {
+        "median": 287.91915357320096,
+        "min": 278.8754006087611,
+        "max": 289.9956740155223,
+        "n": 3
+      },
+      "ttft_seconds": {
+        "median": 0.3049671999979182,
+        "min": 0.108128214997123,
+        "max": 0.30559841899957974,
+        "n": 12
+      },
+      "reasoning_tokens": {
+        "median": 2048.0,
+        "min": 2048,
+        "max": 2048,
+        "n": 12
+      },
+      "content_tokens": {
+        "median": 0.0,
+        "min": 0,
+        "max": 0,
+        "n": 12
+      },
+      "completion_tokens": {
+        "median": 2048.0,
+        "min": 2048,
+        "max": 2048,
+        "n": 12
+      },
+      "finish_reasons": {
+        "length": 12
+      },
+      "spec_decode": {
+        "drafts": 9826,
+        "draft_tokens": 29478,
+        "accepted_tokens": 14749,
+        "acceptance_rate": 0.500339236040437,
+        "mean_acceptance_length": 2.501017708121311
+      },
+      "batches": [
+        {
+          "concurrency": 4,
+          "batch": 0,
+          "aggregate_decode_tokens": 8188,
+          "aggregate_decode_seconds": 29.360782564996043,
+          "aggregate_decode_tokens_per_second": 278.8754006087611,
+          "sum_of_request_rates": 295.95528679699237,
+          "peak_overlapping_streams": 4,
+          "requests": [
+            {
+              "task": "lru-ttl-cache",
+              "seed": 20301026,
+              "finish_reason": "length",
+              "ttft_seconds": 0.3053861599910306,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 168,
+              "decode_tokens": 2047,
+              "decode_seconds": 28.030805741000222,
+              "decode_tokens_per_second": 73.02679840579412,
+              "post_burst_decode_tokens_per_second": 73.02679840579412,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 8668,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "The user wants a thread-safe LRU cache with per-entry TTL in Python 3.12. Let me carefully think through the requirements:\n\n1. `class TTLCache[K, V]` — using Python 3.12 type parameter syntax (`class TTLCache[K, V]:` with `from typing import Generic`? Actually in 3.12, the new syntax `class TTLCache[K, V]:` implicitly makes the class generic, no need for Generic import. That's the PEP 695 syntax.)",
+              "started_perf_seconds": 87002.976832218,
+              "first_token_offset_seconds": 0.3053861599910306,
+              "last_token_offset_seconds": 28.336191900991253,
+              "request_seconds": 28.336357709995355
+            },
+            {
+              "task": "async-task-runner-fix",
+              "seed": 20301027,
+              "finish_reason": "length",
+              "ttft_seconds": 0.305416466013412,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 147,
+              "decode_tokens": 2047,
+              "decode_seconds": 28.34189016399614,
+              "decode_tokens_per_second": 72.22524638107545,
+              "post_burst_decode_tokens_per_second": 72.22524638107545,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9135,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me analyze the bugs in this implementation:\n\n1. **Result ordering bug**: `results.append(await factory())` appends in completion order, not submission order. If tasks complete out of order, results won't match the input `factories` order. Fix: use `results[i] = ...` with indexed position, or pre-allocate a list of correct size.\n\n2. **Cancellation bug**: When `gather` raises (e.g., due to one t",
+              "started_perf_seconds": 87002.976638977,
+              "first_token_offset_seconds": 0.305416466013412,
+              "last_token_offset_seconds": 28.647306630009552,
+              "request_seconds": 28.647349434002535
+            },
+            {
+              "task": "sql-migration-rollback",
+              "seed": 20301028,
+              "finish_reason": "length",
+              "ttft_seconds": 0.11094103299546987,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 201,
+              "decode_tokens": 2047,
+              "decode_seconds": 29.360782564996043,
+              "decode_tokens_per_second": 69.71885015219027,
+              "post_burst_decode_tokens_per_second": 69.71885015219027,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9023,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "The user wants a zero-downtime migration for PostgreSQL 16 on a 40M row orders table. Requirements:\n\n1. Create `customers` table (id bigserial, email citext unique not null, created_at timestamptz) — needs citext extension.\n2. Backfill customers from distinct orders.customer_email.\n3. Add `orders.customer_id bigint` referencing customers(id) — must be done safely (NOT NULL later, FK added as NOT V",
+              "started_perf_seconds": 87002.976406218,
+              "first_token_offset_seconds": 0.11094103299546987,
+              "last_token_offset_seconds": 29.471723597991513,
+              "request_seconds": 29.471770547999768
+            },
+            {
+              "task": "typed-refactor",
+              "seed": 20301029,
+              "finish_reason": "length",
+              "ttft_seconds": 0.30559841899957974,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 332,
+              "decode_tokens": 2047,
+              "decode_seconds": 25.276475541002583,
+              "decode_tokens_per_second": 80.98439185793252,
+              "post_burst_decode_tokens_per_second": 80.98439185793252,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 7685,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me analyze the original function carefully to preserve behavior exactly.\n\nOriginal function:\n\n```python\ndef process(rows, cfg=None):\n    out = []\n    seen = {}\n    cfg = cfg or {}\n    for r in rows:\n        try:\n            uid = int(r.get('user') or r['uid'])\n        except Exception:\n            continue\n        amt = float(r.get('amount', 0)) * (1.2 if r.get('region') == 'EU' else 1)\n      ",
+              "started_perf_seconds": 87002.976221911,
+              "first_token_offset_seconds": 0.30559841899957974,
+              "last_token_offset_seconds": 25.582073960002162,
+              "request_seconds": 25.58223028499924
+            }
+          ],
+          "spec_decode": {
+            "drafts": 3364,
+            "draft_tokens": 10092,
+            "accepted_tokens": 4830,
+            "acceptance_rate": 0.47859690844233055,
+            "mean_acceptance_length": 2.4357907253269917,
+            "per_position_acceptance_rate": {
+              "0": 0.6825208085612366,
+              "1": 0.45659928656361476,
+              "2": 0.2966706302021403
+            }
+          }
+        },
+        {
+          "concurrency": 4,
+          "batch": 1,
+          "aggregate_decode_tokens": 8188,
+          "aggregate_decode_seconds": 28.234903943986865,
+          "aggregate_decode_tokens_per_second": 289.9956740155223,
+          "sum_of_request_rates": 310.54464101459394,
+          "peak_overlapping_streams": 4,
+          "requests": [
+            {
+              "task": "lru-ttl-cache",
+              "seed": 20301126,
+              "finish_reason": "length",
+              "ttft_seconds": 0.3053384680097224,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 168,
+              "decode_tokens": 2047,
+              "decode_seconds": 25.01044858599198,
+              "decode_tokens_per_second": 81.84579308771364,
+              "post_burst_decode_tokens_per_second": 81.84579308771364,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 8320,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "The user wants a thread-safe LRU cache with per-entry TTL in Python 3.12. Let me carefully think through the requirements:\n\n1. **Class `TTLCache[K, V]`** — generic type parameters. Python 3.12 supports the new generic syntax: `class TTLCache[K, V]:`. That's nice and idiomatic for 3.12.\n\n2. **Methods**:\n   - `get(key) -> V | None`\n   - `set(key, value, ttl_seconds: float | None = None)`\n   - `delet",
+              "started_perf_seconds": 87037.460709628,
+              "first_token_offset_seconds": 0.3053384680097224,
+              "last_token_offset_seconds": 25.315787054001703,
+              "request_seconds": 25.315841646006447
+            },
+            {
+              "task": "async-task-runner-fix",
+              "seed": 20301127,
+              "finish_reason": "length",
+              "ttft_seconds": 0.3049693139910232,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 147,
+              "decode_tokens": 2047,
+              "decode_seconds": 26.80680542900518,
+              "decode_tokens_per_second": 76.36120631461478,
+              "post_burst_decode_tokens_per_second": 76.36120631461478,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9507,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "The user wants me to fix an async Python task runner. Let me analyze the bugs in the original code:\n\n```python\nimport asyncio\n\nasync def run_all(factories, limit=8):\n    sem = asyncio.Semaphore(limit)\n    results = []\n    async def one(factory):\n        async with sem:\n            results.append(await factory())\n    tasks = [asyncio.create_task(one(factory)) for factory in factories]\n    try:\n    ",
+              "started_perf_seconds": 87037.460909678,
+              "first_token_offset_seconds": 0.3049693139910232,
+              "last_token_offset_seconds": 27.111774742996204,
+              "request_seconds": 27.111840532001224
+            },
+            {
+              "task": "sql-migration-rollback",
+              "seed": 20301128,
+              "finish_reason": "length",
+              "ttft_seconds": 0.11136921599972993,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 201,
+              "decode_tokens": 2047,
+              "decode_seconds": 28.234903943986865,
+              "decode_tokens_per_second": 72.49891850388057,
+              "post_burst_decode_tokens_per_second": 72.49891850388057,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9150,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me think through this carefully. The user wants a zero-downtime migration on PostgreSQL 16 for:\n\n1. Create `customers` table (id bigserial, email citext unique not null, created_at timestamptz)\n2. Backfill from distinct orders.customer_email\n3. Add `orders.customer_id bigint` referencing customers(id)\n4. Backfill customer_id in batches of 10,000 without long locks\n5. Convert status text to enu",
+              "started_perf_seconds": 87037.460493453,
+              "first_token_offset_seconds": 0.11136921599972993,
+              "last_token_offset_seconds": 28.346273159986595,
+              "request_seconds": 28.346366118988954
+            },
+            {
+              "task": "typed-refactor",
+              "seed": 20301129,
+              "finish_reason": "length",
+              "ttft_seconds": 0.30539711700112093,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 332,
+              "decode_tokens": 2047,
+              "decode_seconds": 25.63918760600791,
+              "decode_tokens_per_second": 79.83872310838493,
+              "post_burst_decode_tokens_per_second": 79.83872310838493,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 7485,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me analyze the original function carefully to preserve its exact behavior.\n\n```python\ndef process(rows, cfg=None):\n    out = []\n    seen = {}\n    cfg = cfg or {}\n    for r in rows:\n        try:\n            uid = int(r.get('user') or r['uid'])\n        except Exception:\n            continue\n        amt = float(r.get('amount', 0)) * (1.2 if r.get('region') == 'EU' else 1)\n        if cfg.get('skip",
+              "started_perf_seconds": 87037.460296857,
+              "first_token_offset_seconds": 0.30539711700112093,
+              "last_token_offset_seconds": 25.94458472300903,
+              "request_seconds": 25.944691823999165
+            }
+          ],
+          "spec_decode": {
+            "drafts": 3225,
+            "draft_tokens": 9675,
+            "accepted_tokens": 4964,
+            "acceptance_rate": 0.5130749354005167,
+            "mean_acceptance_length": 2.5392248062015503,
+            "per_position_acceptance_rate": {
+              "0": 0.7175193798449613,
+              "1": 0.4896124031007752,
+              "2": 0.33209302325581397
+            }
+          }
+        },
+        {
+          "concurrency": 4,
+          "batch": 2,
+          "aggregate_decode_tokens": 8188,
+          "aggregate_decode_seconds": 28.43853872999898,
+          "aggregate_decode_tokens_per_second": 287.91915357320096,
+          "sum_of_request_rates": 308.13026142260475,
+          "peak_overlapping_streams": 4,
+          "requests": [
+            {
+              "task": "lru-ttl-cache",
+              "seed": 20301226,
+              "finish_reason": "length",
+              "ttft_seconds": 0.3044627320050495,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 168,
+              "decode_tokens": 2047,
+              "decode_seconds": 26.322685071994783,
+              "decode_tokens_per_second": 77.76562286109038,
+              "post_burst_decode_tokens_per_second": 77.76562286109038,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 8326,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "The user wants a thread-safe LRU cache with per-entry TTL in Python 3.12. Let me think through the requirements carefully:\n\n1. **Class `TTLCache[K, V]`** — generic typing. Python 3.12 has the new `class TTLCache[K, V]:` syntax for generics. \n\n2. **Methods:**\n   - `get(key) -> V | None`\n   - `set(key, value, ttl_seconds: float | None = None)` — per-entry TTL; `None` likely means no expiry (or shoul",
+              "started_perf_seconds": 87070.821217573,
+              "first_token_offset_seconds": 0.3044627320050495,
+              "last_token_offset_seconds": 26.627147803999833,
+              "request_seconds": 26.627191399995354
+            },
+            {
+              "task": "async-task-runner-fix",
+              "seed": 20301227,
+              "finish_reason": "length",
+              "ttft_seconds": 0.108128214997123,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 147,
+              "decode_tokens": 2047,
+              "decode_seconds": 25.493871126003796,
+              "decode_tokens_per_second": 80.29380826013733,
+              "post_burst_decode_tokens_per_second": 80.29380826013733,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9694,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me analyze this task carefully.\n\nThe user wants me to fix cancellation and exception-handling bugs in an async Python task runner, preserve result ordering, and add precise type hints. Return only the complete replacement Python module.\n\nOriginal code:\n\n```python\nimport asyncio\n\nasync def run_all(factories, limit=8):\n    sem = asyncio.Semaphore(limit)\n    results = []\n    async def one(factory",
+              "started_perf_seconds": 87070.821021469,
+              "first_token_offset_seconds": 0.108128214997123,
+              "last_token_offset_seconds": 25.60199934100092,
+              "request_seconds": 25.6020915699919
+            },
+            {
+              "task": "sql-migration-rollback",
+              "seed": 20301228,
+              "finish_reason": "length",
+              "ttft_seconds": 0.3047227320057573,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 201,
+              "decode_tokens": 2047,
+              "decode_seconds": 28.242159105997416,
+              "decode_tokens_per_second": 72.48029417004827,
+              "post_burst_decode_tokens_per_second": 72.48029417004827,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 9676,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me carefully work through this. The user wants a zero-downtime migration on PostgreSQL 16 for a 40M-row orders table. Requirements:\n\n1. Create `customers` table (id bigserial, email citext unique not null, created_at timestamptz).\n2. Backfill from distinct orders.customer_email.\n3. Add `orders.customer_id bigint` referencing customers(id) — must be added safely (NOT NULL constraint later, FK a",
+              "started_perf_seconds": 87070.820806576,
+              "first_token_offset_seconds": 0.3047227320057573,
+              "last_token_offset_seconds": 28.546881838003173,
+              "request_seconds": 28.546934197001974
+            },
+            {
+              "task": "typed-refactor",
+              "seed": 20301229,
+              "finish_reason": "length",
+              "ttft_seconds": 0.3049650860048132,
+              "reasoning_tokens": 2048,
+              "content_tokens": 0,
+              "reasoning_closed": false,
+              "completion_tokens": 2048,
+              "usage_reasoning_tokens": null,
+              "prompt_tokens": 332,
+              "decode_tokens": 2047,
+              "decode_seconds": 26.38208346099418,
+              "decode_tokens_per_second": 77.59053613132876,
+              "post_burst_decode_tokens_per_second": 77.59053613132876,
+              "token_count_matches_usage": true,
+              "reasoning_chars": 7360,
+              "content_chars": 0,
+              "content_preview": "",
+              "reasoning_preview": "Let me carefully analyze the original function to preserve behavior exactly.\n\n```python\ndef process(rows, cfg=None):\n    out = []\n    seen = {}\n    cfg = cfg or {}\n    for r in rows:\n        try:\n            uid = int(r.get('user') or r['uid'])\n        except Exception:\n            continue\n        amt = float(r.get('amount', 0)) * (1.2 if r.get('region') == 'EU' else 1)\n        if cfg.get('skip_s",
+              "started_perf_seconds": 87070.820632765,
+              "first_token_offset_seconds": 0.3049650860048132,
+              "last_token_offset_seconds": 26.687048546998994,
+              "request_seconds": 26.687105813005473
+            }
+          ],
+          "spec_decode": {
+            "drafts": 3237,
+            "draft_tokens": 9711,
+            "accepted_tokens": 4955,
+            "acceptance_rate": 0.5102461126557513,
+            "mean_acceptance_length": 2.5307383379672537,
+            "per_position_acceptance_rate": {
+              "0": 0.7099165894346617,
+              "1": 0.48717948717948717,
+              "2": 0.3336422613531047
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

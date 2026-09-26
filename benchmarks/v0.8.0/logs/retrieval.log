@@ -1,0 +1,9 @@
+{"filler_tokens": 8192, "position": 0.05, "prompt_tokens": 8253, "passed": true, "response": "d299dcc23eb06f55b105"}
+{"filler_tokens": 8192, "position": 0.5, "prompt_tokens": 8257, "passed": true, "response": "4a990aaa175faba3a16d"}
+{"filler_tokens": 8192, "position": 0.95, "prompt_tokens": 8255, "passed": true, "response": "93fcbb175b659951ebd6"}
+{"filler_tokens": 240000, "position": 0.05, "prompt_tokens": 240068, "passed": true, "response": "5f4e8d43fa8bdc26a912"}
+{"filler_tokens": 240000, "position": 0.5, "prompt_tokens": 240066, "passed": true, "response": "aa82e911598f0b119f92"}
+{"filler_tokens": 240000, "position": 0.95, "prompt_tokens": 240067, "passed": true, "response": "574f8fae2625a5f178dd"}
+{"filler_tokens": 1000000, "position": 0.05, "prompt_tokens": 1000069, "passed": true, "response": "4ea965c55fd990ed4e9c"}
+{"filler_tokens": 1000000, "position": 0.5, "prompt_tokens": 1000067, "passed": true, "response": "8fe35d8f24f4af7a7837"}
+{"filler_tokens": 1000000, "position": 0.95, "prompt_tokens": 1000066, "passed": true, "response": "298c922c1bd2457481a3"}

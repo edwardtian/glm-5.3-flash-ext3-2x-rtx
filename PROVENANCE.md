@@ -6,7 +6,10 @@ This recipe consumes finished Hugging Face target and draft checkpoints and comp
 
 | Component | Immutable source |
 |---|---|
-| Served target | `wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1@0490d2f708b12145f6516555ab066aaeb401cd21` |
+| Served target (v0.8.0 default) | `brandonmusic/GLM-5.3-Flash-tr3-4bpw@a5fee929cf4888b1824323e33e8a19b60129e025` (renamed from `GLM-5.3-Flash-EXL3-4bpw`; same 120 weight shards as `4739eb1`) |
+| Chat template (all profiles) | `zai-org/GLM-5.3-Flash-BF16@a5b45eb41df6402735dedc900be14a42e8d5e538` `chat_template.jinja`, SHA-256 `0c4099f3…c5`, vendored as `templates/glm53-zai-a5b45eb.jinja` |
+| B12x fork (v0.8.0) | `tpurtell/sparkinfer-glmrt@7fcc094edcc93af61fdfbe14300100e3204363ea` |
+| Supported K3.25 target | `wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1@0490d2f708b12145f6516555ab066aaeb401cd21` |
 | Original v0.7.0 benchmark target | `wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3.25-v1@701cd7456c13d87bf0147ad946f828a999afb59c` |
 | Supported uniform-K3 target | `wrldsuksgo2mars/GLM-5.3-Flash-EXL3-K3-v1@1e4abd26e4e1e8d58d81fbd557d6c4099352fe63` |
 | Supported uniform-K4 target | `brandonmusic/GLM-5.3-Flash-tr3-4bpw@aba59d2175e1ee2887ae0ae1300ba848b1deed84` |
@@ -20,13 +23,83 @@ This recipe consumes finished Hugging Face target and draft checkpoints and comp
 | GLM/vLLM base | `cstechdev/vllm:glm53-flash-nope-sm120-cu130-20260826-r1@sha256:0bd709e80b8ff13ae5de8f7d7f708a499fade3a26970d56afb1be2ff3860fde5` |
 | vLLM in base | `0.1.dev20051+g487ecf187` |
 | vLLM DFlash2 delta | `vllm-project/vllm@b389ac29465b33f9e9c534df221ea3c129e9793f` (PR `#52816`) |
-| EXL3 runtime source image | `ghcr.io/tpurtell/deepseek-v4-flash-0731-exl3-k2-spark@sha256:86c8c1054f9c24454949e37031ce6165c007963aa0c0ef30fa884f6d4170af32` |
+| EXL3 runtime source files | vendored `vendor/exl3-source/` (byte-identical to `/opt/vllm` in `ghcr.io/tpurtell/deepseek-v4-flash-0731-exl3-k2-spark@sha256:86c8c1054f9c24454949e37031ce6165c007963aa0c0ef30fa884f6d4170af32`) |
 | EXL3 vLLM fork commit | `30038602b71395f481ef4a6edfe4fcf8551d9c15` |
-| B12x fork | `tpurtell/sparkinfer-glmrt@fe054789069579e19ae5ec21f880b397bcf6575b` |
+| B12x fork (v0.7.x) | `tpurtell/sparkinfer-glmrt@fe054789069579e19ae5ec21f880b397bcf6575b` |
 | ReplaySSM base | vLLM PRs `#48792`, `#49847`, and `#49887`, ported onto the pinned vLLM commit |
 | ReplaySSM mixed-graph repair | This repository's `c51c3856f7f8ba50af3b3a60ff48e7d6a1fa303c` |
 | Dynamic-MTP graph fix | vLLM PR `#49652`, ported onto the pinned vLLM commit |
 | Runtime stack | Torch 2.13, CUDA 13, CUTLASS DSL 4.6.2 |
+
+## Published v0.8.0 release artifacts
+
+`v0.8.0` and `latest` resolve to the same OCI index, built from recipe commit
+`48927a5c4e358c9b74faa41dc5627db635f5d45c`; no image input (Dockerfile,
+patches, container scripts, template, vendored sources) changed after it.
+
+| Artifact | Immutable identity |
+|---|---|
+| Image index | `ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:e4d37a01da91ec590df78af13efa9d256fc306a5a88df09908ea12ebefa32423` |
+| Linux/amd64 manifest | `sha256:3a6fc6e71b6286b2494b70ac716de30d58e71f33a779eb735895f3570eedba29` |
+| Image source revision | `48927a5c4e358c9b74faa41dc5627db635f5d45c` |
+
+The full battery in `benchmarks/v0.8.0/` ran on this exact image.
+
+## v0.8.0 runtime changes
+
+v0.8.0 changes the served default to Brandon's uniform-K4 checkpoint and
+replaces the attention topology. Every change below is a source-locked Python
+port under `patches/` that fails on anchor drift and is applied idempotently in
+the Dockerfile after the v0.7 ports.
+
+- `port-b12x-latest-api.py` moves every B12x call site to the fork's prepared
+  `plan`/`bind`/`run` API at `7fcc094e` (sparse MLA, DSA indexer, EXL3 fused
+  MoE, PCIe all-reduce and DCP helpers, mHC, BF16 GEMV). Sparse-MLA **extend**
+  plans request token-major output: the current fork's extend kernel no longer
+  honors a head-major output view, and requesting one corrupted prefill
+  attention (teacher-forced NLL 3.71 versus 1.17). Decode keeps head-major.
+  The image restricts `VLLM_PLUGINS` to vLLM's LoRA resolvers because the
+  fork's own vLLM plugins target a newer vLLM.
+- `port-glm53-layer-owner.py` adds `VLLM_GLM53_MLA_OWNERS`. Each of the 11 MLA
+  layers (projections, sparse indexer, latent and indexer cache) exists only on
+  its owner GPU and runs all 64 heads unsharded; the other GPU contributes
+  zeros to the existing post-attention all-reduce. KDA layers stay TP2 because
+  their recurrent state shards cleanly by head. `VLLM_GLM53_EMBED_SPLIT` places
+  an uneven share of the token-embedding rows on each GPU to balance the two
+  KV pools. The patch also logs a per-GPU placement ledger and a per-group KV
+  capacity breakdown.
+- `port-glm53-draft-slots.py` stores the DFlash2 sliding-window cache inside
+  the MLA slot tensors with a block size that divides the MLA block, instead of
+  separate 128-token tensors. Draft blocks per request drop from 49 to 7–8.
+- `port-glm53-graph-memory.py` lets `VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0`
+  skip the dry graph capture, whose 0.71 GiB estimate covered a 0.23 GiB pool.
+- `port-glm53-breakable-capture-sync.py` synchronizes capture-time eager
+  segments of vLLM's breakable CUDA graphs. With DCP off, in-flight eager
+  kernels raced the allocator and faulted intermittently (MMU fault in a BF16
+  add, located from a GPU core dump); DCP2's blocking collectives had hidden it.
+- `port-b12x-glm-next-records.py` adds `VLLM_GLM53_NOPE_RECORD=1`: GLM-5.3's
+  NoPE MLA latents are stored as the 528-byte GLM_NEXT record (512 E4M3 bytes
+  plus four FP32 scales) instead of the 656-byte DeepSeek record with an unused
+  RoPE tail. Decode and prefill outputs match the 656-byte path within BF16
+  rounding (`scripts/test-glm-next-records.py`).
+
+v0.8.0 file hashes:
+
+| File | SHA-256 |
+|---|---|
+| `Dockerfile` | `cd6dc0af7031218a3b21244eecd07c3badda6e95f9d7c30d30efa1c27ed893fd` |
+| `start.sh` | `b67eca0733c0c0e0bb6de3f695721b491f7e9249f2384c0b159b212efbe41773` |
+| `model-profiles.sh` | `a4ccf85dc1e1dd75acdb8549ecaec82137c9f77b47e5bb6464d82f04ef5537f1` |
+| `patches/port-b12x-latest-api.py` | `f9a5585872a834e91a3d5017a9f4cd8346065af40e8287e733ae993b57a56c59` |
+| `patches/port-glm53-layer-owner.py` | `b3e8bf8890784890acdf84a76ae618adf99e3189e03251c155a25753a4d80d62` |
+| `patches/port-glm53-draft-slots.py` | `d188439dc7102ff562a0d2f286ab6814e6a72c24bd2885d6e3f9f808b1bfe713` |
+| `patches/port-glm53-graph-memory.py` | `10670cbe9041b4e8235511a44dbe65ef1c66a0bb689afc324406a551a2bff6cf` |
+| `patches/port-glm53-breakable-capture-sync.py` | `b26d41a182f34b71b11c441f5e5db3f13764e72d87a3dbf435b0935d651140a6` |
+| `patches/port-b12x-glm-next-records.py` | `e72dcbd8935cbc2f65118938c1e7baf929796e2ac28fffe33ecf9b385420ec8c` |
+| `vendor/exl3-source/…/quantization/exl3.py` | `209769899a069615e7c8ace17d52515f89ffaf2c73a77532ee45f6de1919710c` |
+| `vendor/exl3-source/…/mla/b12x_mla_sparse.py` | `9eb6daa3031c5cf6a03209ce54f0e5c2874a858caa04d89c75872db42ca228e9` |
+| `vendor/exl3-source/…/layers/sparse_attn_indexer.py` | `4e91b4fc63c4d8472006a475a5c03849c80e2c4fdbe2f27603837c0302fe1c29` |
+| `vendor/exl3-source/…/layers/mla_cache_format.py` | `f3b61e5c366837bca6b1c7039e8570e6884ab6bdb707eafd214e5a5fb28bcc2f` |
 
 ## v0.7.1 structured-output fixes
 

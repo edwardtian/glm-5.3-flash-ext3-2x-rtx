@@ -1,0 +1,16 @@
+{"thinking": false, "streaming": false, "mode": "required", "passed": true, "finish_reason": "tool_calls", "reasoning_chars": 0}
+{"thinking": false, "streaming": false, "mode": "named", "passed": true, "finish_reason": "stop", "reasoning_chars": 0}
+{"thinking": false, "streaming": false, "mode": "auto", "passed": true, "finish_reason": "tool_calls", "reasoning_chars": 0}
+{"thinking": false, "streaming": false, "mode": "none", "passed": true, "finish_reason": "stop", "reasoning_chars": 0}
+{"thinking": false, "streaming": true, "mode": "required", "passed": true, "finish_reason": "tool_calls", "reasoning_chars": 0}
+{"thinking": false, "streaming": true, "mode": "named", "passed": true, "finish_reason": "stop", "reasoning_chars": 0}
+{"thinking": false, "streaming": true, "mode": "auto", "passed": true, "finish_reason": "tool_calls", "reasoning_chars": 0}
+{"thinking": false, "streaming": true, "mode": "none", "passed": true, "finish_reason": "stop", "reasoning_chars": 0}
+{"thinking": true, "streaming": false, "mode": "required", "passed": true, "finish_reason": "tool_calls", "reasoning_chars": 165}
+{"thinking": true, "streaming": false, "mode": "named", "passed": true, "finish_reason": "stop", "reasoning_chars": 165}
+{"thinking": true, "streaming": false, "mode": "auto", "passed": true, "finish_reason": "tool_calls", "reasoning_chars": 62}
+{"thinking": true, "streaming": false, "mode": "none", "passed": true, "finish_reason": "stop", "reasoning_chars": 165}
+{"thinking": true, "streaming": true, "mode": "required", "passed": true, "finish_reason": "tool_calls", "reasoning_chars": 165}
+{"thinking": true, "streaming": true, "mode": "named", "passed": true, "finish_reason": "stop", "reasoning_chars": 165}
+{"thinking": true, "streaming": true, "mode": "auto", "passed": true, "finish_reason": "tool_calls", "reasoning_chars": 62}
+{"thinking": true, "streaming": true, "mode": "none", "passed": true, "finish_reason": "stop", "reasoning_chars": 165}
