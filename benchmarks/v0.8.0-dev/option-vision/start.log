@@ -1,0 +1,11 @@
+Validated 120 checkpoint shards
+Validated DFlash2 K3 draft checkpoint
+f130bf10550dd0b25ef47ab01a1f9758f54574d9b353b0215cbbd331e5f28cdf
+Started glm53-opt on http://127.0.0.1:8001/v1. Initial B12x/CuTe compilation can take several minutes.
+Target: k4 profile, brandonmusic/GLM-5.3-Flash-tr3-4bpw@a5fee929cf4888b1824323e33e8a19b60129e025
+Profile: fp8, KV cache: fp8_ds_mla, max length: 1048576, max sequences: 16, GPU memory utilization: 0.970
+MoE topology: TP2, EP1
+Speculation: DFlash2 K3, bfloat16 draft KV, from incoai/GLM-5.3-Flash-DFlash2@bf582e4eacc1810f76656d1811693ff6c6737d2a
+State rollback: baseline full-state rollback
+Vision: enabled with per-prompt limits {"image":16}
+Follow startup: docker logs -f glm53-opt

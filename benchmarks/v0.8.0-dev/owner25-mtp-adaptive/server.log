@@ -1,0 +1,758 @@
+(APIServer pid=9) INFO 09-26 07:34:40 [api_utils.py:345] 
+(APIServer pid=9) INFO 09-26 07:34:40 [api_utils.py:345]        █     █     █▄   ▄█
+(APIServer pid=9) INFO 09-26 07:34:40 [api_utils.py:345]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.1.dev20051+g487ecf187
+(APIServer pid=9) INFO 09-26 07:34:40 [api_utils.py:345]   █▄█▀ █     █     █     █  model   /model-repo/snapshots/a5fee929cf4888b1824323e33e8a19b60129e025
+(APIServer pid=9) INFO 09-26 07:34:40 [api_utils.py:345]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=9) INFO 09-26 07:34:40 [api_utils.py:345] 
+(APIServer pid=9) INFO 09-26 07:34:40 [api_utils.py:273] non-default args: {'model_tag': '/model-repo/snapshots/a5fee929cf4888b1824323e33e8a19b60129e025', 'enable_auto_tool_choice': True, 'tool_call_parser': 'glm47', 'host': '0.0.0.0', 'port': 8001, 'model': '/model-repo/snapshots/a5fee929cf4888b1824323e33e8a19b60129e025', 'max_model_len': 262144, 'served_model_name': ['brandonmusic/GLM-5.3-Flash-tr3-4bpw'], 'attention_backend': 'B12X_MLA_SPARSE', 'reasoning_parser': 'glm45', 'tensor_parallel_size': 2, 'enable_expert_parallel': True, 'gpu_memory_utilization': 0.95, 'kv_cache_dtype': 'fp8_ds_mla', 'enable_prefix_caching': True, 'mamba_cache_mode': 'align', 'replayssm_buffer_len': 10, 'use_replayssm': True, 'limit_mm_per_prompt': {'image': 16}, 'max_num_batched_tokens': 2048, 'max_num_seqs': 16, 'max_cudagraph_capture_size': 64, 'enable_flashinfer_autotune': False, 'speculative_config': {'method': 'mtp', 'num_speculative_tokens': 5, 'num_speculative_tokens_per_batch_size': [[1, 1, 5], [2, 2, 4], [3, 3, 3], [4, 4, 2], [5, 8, 1], [9, 16, 0]]}}
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_GLM53_MLA_OWNERS
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_ADAPTIVE_MTP_DECISION_WINDOW
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_PCIE_ALLREDUCE_BACKEND
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_USE_B12X_MHC
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_EXL3_PREFILL_BLOCK_M
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_NVFP4_MLA_DYNAMIC_SCALE
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_ADAPTIVE_MTP
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_PCIE_ONESHOT_ALLREDUCE_MAX_SIZE
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_B12X_GLM_H64_QUERY_PROJ
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_EXL3_PREFILL_CAPACITY
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_EXL3_TRELLIS_MIN_M
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_ADAPTIVE_MTP_PROBE_INTERVAL
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_EXL3_PREFILL_TRELLIS
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_EXL3_TRELLIS_BLOCK_M
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_ADAPTIVE_MTP_LOAD_THRESHOLDS
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_USE_B12X_KPOOL_INDEXER
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_B12X_PCIE_EAGER
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_GLM53_DRAFT_SLOT_SHARING
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_B12X_DCP_A2A
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_EXL3_TRELLIS_MAX_M
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_ENABLE_PCIE_ALLREDUCE
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_ADAPTIVE_MTP_HISTORY
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_ADAPTIVE_MTP_PROBE_INTERVAL_MAX
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_ADAPTIVE_MTP_MIN_DEPTH
+(APIServer pid=9) WARNING 09-26 07:34:40 [envs.py:2239] Unknown vLLM environment variable detected: VLLM_NVFP4_MLA_SCALES_FILE
+(APIServer pid=9) INFO 09-26 07:34:40 [model.py:679] Resolved architecture: Glm5NextForConditionalGeneration
+(APIServer pid=9) INFO 09-26 07:34:40 [model.py:1972] Using max model len 262144
+(APIServer pid=9) INFO 09-26 07:34:43 [cache.py:289] Using fp8_ds_mla data type to store kv cache. It reduces the GPU memory footprint and boosts the performance. Meanwhile, it may cause accuracy drop without a proper scaling factor
+(APIServer pid=9) INFO 09-26 07:34:53 [model.py:679] Resolved architecture: Glm5NextMTPModel
+(APIServer pid=9) INFO 09-26 07:34:53 [model.py:1972] Using max model len 1048576
+(APIServer pid=9) WARNING 09-26 07:34:53 [speculative.py:975] Enabling num_speculative_tokens > 1 will run multiple times of forward on same MTP layer,which may result in lower acceptance rate
+(APIServer pid=9) INFO 09-26 07:34:53 [speculative.py:1256] Overriding draft model max model len from 1048576 to 262144
+(APIServer pid=9) INFO 09-26 07:34:53 [exl3.py:625] EXL3 standard fused MoE enabled for glm5_next: projection tiers (4,) via b12x
+(APIServer pid=9) INFO 09-26 07:34:53 [vllm.py:1336] Auto-enabling VLLM_USE_BREAKABLE_CUDAGRAPH=1. Set VLLM_USE_BREAKABLE_CUDAGRAPH=0 to opt out.
+(APIServer pid=9) INFO 09-26 07:34:53 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(APIServer pid=9) WARNING 09-26 07:34:53 [vllm.py:1866] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(APIServer pid=9) INFO 09-26 07:34:53 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=9) [transformers] The following generation flags are not valid and may be ignored: ['top_p']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+(EngineCore pid=653) INFO 09-26 07:35:03 [core.py:122] Initializing a V1 LLM engine (v0.1.dev20051+g487ecf187) with config: model='/model-repo/snapshots/a5fee929cf4888b1824323e33e8a19b60129e025', speculative_config=SpeculativeConfig(method='mtp', model='/model-repo/snapshots/a5fee929cf4888b1824323e33e8a19b60129e025', num_spec_tokens=5), tokenizer='/model-repo/snapshots/a5fee929cf4888b1824323e33e8a19b60129e025', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=262144, download_dir=None, load_format=auto, tensor_parallel_size=2, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=exl3, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=fp8_ds_mla, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='glm45', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=brandonmusic/GLM-5.3-Flash-tr3-4bpw, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [2048], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 64, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native']), enable_flashinfer_autotune=False, enable_cutedsl_warmup=True, enable_jit_warmup=True, enable_bf16x3_router_gemm=False, moe_backend='auto', linear_backend='auto')
+(EngineCore pid=653) INFO 09-26 07:35:03 [multiproc_executor.py:149] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=172.17.0.2 (local), world_size=2, local_world_size=2
+(Worker pid=835) INFO 09-26 07:35:12 [parallel_state.py:1640] world_size=2 rank=0 local_rank=0 distributed_init_method=file:///tmp/vllm_dist_80f16b176f56435fa4bb56ace5a8ecb6 backend=nccl
+(Worker pid=903) INFO 09-26 07:35:16 [parallel_state.py:1640] world_size=2 rank=1 local_rank=1 distributed_init_method=file:///tmp/vllm_dist_80f16b176f56435fa4bb56ace5a8ecb6 backend=nccl
+(Worker pid=835) INFO 09-26 07:35:16 [pynccl.py:113] vLLM is using nccl==2.30.7
+NCCL version 2.30.7+cuda13.3
+(Worker pid=835) (Worker pid=903) WARNING 09-26 07:35:17 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.0 not supported, communicator is not available.
+WARNING 09-26 07:35:17 [symm_mem.py:67] SymmMemCommunicator: Device capability 12.0 not supported, communicator is not available.
+(Worker pid=835) INFO 09-26 07:35:17 [b12x_pcie_all_reduce.py:92] Enabled B12x PCIe one-shot all-reduce (world_size=2, max_size=393216 bytes, graph_channel=single, eager=False).
+(Worker pid=835) INFO 09-26 07:35:17 [cuda_communicator.py:290] Using ['B12X_PCIE_ONESHOT', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['NCCL_SYMM_MEM', 'QUICK_REDUCE', 'FLASHINFER', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=835) INFO 09-26 07:35:17 [cuda_communicator.py:290] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'ep:0' out of potential backends: ['NCCL_SYMM_MEM', 'QUICK_REDUCE', 'FLASHINFER', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=835) INFO 09-26 07:35:17 [parallel_state.py:1984] rank 0 in world size 2 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0, EPLB rank N/A
+(Worker pid=835) INFO 09-26 07:35:17 [gpu_worker.py:386] Using V2 Model Runner
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:18 [model_runner.py:353] Loading model from scratch...
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:18 [cuda.py:596] Using backend AttentionBackendEnum.FLASH_ATTN for vit attention
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:18 [mm_encoder_attention.py:375] Using AttentionBackendEnum.FLASH_ATTN for MMEncoderAttention.
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:18 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:18 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:35:18 [vllm.py:1866] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:18 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:18 [sparse_attn_indexer_kpool.py:1110] Using B12x fused paged score+top-k for GLM kpool decode.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:18 [cuda.py:477] Using AttentionBackendEnum.B12X_MLA_SPARSE backend.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:18 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:18 [cuda.py:477] Using AttentionBackendEnum.B12X_MLA_SPARSE backend.
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:18 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:35:19 [mla_attention.py:553] Sparse MLA impl has no dense-MHA prefill path; using the top-k MQA path only.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [deep_gemm.py:191] deep_gemm not found in site-packages, trying vendored vllm.third_party.deep_gemm
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [deep_gemm.py:136] DeepGEMM E8M0 enabled on current platform.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [expert_map_manager.py:245] [EP Rank 0/2] Expert parallelism is enabled. Expert placement strategy: linear. Local/global number of experts: 144/288. Experts local to global index map: 0->0, 1->1, 2->2, 3->3, 4->4, 5->5, 6->6, 7->7, 8->8, 9->9, 10->10, 11->11, 12->12, 13->13, 14->14, 15->15, 16->16, 17->17, 18->18, 19->19, 20->20, 21->21, 22->22, 23->23, 24->24, 25->25, 26->26, 27->27, 28->28, 29->29, 30->30, 31->31, 32->32, 33->33, 34->34, 35->35, 36->36, 37->37, 38->38, 39->39, 40->40, 41->41, 42->42, 43->43, 44->44, 45->45, 46->46, 47->47, 48->48, 49->49, 50->50, 51->51, 52->52, 53->53, 54->54, 55->55, 56->56, 57->57, 58->58, 59->59, 60->60, 61->61, 62->62, 63->63, 64->64, 65->65, 66->66, 67->67, 68->68, 69->69, 70->70, 71->71, 72->72, 73->73, 74->74, 75->75, 76->76, 77->77, 78->78, 79->79, 80->80, 81->81, 82->82, 83->83, 84->84, 85->85, 86->86, 87->87, 88->88, 89->89, 90->90, 91->91, 92->92, 93->93, 94->94, 95->95, 96->96, 97->97, 98->98, 99->99, 100->100, 101->101, 102->102, 103->103, 104->104, 105->105, 106->106, 107->107, 108->108, 109->109, 110->110, 111->111, 112->112, 113->113, 114->114, 115->115, 116->116, 117->117, 118->118, 119->119, 120->120, 121->121, 122->122, 123->123, 124->124, 125->125, 126->126, 127->127, 128->128, 129->129, 130->130, 131->131, 132->132, 133->133, 134->134, 135->135, 136->136, 137->137, 138->138, 139->139, 140->140, 141->141, 142->142, 143->143.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:19 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [weight_utils.py:858] Filesystem type for checkpoints: EXT4. Checkpoint size: 163.58 GiB. Available RAM: 165.85 GiB.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:19 [weight_utils.py:888] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre) and the checkpoint size (163.58 GiB) exceeds 90% of available RAM (165.85 GiB).
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   0% Completed | 0/120 [00:00<?, ?it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   1% Completed | 1/120 [00:00<00:25,  4.69it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   2% Completed | 3/120 [00:00<00:13,  8.91it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   3% Completed | 4/120 [00:00<00:14,  8.08it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   5% Completed | 6/120 [00:00<00:11,  9.88it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   7% Completed | 8/120 [00:00<00:10, 10.75it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   8% Completed | 10/120 [00:01<00:12,  8.66it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  10% Completed | 12/120 [00:01<00:14,  7.50it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  12% Completed | 14/120 [00:01<00:12,  8.74it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  12% Completed | 15/120 [00:01<00:12,  8.14it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  14% Completed | 17/120 [00:01<00:11,  9.33it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  15% Completed | 18/120 [00:02<00:11,  9.07it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  17% Completed | 20/120 [00:02<00:10,  9.82it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  18% Completed | 22/120 [00:02<00:09, 10.59it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  20% Completed | 24/120 [00:02<00:09, 10.28it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  22% Completed | 26/120 [00:02<00:09,  9.82it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  23% Completed | 28/120 [00:02<00:08, 10.70it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  25% Completed | 30/120 [00:03<00:08, 10.58it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  27% Completed | 32/120 [00:03<00:08, 10.41it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  28% Completed | 34/120 [00:03<00:08, 10.71it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  30% Completed | 36/120 [00:03<00:07, 11.55it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  32% Completed | 38/120 [00:03<00:07, 11.20it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  33% Completed | 40/120 [00:04<00:07, 10.66it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  35% Completed | 42/120 [00:04<00:06, 11.47it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  37% Completed | 44/120 [00:04<00:08,  9.31it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  38% Completed | 46/120 [00:05<00:13,  5.48it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  39% Completed | 47/120 [00:05<00:12,  5.87it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  40% Completed | 48/120 [00:05<00:13,  5.24it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  42% Completed | 50/120 [00:05<00:10,  6.69it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  42% Completed | 51/120 [00:05<00:10,  6.84it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  44% Completed | 53/120 [00:06<00:07,  8.49it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  46% Completed | 55/120 [00:06<00:06,  9.50it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  48% Completed | 57/120 [00:06<00:06,  9.75it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  49% Completed | 59/120 [00:06<00:06, 10.10it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  51% Completed | 61/120 [00:06<00:05, 11.15it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  52% Completed | 63/120 [00:06<00:05, 11.09it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  54% Completed | 65/120 [00:07<00:05, 10.88it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  56% Completed | 67/120 [00:07<00:04, 11.48it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  57% Completed | 69/120 [00:07<00:04, 11.81it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  59% Completed | 71/120 [00:07<00:04, 11.32it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  61% Completed | 73/120 [00:07<00:04, 11.00it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  62% Completed | 75/120 [00:07<00:03, 11.86it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  64% Completed | 77/120 [00:08<00:03, 12.18it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  66% Completed | 79/120 [00:08<00:03, 11.53it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  68% Completed | 81/120 [00:08<00:03, 11.49it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  69% Completed | 83/120 [00:08<00:03, 12.15it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  71% Completed | 85/120 [00:08<00:03, 11.64it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  72% Completed | 87/120 [00:09<00:02, 11.25it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  74% Completed | 89/120 [00:09<00:02, 11.94it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  76% Completed | 91/120 [00:09<00:02, 12.07it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  78% Completed | 93/120 [00:09<00:02, 11.48it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  79% Completed | 95/120 [00:09<00:02, 11.15it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  81% Completed | 97/120 [00:09<00:01, 12.00it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  82% Completed | 99/120 [00:10<00:01, 11.91it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  84% Completed | 101/120 [00:10<00:01, 11.49it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  86% Completed | 103/120 [00:10<00:01, 11.44it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  89% Completed | 107/120 [00:10<00:00, 15.06it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  91% Completed | 109/120 [00:10<00:00, 13.01it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  92% Completed | 111/120 [00:10<00:00, 13.04it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  94% Completed | 113/120 [00:11<00:00,  9.75it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  96% Completed | 115/120 [00:12<00:01,  3.96it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  98% Completed | 117/120 [00:12<00:00,  4.45it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  99% Completed | 119/120 [00:13<00:00,  5.39it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards: 100% Completed | 120/120 [00:13<00:00,  5.59it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards: 100% Completed | 120/120 [00:13<00:00,  9.12it/s]
+(Worker_TP0_EP0 pid=835) 
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:32 [default_loader.py:430] Loading weights took 13.16 seconds
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:33 [exl3.py:2559] EXL3 B12x EP active: 288 global / 144 local experts; rank-local partials use vLLM's final all-reduce
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:33 [cuda.py:477] Using AttentionBackendEnum.B12X_MLA_SPARSE backend.
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:33 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:34 [mla_attention.py:1113] Prewarmed B12x GLM H64 BF16 query projection for decode M=2..16.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:34 [cuda.py:477] Using AttentionBackendEnum.B12X_MLA_SPARSE backend.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:34 [b12x_mla_sparse.py:1527] B12X GLM MLA KV format: KV_FP8_ROPE=0 kv_gmem_stride=656 kv_cache_dtype=fp8_ds_mla
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:34 [weight_utils.py:858] Filesystem type for checkpoints: EXT4. Checkpoint size: 163.58 GiB. Available RAM: 165.73 GiB.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:34 [weight_utils.py:888] Auto-prefetch is disabled because the filesystem (EXT4) is not a recognized network FS (NFS/Lustre) and the checkpoint size (163.58 GiB) exceeds 90% of available RAM (165.73 GiB).
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   0% Completed | 0/120 [00:00<?, ?it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:   6% Completed | 7/120 [00:00<00:01, 67.36it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  12% Completed | 14/120 [00:00<00:01, 63.06it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  18% Completed | 21/120 [00:00<00:01, 62.85it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  23% Completed | 28/120 [00:00<00:01, 62.63it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  29% Completed | 35/120 [00:00<00:01, 61.52it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  35% Completed | 42/120 [00:00<00:01, 61.36it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  41% Completed | 49/120 [00:00<00:01, 61.29it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  47% Completed | 56/120 [00:00<00:01, 61.20it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  52% Completed | 63/120 [00:01<00:00, 61.83it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  58% Completed | 70/120 [00:01<00:00, 62.36it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  64% Completed | 77/120 [00:01<00:00, 62.16it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  70% Completed | 84/120 [00:01<00:00, 61.55it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  76% Completed | 91/120 [00:01<00:00, 60.94it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  82% Completed | 98/120 [00:01<00:00, 61.08it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  88% Completed | 105/120 [00:01<00:00, 40.29it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  92% Completed | 110/120 [00:02<00:00, 31.94it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards:  98% Completed | 117/120 [00:02<00:00, 37.74it/s]
+(Worker_TP0_EP0 pid=835) Loading safetensors checkpoint shards: 100% Completed | 120/120 [00:02<00:00, 51.71it/s]
+(Worker_TP0_EP0 pid=835) 
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:36 [default_loader.py:430] Loading weights took 2.32 seconds
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:35:36 [speculator.py:195] Draft model Glm5NextMTP does not support external multimodal embeddings. Embeddings from the target model will not be passed to the drafter; using text-only draft inputs instead.
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:37 [model_runner.py:374] Model loading took 82.35 GiB and 19.623440 seconds
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:37 [placement.py:198] glm53-placement ledger {"gib": {"dense_mlp": 0.422, "draft": 0.219, "embed": 0.591, "kda_attention": 4.398, "layer_other": 0.133, "lm_head": 0.591, "mla_attention": 1.163, "other": 0.0, "routed_experts": 0.0, "router": 0.092, "shared_experts": 0.984, "vision": 0.542}, "mla_owned": [27, 31, 35, 39, 43], "rank": 1, "torch_allocated_gib": 82.375, "total_gib": 9.136}
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:37 [interface.py:635] Setting kv cache block size to 64 for DEEPSEEK_V32_INDEXER backend.
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:37 [interface.py:926] Setting attention block size to 4352 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:35:37 [interface.py:950] Padding mamba page size by 1.31% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:37 [model_runner.py:374] Model loading took 82.58 GiB and 20.111153 seconds
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:37 [placement.py:198] glm53-placement ledger {"gib": {"dense_mlp": 0.422, "draft": 0.219, "embed": 0.591, "kda_attention": 4.398, "layer_other": 0.133, "lm_head": 0.591, "mla_attention": 1.396, "other": 0.0, "routed_experts": 0.0, "router": 0.092, "shared_experts": 0.984, "vision": 0.542}, "mla_owned": [3, 7, 11, 15, 19, 23], "rank": 0, "torch_allocated_gib": 82.608, "total_gib": 9.368}
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:37 [topk_topp_sampler.py:62] Using FlashInfer for top-p & top-k sampling.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:37 [interface.py:635] Setting kv cache block size to 64 for DEEPSEEK_V32_INDEXER backend.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:37 [interface.py:926] Setting attention block size to 4352 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:37 [interface.py:950] Padding mamba page size by 1.31% to ensure that mamba page size and attention page size are exactly equal.
+(EngineCore pid=653) INFO 09-26 07:35:37 [torch_utils.py:263] Reducing Torch threads from 32 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:40 [encoder_runner.py:119] Encoder cache will be initialized with a budget of 32242 tokens, and profiled with 1 video items of the maximum feature size.
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:35:49  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:35:49  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:35:53  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:35:53  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP1_EP1 pid=903)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(Worker_TP0_EP0 pid=835) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP0_EP0 pid=835)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:35:54  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_post_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:35:54  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_post_tilelang` with `out_idx=None`
+[07:35:54] : Warning: T.vectorized loop over `i_hci` with extent 4 is lowered as a serial loop because TileLang could not find a valid vectorization plan. Scalar accumulator updates inside the loop are a common cause; move reductions to T.unroll or T.serial if this is intended.
+[07:35:54] : Warning: T.vectorized loop over `i_hci` with extent 4 is lowered as a serial loop because TileLang could not find a valid vectorization plan. Scalar accumulator updates inside the loop are a common cause; move reductions to T.unroll or T.serial if this is intended.
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:35:55  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_post_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:35:55  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_post_tilelang`
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:57 [exl3.py:3025] EXL3 rank-sliced runtime planned: Trellis m=1..32 block_m=8, prefill trellis block_m=64 arena=271.1MiB capacity=1024 chunk=128 topk=8
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:35:57 [exl3.py:3095] Dispatching EXL3 routes through B12x replicated-input EP; vLLM will all-reduce the rank-local partial.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:36:01 [gpu_worker.py:565] Available KV cache memory: 4.44 GiB
+(EngineCore pid=653) INFO 09-26 07:36:02 [kv_cache_utils.py:2284] glm53-placement kv-capacity {"num_blocks": 227, "tensor_bytes": 4764660992, "groups": [{"spec": "MLAAttentionSpec", "layers": 14, "block_size": 4352, "page_bytes": 143616, "blocks_per_max_request": 61}, {"spec": "KpoolTailSpec", "layers": 7, "block_size": 4, "page_bytes": 143616, "blocks_per_max_request": 1}, {"spec": "MambaSpec", "layers": 5, "block_size": 4352, "page_bytes": 2854912, "blocks_per_max_request": 2}, {"spec": "MambaSpec", "layers": 5, "block_size": 4352, "page_bytes": 2854912, "blocks_per_max_request": 2}, {"spec": "MambaSpec", "layers": 5, "block_size": 4352, "page_bytes": 2854912, "blocks_per_max_request": 2}, {"spec": "MambaSpec", "layers": 5, "block_size": 4352, "page_bytes": 2854912, "blocks_per_max_request": 2}, {"spec": "MambaSpec", "layers": 5, "block_size": 4352, "page_bytes": 2854912, "blocks_per_max_request": 2}, {"spec": "MambaSpec", "layers": 5, "block_size": 4352, "page_bytes": 2854912, "blocks_per_max_request": 2}, {"spec": "MambaSpec", "layers": 4, "block_size": 4352, "page_bytes": 2854912, "blocks_per_max_request": 2}]}
+(EngineCore pid=653) INFO 09-26 07:36:02 [kv_cache_utils.py:2299] GPU KV cache size: 782,982 tokens, Maximum concurrency for 262,144 tokens per request: 2.99x
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:36:02 [indexer.py:740] DSA indexer decode path: use_flattening=True supports_varlen=False (next_n=6, use_fp4_indexer_cache=False)
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:36:02 [speculator.py:117] Fused multi-step draft decode is not supported by attention backend(s) B12X_MLA_SPARSE, DEEPSEEK_V32_INDEXER, KPOOL_TAIL; falling back to rebuilding attention metadata between draft steps.
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:36:02 [deepseek_v4_mhc_warmup.py:245] Warming up mHC TileLang kernels for Glm5NextDecoderLayer token sizes: [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768, 832, 896, 960, 1024, 1088, 1152, 1216, 1280, 1344, 1408, 1472, 1536, 1600, 1664, 1728, 1792, 1856, 1920, 1984, 2048]
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:36:02 [deepseek_v4_mhc_warmup.py:245] Warming up mHC TileLang kernels for Glm5NextDecoderLayer token sizes: [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768, 832, 896, 960, 1024, 1088, 1152, 1216, 1280, 1344, 1408, 1472, 1536, 1600, 1664, 1728, 1792, 1856, 1920, 1984, 2048]
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:02  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:06  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:06  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:36:07 [mhc.py:438] Using B12x fused GLM H4096 mHC post+pre for decode M=1.
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:07  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_fused_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:07  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_fused_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:07  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_fused_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:07  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_fused_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:08  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:08  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_fused_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_fused_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_fused_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_fused_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:18  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:18  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:26  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:27  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:27  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:27  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:32  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:32  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:36  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:36  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:36  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:36  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:41  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:41  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:45  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:50  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:54  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:54  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:55  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:55  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:59  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:59  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:36:59  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:36:59  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(EngineCore pid=653) INFO 09-26 07:37:03 [shm_broadcast.py:801] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:03  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:03  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:04  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:04  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:08  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:08  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:08  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:08  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:12  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:13  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:17  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:21  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:22  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:26  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:26  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:26  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:27  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:31  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:35  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:35  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:36  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:36  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:129): TileLang begins to compile kernel `mhc_pre_big_fuse_with_norm_tilelang` with `out_idx=None`
+(Worker_TP0_EP0 pid=835) 2026-09-26 07:37:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP1_EP1 pid=903) 2026-09-26 07:37:40  [TileLang:tilelang.jit.kernel:INFO] (kernel.py:137): TileLang completes to compile kernel `mhc_pre_big_fuse_with_norm_tilelang`
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:37:40 [deepseek_v4_mhc_warmup.py:255] mHC TileLang warmup finished in 98.13 seconds.
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:37:40 [deepseek_v4_mhc_warmup.py:255] mHC TileLang warmup finished in 98.14 seconds.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:37:40 [spec_decode_rejection_warmup.py:64] Warming up spec-decode rejection sampler kernels (vocab=154880, num_spec=5, dtype_pairs=[('torch.float32', 'torch.float32'), ('torch.bfloat16', 'torch.bfloat16'), ('torch.float32', 'torch.bfloat16'), ('torch.bfloat16', 'torch.float32')], block_verify=False).
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:37:40 [spec_decode_rejection_warmup.py:64] Warming up spec-decode rejection sampler kernels (vocab=154880, num_spec=5, dtype_pairs=[('torch.bfloat16', 'torch.float32'), ('torch.float32', 'torch.float32'), ('torch.bfloat16', 'torch.bfloat16'), ('torch.float32', 'torch.bfloat16')], block_verify=False).
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:37:42 [kernel_warmup.py:95] Warming up ll_bf16 router GEMM kernels for shapes: ((4096, 288),).
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:37:43 [kernel_warmup.py:170] Skipping FlashInfer autotune because it is disabled.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:37:44 [breakable_cudagraph.py:291] Breakable CUDA graph enabled
+(EngineCore pid=653) INFO 09-26 07:38:03 [shm_broadcast.py:801] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:38:25 [speculator.py:151] Capturing model for speculator...
+(Worker_TP0_EP0 pid=835) Capturing CUDA graphs (FULL):   0%|          | 0/44 [00:00<?, ?it/s]Capturing CUDA graphs (FULL):   2%|▏         | 1/44 [00:05<04:03,  5.66s/it]Capturing CUDA graphs (FULL):   5%|▍         | 2/44 [00:06<01:49,  2.61s/it]Capturing CUDA graphs (FULL):   7%|▋         | 3/44 [00:06<01:01,  1.49s/it]Capturing CUDA graphs (FULL):   9%|▉         | 4/44 [00:06<00:38,  1.04it/s]Capturing CUDA graphs (FULL):  11%|█▏        | 5/44 [00:06<00:26,  1.48it/s]Capturing CUDA graphs (FULL):  14%|█▎        | 6/44 [00:06<00:20,  1.89it/s]Capturing CUDA graphs (FULL):  16%|█▌        | 7/44 [00:07<00:15,  2.44it/s]Capturing CUDA graphs (FULL):  18%|█▊        | 8/44 [00:07<00:11,  3.03it/s]Capturing CUDA graphs (FULL):  20%|██        | 9/44 [00:07<00:11,  3.05it/s]Capturing CUDA graphs (FULL):  23%|██▎       | 10/44 [00:07<00:09,  3.62it/s]Capturing CUDA graphs (FULL):  25%|██▌       | 11/44 [00:07<00:07,  4.15it/s]Capturing CUDA graphs (FULL):  27%|██▋       | 12/44 [00:07<00:06,  4.61it/s]Capturing CUDA graphs (FULL):  30%|██▉       | 13/44 [00:08<00:07,  4.01it/s]Capturing CUDA graphs (FULL):  32%|███▏      | 14/44 [00:08<00:07,  3.92it/s]Capturing CUDA graphs (FULL):  34%|███▍      | 15/44 [00:08<00:06,  4.40it/s]Capturing CUDA graphs (FULL):  36%|███▋      | 16/44 [00:08<00:06,  4.31it/s]Capturing CUDA graphs (FULL):  39%|███▊      | 17/44 [00:09<00:05,  4.73it/s]Capturing CUDA graphs (FULL):  41%|████      | 18/44 [00:09<00:07,  3.52it/s]Capturing CUDA graphs (FULL):  43%|████▎     | 19/44 [00:09<00:06,  3.73it/s]Capturing CUDA graphs (FULL):  45%|████▌     | 20/44 [00:09<00:05,  4.24it/s]Capturing CUDA graphs (FULL):  48%|████▊     | 21/44 [00:10<00:04,  4.67it/s]Capturing CUDA graphs (FULL):  50%|█████     | 22/44 [00:10<00:04,  5.03it/s]Capturing CUDA graphs (FULL):  52%|█████▏    | 23/44 [00:10<00:04,  4.21it/s]Capturing CUDA graphs (FULL):  55%|█████▍    | 24/44 [00:10<00:05,  3.82it/s]Capturing CUDA graphs (FULL):  57%|█████▋    | 25/44 [00:11<00:04,  4.32it/s]Capturing CUDA graphs (FULL):  59%|█████▉    | 26/44 [00:12<00:11,  1.57it/s]Capturing CUDA graphs (FULL):  61%|██████▏   | 27/44 [00:12<00:08,  2.04it/s]Capturing CUDA graphs (FULL):  64%|██████▎   | 28/44 [00:13<00:07,  2.23it/s]Capturing CUDA graphs (FULL):  66%|██████▌   | 29/44 [00:14<00:11,  1.30it/s]Capturing CUDA graphs (FULL):  68%|██████▊   | 30/44 [00:16<00:12,  1.08it/s]Capturing CUDA graphs (FULL):  70%|███████   | 31/44 [00:18<00:17,  1.36s/it]Capturing CUDA graphs (FULL):  73%|███████▎  | 32/44 [00:20<00:19,  1.65s/it]Capturing CUDA graphs (FULL):  75%|███████▌  | 33/44 [00:20<00:13,  1.20s/it]Capturing CUDA graphs (FULL):  77%|███████▋  | 34/44 [00:21<00:08,  1.13it/s]Capturing CUDA graphs (FULL):  80%|███████▉  | 35/44 [00:22<00:09,  1.04s/it]Capturing CUDA graphs (FULL):  82%|████████▏ | 36/44 [00:22<00:06,  1.29it/s]Capturing CUDA graphs (FULL):  84%|████████▍ | 37/44 [00:24<00:08,  1.25s/it]Capturing CUDA graphs (FULL):  86%|████████▋ | 38/44 [00:27<00:09,  1.57s/it]Capturing CUDA graphs (FULL):  89%|████████▊ | 39/44 [00:27<00:05,  1.15s/it]Capturing CUDA graphs (FULL):  91%|█████████ | 40/44 [00:27<00:03,  1.18it/s]Capturing CUDA graphs (FULL):  93%|█████████▎| 41/44 [00:30<00:04,  1.37s/it]Capturing CUDA graphs (FULL):  95%|█████████▌| 42/44 [00:32<00:03,  1.75s/it]Capturing CUDA graphs (FULL):  98%|█████████▊| 43/44 [00:32<00:01,  1.27s/it]Capturing CUDA graphs (FULL): 100%|██████████| 44/44 [00:40<00:00,  3.20s/it]Capturing CUDA graphs (FULL): 100%|██████████| 44/44 [00:40<00:00,  1.08it/s]
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:38:25 [speculator.py:151] Capturing model for speculator...
+(Worker_TP0_EP0 pid=835) Capturing prefill CUDA graphs (FULL):   0%|          | 0/44 [00:00<?, ?it/s]Capturing prefill CUDA graphs (FULL):  14%|█▎        | 6/44 [00:00<00:00, 53.67it/s]Capturing prefill CUDA graphs (FULL):  30%|██▉       | 13/44 [00:00<00:00, 58.05it/s]Capturing prefill CUDA graphs (FULL):  45%|████▌     | 20/44 [00:00<00:00, 61.32it/s]Capturing prefill CUDA graphs (FULL):  61%|██████▏   | 27/44 [00:00<00:00, 62.89it/s]Capturing prefill CUDA graphs (FULL):  80%|███████▉  | 35/44 [00:00<00:00, 66.65it/s]Capturing prefill CUDA graphs (FULL):  98%|█████████▊| 43/44 [00:00<00:00, 69.30it/s]Capturing prefill CUDA graphs (FULL): 100%|██████████| 44/44 [00:00<00:00, 55.21it/s]
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:38:25 [model_runner.py:1033] Graph capturing finished in 42 secs, took 0.51 GiB
+(Worker_TP1_EP1 pid=903) INFO 09-26 07:38:25 [gpu_worker.py:791] Free memory on device (93.79/94.97 GiB) on startup. Desired GPU memory utilization is (0.95, 90.22 GiB). Actual usage is 83.15 GiB for consumed memory (weights + non-torch), 2.47 GiB for peak activation, and 0.51 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=4226329293` (3.94 GiB) to fit into requested memory, or `--kv-cache-memory=8056790528` (7.5 GiB) to fully utilize gpu memory. Current kv cache memory in use is 4.6 GiB.
+(Worker_TP0_EP0 pid=835) Capturing decode CUDA graphs (FULL):   0%|          | 0/5 [00:00<?, ?it/s]Capturing decode CUDA graphs (FULL): 100%|██████████| 5/5 [00:00<00:00, 115.06it/s]
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:38:25 [model_runner.py:1033] Graph capturing finished in 42 secs, took 0.52 GiB
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:38:25 [gpu_worker.py:791] Free memory on device (93.8/94.97 GiB) on startup. Desired GPU memory utilization is (0.95, 90.22 GiB). Actual usage is 83.31 GiB for consumed memory (weights + non-torch), 2.47 GiB for peak activation, and 0.52 GiB for CUDAGraph memory. Replace gpu_memory_utilization config with `--kv-cache-memory=4055778407` (3.78 GiB) to fit into requested memory, or `--kv-cache-memory=7896882688` (7.35 GiB) to fully utilize gpu memory. Current kv cache memory in use is 4.44 GiB.
+(Worker_TP1_EP1 pid=903) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP1_EP1 pid=903)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(Worker_TP0_EP0 pid=835) /usr/local/lib/python3.12/dist-packages/triton/language/core.py:2284: UserWarning: tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.
+(Worker_TP0_EP0 pid=835)   warn("tl.make_block_ptr is deprecated. Use TensorDescriptor or tl.make_tensor_descriptor instead.")
+(EngineCore pid=653) INFO 09-26 07:39:03 [shm_broadcast.py:801] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_TP0_EP0 pid=835) (Worker_TP1_EP1 pid=903) INFO 09-26 07:39:18 [jit_monitor.py:79] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+INFO 09-26 07:39:18 [jit_monitor.py:79] Kernel JIT monitor activated; monitored JIT compilations during inference will use mode=warn.
+(Worker_TP0_EP0 pid=835) INFO 09-26 07:39:18 [torch_utils.py:263] Reducing Torch threads from 32 to 1 for serving. Set OMP_NUM_THREADS in the external environment to override.
+(EngineCore pid=653) INFO 09-26 07:39:18 [core.py:363] init engine (profile, create kv cache, warmup model) took 220.91 s
+(EngineCore pid=653) INFO 09-26 07:39:20 [scheduler.py:281] Enabled request-local feedback-adaptive MTP (K=0..5, arithmetic-mean batch execution)
+(EngineCore pid=653) INFO 09-26 07:39:21 [kernel.py:306] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(EngineCore pid=653) WARNING 09-26 07:39:21 [vllm.py:1866] max_num_scheduled_tokens is set to 2048 based on the speculative decoding settings. This may lead to suboptimal performance. Consider increasing max_num_batched_tokens to accommodate the additional draft token slots, or decrease num_speculative_tokens.
+(EngineCore pid=653) INFO 09-26 07:39:21 [compilation.py:329] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=9) INFO 09-26 07:39:21 [api_server.py:678] Supported tasks: ['generate']
+(APIServer pid=9) INFO 09-26 07:39:21 [parser_manager.py:37] "auto" tool choice has been enabled.
+(APIServer pid=9) INFO 09-26 07:39:22 [hf.py:551] Detected the chat template content format to be 'openai'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=9) INFO 09-26 07:39:24 [base.py:235] Multi-modal warmup completed in 2.304s
+(APIServer pid=9) INFO 09-26 07:39:26 [base.py:235] Readonly multi-modal warmup completed in 2.218s
+(APIServer pid=9) WARNING 09-26 07:39:26 [model.py:1720] Default vLLM sampling parameters have been overridden by the model's `generation_config.json`: `{'temperature': 1.0, 'top_p': 0.95}`. If this is not intended, please relaunch vLLM instance with `--generation-config vllm`.
+(APIServer pid=9) INFO 09-26 07:39:26 [api_server.py:682] Starting vLLM server on http://0.0.0.0:8001
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:51] Available routes are:
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /openapi.json, Methods: HEAD, GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /docs, Methods: HEAD, GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /docs/oauth2-redirect, Methods: HEAD, GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /redoc, Methods: HEAD, GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /load, Methods: GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /version, Methods: GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /health, Methods: GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /metrics, Methods: GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /tokenize, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /detokenize, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/models, Methods: GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /ping, Methods: GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /ping, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /invocations, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/responses, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/completions, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/messages, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /generative_scoring, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/completions/render, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/chat/completions/derender, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /v1/completions/derender, Methods: POST
+(APIServer pid=9) INFO 09-26 07:39:26 [launcher.py:60] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=9) INFO:     Started server process [9]
+(APIServer pid=9) INFO:     Waiting for application startup.
+(APIServer pid=9) INFO:     Application startup complete.
+(APIServer pid=9) INFO:     127.0.0.1:50940 - "GET /health HTTP/1.1" 200 OK
+(APIServer pid=9) INFO:     127.0.0.1:50950 - "GET /v1/models HTTP/1.1" 200 OK
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:29 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _gumbel_sample_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(EngineCore pid=653) INFO 09-26 07:39:29 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-b0995a705a318532-0-aa491a2a batch_bucket=1 K5->K4 accepted=5/5 evidence=8
+(APIServer pid=9) INFO:     127.0.0.1:50964 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup greedy C1 warmup completed in 1.40s
+(APIServer pid=9) INFO:     127.0.0.1:57238 - "POST /tokenize HTTP/1.1" 200 OK
+(APIServer pid=9) INFO:     127.0.0.1:57242 - "POST /v1/chat/completions/render HTTP/1.1" 200 OK
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:30 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _compute_local_logits_stats_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:30 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _rejection_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:30 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _resample_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=9) INFO:     127.0.0.1:57248 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup rendered-chat warmup completed in 1.02s
+(APIServer pid=9) INFO:     127.0.0.1:57260 - "POST /tokenize HTTP/1.1" 200 OK
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:31 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _kpool_tail_seed_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:31 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _pack_topk_routes_small_prefix_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=9) INFO:     127.0.0.1:57262 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup 8K code-depth warmup completed in 1.73s
+(APIServer pid=9) INFO:     127.0.0.1:57268 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup long-prefill warmup completed in 3.16s
+(APIServer pid=9) INFO 09-26 07:39:37 [loggers.py:310] Engine 000: Avg prompt throughput: 1532.5 tokens/s, Avg generation throughput: 6.1 tokens/s, Running: 1 reqs, Waiting: 0 reqs, GPU KV cache usage: 4.9%, Prefix cache hit rate: 0.0%
+(APIServer pid=9) INFO 09-26 07:39:37 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 3.06, Accepted throughput: 3.98 tokens/s, Drafted throughput: 9.44 tokens/s, Accepted: 64 tokens, Drafted: 152 tokens, Per-position acceptance rate: 0.839, 0.581, 0.290, 0.194, 0.161, Avg Draft acceptance rate: 42.1%
+(APIServer pid=9) INFO:     127.0.0.1:57284 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=9) INFO:     127.0.0.1:53548 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup ReplaySSM prefix warmup completed in 4.68s
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:40 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _causal_conv1d_update_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:43 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _kda_replayssm_spec_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:46 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _kpool_softmax_rotate_write_cache_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:46 [jit_monitor.py:135] CuTeDSL JIT compilation during inference: DSAFusedIndexerKernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(APIServer pid=9) INFO 09-26 07:39:47 [loggers.py:310] Engine 000: Avg prompt throughput: 2732.3 tokens/s, Avg generation throughput: 5.0 tokens/s, Running: 4 reqs, Waiting: 0 reqs, GPU KV cache usage: 15.9%, Prefix cache hit rate: 13.4%
+(APIServer pid=9) INFO 09-26 07:39:47 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 4.09, Accepted throughput: 3.40 tokens/s, Drafted throughput: 5.30 tokens/s, Accepted: 34 tokens, Drafted: 53 tokens, Per-position acceptance rate: 0.636, 0.636, 0.636, 0.636, 0.545, Avg Draft acceptance rate: 64.2%
+(EngineCore pid=653) INFO 09-26 07:39:49 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-94ed913493d52848-0-93fea3f9 batch_bucket=4 K4->K3 accepted=0/4 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:49 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-90022e6ee74d8317-0-b79f4727 batch_bucket=4 K3->K2 accepted=0/3 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:50 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-804ad088e28492ce-0-a7281de5 batch_bucket=4 K2->K1 accepted=1/3 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:50 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-94ed913493d52848-0-93fea3f9 batch_bucket=4 K3->K2 accepted=0/3 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:50 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-90022e6ee74d8317-0-b79f4727 batch_bucket=4 K2->K1 accepted=0/3 evidence=9
+(APIServer pid=9) INFO:     127.0.0.1:53550 - "POST /v1/completions HTTP/1.1" 200 OK
+(EngineCore pid=653) INFO 09-26 07:39:50 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-94ed913493d52848-0-93fea3f9 batch_bucket=4 K2->K1 accepted=0/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:51 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-804ad088e28492ce-0-a7281de5 batch_bucket=4 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:52 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-90022e6ee74d8317-0-b79f4727 batch_bucket=4 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:52 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-804ad088e28492ce-0-a7281de5 batch_bucket=4 K2->K1 accepted=1/2 evidence=16
+(APIServer pid=9) INFO:     127.0.0.1:53564 - "POST /v1/completions HTTP/1.1" 200 OK
+(EngineCore pid=653) INFO 09-26 07:39:53 [adaptive_mtp.py:193] Adaptive MTP request=cmpl-804ad088e28492ce-0-a7281de5 batch_bucket=2 K1->K2 accepted=1/1 evidence=8
+(APIServer pid=9) INFO:     127.0.0.1:53576 - "POST /v1/completions HTTP/1.1" 200 OK
+(APIServer pid=9) INFO:     127.0.0.1:53554 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup ReplaySSM mixed prefill/decode warmup completed in 13.89s
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:54 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _w4a16_route_count_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:54 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _pack_topk_routes_post_prefix_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:39:55 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _topk_topp_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(EngineCore pid=653) INFO 09-26 07:39:56 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K5->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:56 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=15
+(EngineCore pid=653) INFO 09-26 07:39:56 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=15
+(EngineCore pid=653) INFO 09-26 07:39:56 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:56 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:56 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:56 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=0/1 evidence=13
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=0/1 evidence=10
+(APIServer pid=9) INFO 09-26 07:39:57 [loggers.py:310] Engine 000: Avg prompt throughput: 479.3 tokens/s, Avg generation throughput: 137.9 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 63.7%, Prefix cache hit rate: 13.3%
+(APIServer pid=9) INFO 09-26 07:39:57 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 1.77, Accepted throughput: 59.30 tokens/s, Drafted throughput: 99.90 tokens/s, Accepted: 593 tokens, Drafted: 999 tokens, Per-position acceptance rate: 0.676, 0.049, 0.034, 0.009, 0.000, Avg Draft acceptance rate: 59.4%
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=0/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=13_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=0/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:57 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=0/1 evidence=12
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=0/1 evidence=12
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K3 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=13_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:58 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K3 accepted=2/2 evidence=13
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=14
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=11
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:39:59 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K3->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=13
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K3->K1 accepted=1/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:00 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:01 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=14
+(EngineCore pid=653) INFO 09-26 07:40:01 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:01 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:01 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:01 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:01 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K3->K1 accepted=0/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:01 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:02 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:02 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=8 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:02 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=4 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:02 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=4 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:03 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=4 K2->K1 accepted=0/2 evidence=14
+(EngineCore pid=653) INFO 09-26 07:40:03 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-a2075009968a35bd-0-a2c39dd5 batch_bucket=2 K2->K1 accepted=0/2 evidence=9
+(APIServer pid=9) INFO:     127.0.0.1:32800 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup warmup 1/4 completed in 8.89s
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:40:04 [jit_monitor.py:135] Triton kernel JIT compilation during inference: _w4a16_route_prefix_from_counts_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(EngineCore pid=653) INFO 09-26 07:40:04 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K5->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K3 accepted=2/2 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:05 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/2 evidence=9
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=13_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=13
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K3 accepted=2/2 evidence=12
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=13
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=13_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:06 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=12
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(APIServer pid=9) INFO 09-26 07:40:07 [loggers.py:310] Engine 000: Avg prompt throughput: 65.6 tokens/s, Avg generation throughput: 500.8 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 63.7%, Prefix cache hit rate: 13.2%
+(APIServer pid=9) INFO 09-26 07:40:07 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.29, Accepted throughput: 281.60 tokens/s, Drafted throughput: 347.69 tokens/s, Accepted: 2816 tokens, Drafted: 3477 tokens, Per-position acceptance rate: 0.860, 0.429, 0.000, 0.000, 0.000, Avg Draft acceptance rate: 81.0%
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:07 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:08 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:08 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:08 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:08 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:08 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:08 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:08 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:09 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K3 accepted=2/2 evidence=9
+(EngineCore pid=653) INFO 09-26 07:40:09 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:09 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:09 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:09 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:09 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K3->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:09 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:10 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=16 K1->K2 accepted=1/1 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:11 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-83c42266f99b7122-0-a27cc8d3 batch_bucket=4 K1->K2 accepted=1/1 evidence=16
+(APIServer pid=9) INFO:     127.0.0.1:45792 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup warmup 2/4 completed in 7.64s
+(EngineCore pid=653) INFO 09-26 07:40:13 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K5->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:13 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:13 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:13 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:13 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/1 evidence=13
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/1 evidence=10
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:14 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=13_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/1 evidence=12
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/1 evidence=12
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K3 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=13_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:15 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=1/1 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K3 accepted=2/2 evidence=14
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:16 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(APIServer pid=9) INFO 09-26 07:40:17 [loggers.py:310] Engine 000: Avg prompt throughput: 65.6 tokens/s, Avg generation throughput: 498.8 tokens/s, Running: 16 reqs, Waiting: 0 reqs, GPU KV cache usage: 63.7%, Prefix cache hit rate: 13.0%
+(APIServer pid=9) INFO 09-26 07:40:17 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.25, Accepted throughput: 276.90 tokens/s, Drafted throughput: 338.40 tokens/s, Accepted: 2769 tokens, Drafted: 3384 tokens, Per-position acceptance rate: 0.848, 0.404, 0.000, 0.000, 0.000, Avg Draft acceptance rate: 81.8%
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K3 accepted=2/2 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:17 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=13
+(EngineCore pid=653) INFO 09-26 07:40:18 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:18 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:18 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:18 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K3->K1 accepted=0/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:19 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(Worker_TP0_EP0 pid=835) WARNING 09-26 07:40:19 [jit_monitor.py:135] CuTeDSL JIT compilation during inference: DSAPagedStreamLogitsKernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(EngineCore pid=653) INFO 09-26 07:40:19 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:20 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-923d2a0f076b187f-0-bcaacf26 batch_bucket=2 K2->K3 accepted=2/2 evidence=9
+(APIServer pid=9) INFO:     127.0.0.1:54258 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup warmup 3/4 completed in 7.25s
+(EngineCore pid=653) INFO 09-26 07:40:21 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K5->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:21 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:21 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:21 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=9
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=9
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:22 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=10
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=14_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K3 accepted=2/2 evidence=14
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=12_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:23 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=4_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=13_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=9
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=11
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=13_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K3 accepted=2/2 evidence=10
+(EngineCore pid=653) INFO 09-26 07:40:24 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=14
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=15_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K3 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=10
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=15
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=1/2 evidence=14
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:25 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=9
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K3->K1 accepted=1/2 evidence=12
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=13
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=10
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K3 accepted=2/2 evidence=12
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=6_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=1_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=0/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:26 [adaptive_mtp.py:193] Adaptive MTP request=7_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=14
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=3_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K3->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=5_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K2->K1 accepted=2/2 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=2_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=2/2 evidence=16
+(APIServer pid=9) INFO 09-26 07:40:27 [loggers.py:310] Engine 000: Avg prompt throughput: 65.6 tokens/s, Avg generation throughput: 516.2 tokens/s, Running: 14 reqs, Waiting: 0 reqs, GPU KV cache usage: 55.8%, Prefix cache hit rate: 12.9%
+(APIServer pid=9) INFO 09-26 07:40:27 [metrics.py:120] SpecDecoding metrics: Mean acceptance length: 2.38, Accepted throughput: 298.88 tokens/s, Drafted throughput: 363.97 tokens/s, Accepted: 2989 tokens, Drafted: 3640 tokens, Per-position acceptance rate: 0.882, 0.494, 0.001, 0.000, 0.000, Avg Draft acceptance rate: 82.1%
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=11_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=16
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=10_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=16 K1->K2 accepted=1/1 evidence=8
+(EngineCore pid=653) INFO 09-26 07:40:27 [adaptive_mtp.py:193] Adaptive MTP request=9_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=8 K2->K3 accepted=2/2 evidence=12
+(EngineCore pid=653) INFO 09-26 07:40:28 [adaptive_mtp.py:193] Adaptive MTP request=0_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=4 K2->K3 accepted=2/2 evidence=9
+(EngineCore pid=653) INFO 09-26 07:40:28 [adaptive_mtp.py:193] Adaptive MTP request=8_cmpl-9c24af31ec2f2a9e-0-9a90899b batch_bucket=4 K1->K2 accepted=2/2 evidence=16
+(APIServer pid=9) INFO:     127.0.0.1:47348 - "POST /v1/completions HTTP/1.1" 200 OK
+GLM release startup warmup 4/4 completed in 7.45s
+GLM release startup warmup complete; container is ready.
+(APIServer pid=9) INFO:     127.0.0.1:44012 - "GET /health HTTP/1.1" 200 OK

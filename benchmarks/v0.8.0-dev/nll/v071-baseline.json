@@ -1,0 +1,31 @@
+{
+  "label": "v071-baseline",
+  "model": "brandonmusic/GLM-5.3-Flash-tr3-4bpw",
+  "documents": {
+    "prose-provenance": {
+      "tokens": 7153,
+      "mean_nll": 2.7816039463143474,
+      "ppl": 16.144895737607495,
+      "seconds": 2.93
+    },
+    "code-start-sh": {
+      "tokens": 7654,
+      "mean_nll": 0.7144305657182205,
+      "ppl": 2.04302298363971,
+      "seconds": 1.88
+    },
+    "code-benchmark": {
+      "tokens": 3819,
+      "mean_nll": 0.7493894502201596,
+      "ppl": 2.115707877216461,
+      "seconds": 1.07
+    },
+    "long-backref": {
+      "tokens": 17500,
+      "mean_nll": 0.8105753827669749,
+      "ppl": 2.249201766367326,
+      "seconds": 4.26
+    }
+  },
+  "token_weighted_mean_nll": 1.1740035455574
+}

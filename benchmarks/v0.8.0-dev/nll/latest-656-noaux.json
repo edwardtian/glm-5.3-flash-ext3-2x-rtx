@@ -1,0 +1,31 @@
+{
+  "label": "latest-656-noaux",
+  "model": "brandonmusic/GLM-5.3-Flash-tr3-4bpw",
+  "documents": {
+    "prose-provenance": {
+      "tokens": 7153,
+      "mean_nll": 4.836199589140804,
+      "ppl": 125.98962838274538,
+      "seconds": 1.88
+    },
+    "code-start-sh": {
+      "tokens": 7654,
+      "mean_nll": 3.4080056100412817,
+      "ppl": 30.20494371154213,
+      "seconds": 1.83
+    },
+    "code-benchmark": {
+      "tokens": 3819,
+      "mean_nll": 2.813362999608961,
+      "ppl": 16.6658713997895,
+      "seconds": 0.93
+    },
+    "long-backref": {
+      "tokens": 17500,
+      "mean_nll": 3.5805618554883902,
+      "ppl": 35.893702256244495,
+      "seconds": 3.96
+    }
+  },
+  "token_weighted_mean_nll": 3.7115173660779934
+}
