@@ -545,7 +545,8 @@ docker run --detach \
   --tool-call-parser glm47 \
   --reasoning-parser glm45 \
   "${CHAT_TEMPLATE_ARGS[@]}" \
-  "${PROFILER_SERVE_ARGS[@]}"
+  "${PROFILER_SERVE_ARGS[@]}" \
+  ${EXTRA_SERVE_ARGS:-}
 
 printf 'Started %s on http://127.0.0.1:%s/v1. Initial B12x/CuTe compilation can take several minutes.\n' \
   "${CONTAINER_NAME}" "${PORT}"

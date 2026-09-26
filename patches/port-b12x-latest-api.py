@@ -347,7 +347,12 @@ SPARSE_MLA_PLAN_NEW = """        # Lazily import SparkInfer only on this opt-in 
                 max_batch=int(max_batch),
                 max_chunks_per_row=self._num_splits_cap,
                 page_size=self.block_size,
-                head_major_output=self._head_major_mla_output,
+                # Current B12x extend kernels write token-major output; a
+                # head-major extend view reads the wrong rows (cos 0.76 vs
+                # an FP32 reference; NaN hidden states in serving).
+                head_major_output=(
+                    self._head_major_mla_output if mode == "decode" else False
+                ),
                 return_lse=(
                     bool(self.need_to_return_lse_for_decode)
                     if mode == "decode"
