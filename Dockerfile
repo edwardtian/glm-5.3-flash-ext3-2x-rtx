@@ -1,11 +1,12 @@
 # syntax=docker/dockerfile:1.7
 
-# Use the user's qualified vLLM EXL3 implementation as a source artifact only.
-# The final runtime remains the newer GLM-5.3 SM120 vLLM image.
-ARG EXL3_SOURCE_IMAGE=ghcr.io/tpurtell/deepseek-v4-flash-0731-exl3-k2-spark@sha256:86c8c1054f9c24454949e37031ce6165c007963aa0c0ef30fa884f6d4170af32
+# The four EXL3/B12x vLLM source files come from the qualified vLLM fork
+# 30038602b71395f481ef4a6edfe4fcf8551d9c15, as shipped unmodified in
+# ghcr.io/tpurtell/deepseek-v4-flash-0731-exl3-k2-spark@sha256:86c8c105...
+# They are vendored under vendor/exl3-source (hashes in PROVENANCE.md) so a
+# rebuild does not pull that 11 GB image. The runtime is the GLM-5.3 image.
 ARG GLM_BASE_IMAGE=cstechdev/vllm:glm53-flash-nope-sm120-cu130-20260826-r1@sha256:0bd709e80b8ff13ae5de8f7d7f708a499fade3a26970d56afb1be2ff3860fde5
 
-FROM ${EXL3_SOURCE_IMAGE} AS exl3_source
 FROM ${GLM_BASE_IMAGE}
 
 ARG B12X_REPOSITORY=https://github.com/tpurtell/sparkinfer-glmrt
@@ -46,20 +47,16 @@ ENV VLLM_PLUGINS=lora_filesystem_resolver,lora_hf_hub_resolver
 
 # Carry only the proven EXL3 quantization implementation into the GLM vLLM
 # tree, then adapt its narrow registration/model-recognition surface.
-COPY --from=exl3_source \
-    /opt/vllm/vllm/model_executor/layers/quantization/exl3.py \
+COPY vendor/exl3-source/vllm/model_executor/layers/quantization/exl3.py \
     /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/quantization/exl3.py
 # Reuse the mature vLLM/B12x adapter from the same qualified source image. The
 # adapter is ported below onto the newer GLM-5.3 vLLM APIs; all kernels still
 # resolve from the current /opt/b12x checkout pinned above.
-COPY --from=exl3_source \
-    /opt/vllm/vllm/v1/attention/backends/mla/b12x_mla_sparse.py \
+COPY vendor/exl3-source/vllm/v1/attention/backends/mla/b12x_mla_sparse.py \
     /usr/local/lib/python3.12/dist-packages/vllm/v1/attention/backends/mla/b12x_mla_sparse.py
-COPY --from=exl3_source \
-    /opt/vllm/vllm/model_executor/layers/sparse_attn_indexer.py \
+COPY vendor/exl3-source/vllm/model_executor/layers/sparse_attn_indexer.py \
     /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/sparse_attn_indexer.py
-COPY --from=exl3_source \
-    /opt/vllm/vllm/model_executor/layers/mla_cache_format.py \
+COPY vendor/exl3-source/vllm/model_executor/layers/mla_cache_format.py \
     /usr/local/lib/python3.12/dist-packages/vllm/model_executor/layers/mla_cache_format.py
 COPY patches/port-exl3-glm53.py /tmp/port-exl3-glm53.py
 COPY patches/port-exl3-ep-glm53.py /tmp/port-exl3-ep-glm53.py
