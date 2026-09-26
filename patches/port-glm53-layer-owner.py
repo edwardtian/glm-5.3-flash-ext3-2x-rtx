@@ -180,6 +180,95 @@ def build_mla_attention(cls, **kwargs):
     return module
 
 
+EMBED_ENV = "VLLM_GLM53_EMBED_SPLIT"
+
+
+def embed_split(vllm_config) -> list[float] | None:
+    """Per-rank fractions of the vocabulary rows, or None for even TP."""
+    spec = os.environ.get(EMBED_ENV, "").strip()
+    if spec in {"", "tp", "off", "none"}:
+        return None
+    world = int(vllm_config.parallel_config.tensor_parallel_size)
+    parts = [float(x) for x in spec.split(",")]
+    if len(parts) == world - 1:
+        parts.append(1.0 - sum(parts))
+    if len(parts) != world or any(x < 0 for x in parts) or abs(sum(parts) - 1) > 1e-6:
+        raise ValueError(
+            f"{EMBED_ENV}={spec} must give {world - 1} or {world} non-negative "
+            "rank fractions summing to 1"
+        )
+    return parts
+
+
+class Glm5NextSplitEmbedding(torch.nn.Module):
+    """Token embedding whose vocabulary rows are split unevenly across TP.
+
+    Rank r holds rows [start_r, end_r). Out-of-range ids contribute zeros and
+    the TP all-reduce combines the ranks, exactly like vLLM's even
+    vocab-parallel lookup. Uneven fractions let the recipe balance the two
+    GPUs' free memory for the KV pool at essentially no lookup cost.
+    """
+
+    def __init__(self, num_embeddings, embedding_dim, fractions, rank, dtype):
+        super().__init__()
+        bounds = [0]
+        for fraction in fractions[:-1]:
+            bounds.append(min(num_embeddings, round(bounds[-1] + fraction * num_embeddings)))
+        bounds.append(num_embeddings)
+        self.start, self.end = bounds[rank], bounds[rank + 1]
+        self.num_embeddings = num_embeddings
+        self.embedding_dim = embedding_dim
+        rows = max(self.end - self.start, 0)
+        self.glm53_owner_mode = "local" if rows else "remote"
+        self.weight = torch.nn.Parameter(
+            torch.empty(rows, embedding_dim, dtype=dtype), requires_grad=False
+        )
+        self.weight.weight_loader = self.weight_loader
+
+    def weight_loader(self, param, loaded_weight):
+        assert loaded_weight.shape[0] >= self.end, loaded_weight.shape
+        param.data.copy_(loaded_weight[self.start : self.end])
+
+    def forward(self, input_: torch.Tensor) -> torch.Tensor:
+        from vllm.distributed import tensor_model_parallel_all_reduce
+
+        ids = input_.long()
+        in_range = (ids >= self.start) & (ids < self.end)
+        if self.end > self.start:
+            local = torch.nn.functional.embedding(
+                torch.where(in_range, ids - self.start, torch.zeros_like(ids)),
+                self.weight,
+            )
+            local = local.masked_fill(~in_range.unsqueeze(-1), 0)
+        else:
+            local = torch.zeros(
+                (*ids.shape, self.embedding_dim),
+                dtype=self.weight.dtype,
+                device=ids.device,
+            )
+        return tensor_model_parallel_all_reduce(local)
+
+
+def build_embedding(cls, num_embeddings: int, embedding_dim: int, *, prefix: str, vllm_config):
+    """Build vLLM's even vocab-parallel embedding or the uneven split one."""
+    from vllm.distributed import get_tensor_model_parallel_rank
+
+    fractions = embed_split(vllm_config)
+    if fractions is None:
+        return cls(num_embeddings, embedding_dim, prefix=prefix)
+    module = Glm5NextSplitEmbedding(
+        num_embeddings,
+        embedding_dim,
+        fractions,
+        get_tensor_model_parallel_rank(),
+        vllm_config.model_config.dtype,
+    )
+    if module.glm53_owner_mode == "remote":
+        # No rows: keep the loader from resolving the checkpoint tensor here.
+        del module.weight
+    return module
+
+
 _COMPONENTS = (
     ("vision", ("visual.",)),
     ("embed", ("embed_tokens",)),
@@ -334,6 +423,22 @@ replace_once(
 )
 replace_once(
     model,
+    """            self.embed_tokens = VocabParallelEmbedding(
+                config.vocab_size,
+                config.hidden_size,
+                prefix=f"{prefix}.embed_tokens",
+            )""",
+    """            self.embed_tokens = glm53_build_embedding(
+                VocabParallelEmbedding,
+                config.vocab_size,
+                config.hidden_size,
+                prefix=f"{prefix}.embed_tokens",
+                vllm_config=vllm_config,
+            )""",
+    "embedding construction",
+)
+replace_once(
+    model,
     """        x = self.self_attn(
             hidden_states=x,
             positions=positions,
@@ -357,6 +462,9 @@ replace_once(
 )
 from vllm.models.glm5next.nvidia.placement import (
     build_mla_attention as glm53_build_mla_attention,
+)
+from vllm.models.glm5next.nvidia.placement import (
+    build_embedding as glm53_build_embedding,
 )
 from vllm.model_executor.models.utils import (
     AutoWeightsLoader,
