@@ -109,6 +109,7 @@ MAX_NUM_SEQS=12 ./start.sh              # 12 slots: 2,137,765-token pool
 ENABLE_EXPERT_PARALLEL=1 ./start.sh     # EP2 experts: better at high concurrency, slower at C1
 DFLASH_TOKENS=5 ./start.sh              # faster C1, slower C2–C4, smaller pool
 SPECULATIVE_METHOD=mtp ./start.sh       # checkpoint MTP layer instead of DFlash2
+GLM53_DFLASH_BOUNDARY_LOOKUP=1 ./start.sh  # opt-in: reuse the aligned DFlash2 prefix
 ```
 
 | Option | Pool at 1M | NLL (lower is better) | Needles 8K/240K | Other checks |
@@ -116,6 +117,22 @@ SPECULATIVE_METHOD=mtp ./start.sh       # checkpoint MTP layer instead of DFlash
 | Default (FP8, vision off) | 1,993,771 | 1.1786 | 6/6 | full battery |
 | Vision on | 1,731,627 | 1.1779 | 6/6 | 1, 4 and 16 images pass; 17 rejected |
 | NVFP4 cache | 2,621,440 | 1.1765 | 6/6 | — |
+
+`GLM53_DFLASH_BOUNDARY_LOOKUP=1` (DFlash2 only, default off) stops every KV
+group from dropping its last matching block on a prefix-cache hit. Without it,
+the MTP-only group scoping does not recognize the DFlash drafter, vLLM's
+all-group fallback marks every group as EAGLE, and each request recomputes
+about two 3,584-token blocks of an already-cached prefix. On a downstream
+TP2/DCP2 profile, repeated 31K and 62K prompts reused 28,672 and 57,344
+tokens instead of 21,504 and 50,176; cached TTFT fell from 2.37 s to 0.93 s
+and from 2.72 s to 1.35 s. Hits still land on the DCP2 grid (7,168 tokens).
+Greedy outputs stayed correct, and draft acceptance did not drop on cached
+requests.
+
+`MODEL_PROFILE=k3` and `MODEL_PROFILE=k4` pin both the repository and its
+revision. For another checkpoint, set `MODEL_ID` and `MODEL_REVISION` together;
+the launcher rejects half-overrides so it cannot combine one model with
+another model's commit.
 
 The NLL column is `scripts/test-prompt-nll.py`: the mean negative
 log-likelihood per token of fixed prose, code and a 17.5K-token back-reference
