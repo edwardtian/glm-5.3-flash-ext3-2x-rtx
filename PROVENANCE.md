@@ -45,6 +45,18 @@ patches, container scripts, template, vendored sources) changed after it.
 
 The full battery in `benchmarks/v0.8.0/` ran on this exact image.
 
+## Upstream kpool tail fixes (after v0.8.0)
+
+Ports of two GLM-5.3-Flash fixes merged in vLLM after this recipe's base was cut. Both images up to and including
+v0.8.0 fail the four upstream regression tests for them in `tests/kernels/test_kpool_decode_update_batched.py`
+(29 pass); with both ports applied, all 33 pass (one ROCm-only test skips).
+
+- `port-kpool-seed-stride-glm53.py` ports vllm-project/vllm#57477. The tail cache aliases the indexer cache with the
+  indexer's padded block stride (`tail.stride(0)` is 71808 elements on the v0.8.0 layout, not the dense 2048), but the
+  prefill seed kernel addressed it densely: every prefill left its own tail block unseeded and wrote 2 KB of raw K and
+  gate rows into another block's indexer region. The kernel now addresses blocks through `tail.stride(0)` /
+  `tail.stride(1)`, as the decode kernel already did, and the wrapper asserts the view layout.
+
 ## v0.8.0 runtime changes
 
 v0.8.0 changes the served default to Brandon's uniform-K4 checkpoint and
