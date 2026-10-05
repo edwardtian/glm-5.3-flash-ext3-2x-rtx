@@ -102,6 +102,7 @@ COPY patches/port-glm53-draft-slots.py /tmp/port-glm53-draft-slots.py
 COPY patches/port-glm53-breakable-capture-sync.py /tmp/port-glm53-breakable-capture-sync.py
 COPY patches/port-b12x-glm-next-records.py /tmp/port-b12x-glm-next-records.py
 COPY patches/port-kpool-seed-stride-glm53.py /tmp/port-kpool-seed-stride-glm53.py
+COPY patches/port-kpool-spec-ring-glm53.py /tmp/port-kpool-spec-ring-glm53.py
 RUN python3 /tmp/port-exl3-glm53.py \
     /usr/local/lib/python3.12/dist-packages/vllm \
  && python3 /tmp/port-exl3-ep-glm53.py \
@@ -195,6 +196,8 @@ RUN python3 /tmp/port-dflash2-glm53.py \
  && python3 /tmp/port-b12x-glm-next-records.py \
       /usr/local/lib/python3.12/dist-packages/vllm \
  && python3 /tmp/port-kpool-seed-stride-glm53.py \
+      /usr/local/lib/python3.12/dist-packages/vllm \
+ && python3 /tmp/port-kpool-spec-ring-glm53.py \
       /usr/local/lib/python3.12/dist-packages/vllm \
  && python3 -m compileall -q /usr/local/lib/python3.12/dist-packages/vllm
 
