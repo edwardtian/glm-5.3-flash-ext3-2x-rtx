@@ -45,6 +45,26 @@ patches, container scripts, template, vendored sources) changed after it.
 
 The full battery in `benchmarks/v0.8.0/` ran on this exact image.
 
+## Upstream kpool tail fixes (after v0.8.0)
+
+Ports of two GLM-5.3-Flash fixes merged in vLLM after this recipe's base was cut. Both images up to and including
+v0.8.0 fail the four upstream regression tests for them in `tests/kernels/test_kpool_decode_update_batched.py`
+(29 pass); with both ports applied, all 33 pass (one ROCm-only test skips).
+
+- `port-kpool-seed-stride-glm53.py` ports vllm-project/vllm#57477. The tail cache aliases the indexer cache with the
+  indexer's padded block stride (`tail.stride(0)` is 71808 elements on the v0.8.0 layout, not the dense 2048), but the
+  prefill seed kernel addressed it densely: every prefill left its own tail block unseeded and wrote 2 KB of raw K and
+  gate rows into another block's indexer region. The kernel now addresses blocks through `tail.stride(0)` /
+  `tail.stride(1)`, as the decode kernel already did, and the wrapper asserts the view layout.
+- `port-kpool-spec-ring-glm53.py` ports vllm-project/vllm#58454 and must run after the seed-stride port (it refuses
+  otherwise, writing nothing). The tail ring held exactly `index_kpool` (4) slots per request, but drafts are stashed
+  before acceptance: when a pool-completing draft is rejected, the drafts behind it have already overwritten that pool's
+  committed keys and the redo compresses the pool from corrupted slots. This affects any speculative method with 2+
+  draft tokens once context exceeds `index_topk`. The ring now holds `kpool * next_power_of_2(cdiv(kpool + num_spec,
+  kpool))` slots (8 for 3 drafts, 16 for 5-7, unchanged at 4 without speculation). Slot mapping, cache shape, allocator
+  and page size all derive from the spec's `block_size`; the larger ring fits inside the existing page padding, so KV
+  capacity is unchanged (4,707,515 tokens before and after on v0.8.0 defaults).
+
 ## v0.8.0 runtime changes
 
 v0.8.0 changes the served default to Brandon's uniform-K4 checkpoint and
