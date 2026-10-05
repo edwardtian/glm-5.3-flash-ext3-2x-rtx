@@ -15,13 +15,13 @@ def main():
         ({}, "1048576"),
         ({"MODEL_PROFILE": "k3"}, "1048576"),
         ({"MODEL_PROFILE": "k325"}, "1048576"),
-        ({"MODEL_PROFILE": "k4"}, "262144"),
+        ({"MODEL_PROFILE": "k4"}, "1048576"),
         ({"MODEL_PROFILE": "k4", "MAX_MODEL_LEN": "131072"}, "131072"),
         ({"MODEL_PROFILE": "k325", "MAX_MODEL_LEN": "524288"}, "524288"),
-        ({"MODEL_ID": "brandonmusic/GLM-5.3-Flash-EXL3-4bpw", "MODEL_REVISION": "test"}, "262144"),
-        ({"MODEL_ID": "brandonmusic/GLM-5.3-Flash-tr3-4bpw", "MODEL_REVISION": "test"}, "262144"),
+        ({"MODEL_ID": "brandonmusic/GLM-5.3-Flash-EXL3-4bpw", "MODEL_REVISION": "test"}, "1048576"),
+        ({"MODEL_ID": "brandonmusic/GLM-5.3-Flash-tr3-4bpw", "MODEL_REVISION": "test"}, "1048576"),
         ({"MODEL_ID": "example/custom", "MODEL_REVISION": "test"}, "1048576"),
-        ({"MODEL_PROFILE": "k4", "MAX_MODEL_LEN": ""}, "262144"),
+        ({"MODEL_PROFILE": "k4", "MAX_MODEL_LEN": ""}, "1048576"),
     ]
     for overrides, expected in cases:
         actual = subprocess.check_output([

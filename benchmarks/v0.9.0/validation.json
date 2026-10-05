@@ -1,0 +1,40 @@
+{
+  "schema": "glm53-release-validation.v1",
+  "version": "v0.9.0",
+  "image_index": "sha256:f36dfb876da9393c95ca738ed912ca73905d0211004ce5c09b9ae312ed0f5cc9",
+  "image_source_revision": "c512b93ee4577f16e0e9396ad001d5203324bf15",
+  "merged_prs": [
+    3,
+    4,
+    5
+  ],
+  "upstream_kpool_tests": {
+    "revision": "6dd813e0b7ca8314fed28c13a73cfb5fc5310163",
+    "source": "tests/kernels/test_kpool_decode_update_batched.py",
+    "sha256": "698d688693f37ba8a392a1142ece58cd10ff22de79cfb7164a9d9888d9e63448",
+    "passed": 33,
+    "skipped": 1,
+    "skip_reason": "ROCm only",
+    "receipt": "kpool-tests.xml"
+  },
+  "checks": {
+    "full_docker_build": true,
+    "embedded_compatibility_probe": true,
+    "embedded_structured_output_tests": true,
+    "new_patch_idempotence": true,
+    "model_profile_cases": 10,
+    "adaptive_mtp_policy": true,
+    "shell_syntax": true,
+    "boundary_lookup_argument_rejection": true
+  },
+  "live_default": {
+    "healthy": true,
+    "tool_constraints_passed": 16,
+    "cached_tokens_on_32768_token_replay": 26112,
+    "chat_and_completion_usage_details": true,
+    "token_weighted_mean_nll": 1.178930245136628,
+    "v080_baseline_nll": 1.1786379102563864,
+    "nll_delta": 0.000292334880241496,
+    "runtime_receipt": "runtime-default.json"
+  }
+}

@@ -31,9 +31,37 @@ This recipe consumes finished Hugging Face target and draft checkpoints and comp
 | Dynamic-MTP graph fix | vLLM PR `#49652`, ported onto the pinned vLLM commit |
 | Runtime stack | Torch 2.13, CUDA 13, CUTLASS DSL 4.6.2 |
 
+## Published v0.9.0 release artifacts
+
+The v0.9.0 image is built from the combined PR merge commit
+`c512b93ee4577f16e0e9396ad001d5203324bf15`. No image input changed after
+that commit; the release follow-up updates the launcher, tests, and documentation.
+
+| Artifact | Immutable identity |
+|---|---|
+| Image index | `ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:f36dfb876da9393c95ca738ed912ca73905d0211004ce5c09b9ae312ed0f5cc9` |
+| Linux/amd64 manifest | `sha256:e57ab0cdb8548130f465c0d2ee530a66ffdd1c1fed1a42d351aaed3c1a88ec7a` |
+| Image source revision | `c512b93ee4577f16e0e9396ad001d5203324bf15` |
+
+The full image build and its compatibility/structured-output probes passed.
+The upstream kpool GPU regression suite passed 33 tests and skipped one
+ROCm-only test. The pinned test source and release-specific receipts are
+recorded in [benchmarks/v0.9.0/RELEASE-NOTES.md](benchmarks/v0.9.0/RELEASE-NOTES.md).
+The v0.8.0 performance tables remain historical measurements.
+
+v0.9.0 file hashes:
+
+| File | SHA-256 |
+|---|---|
+| `Dockerfile` | `251a48698d4a565d883c93dd5f063e29fe3e5d0d21db4579cbcc76c9a434395d` |
+| `start.sh` | `e1196cbcd6b4744cb41fdebf3d12d8586dbea464e702af5de47617837efe0e5e` |
+| `patches/port-dflash2-boundary-prefix-cache.py` | `c6d7a149199bb73ad641b3f26f50f536a96d74db93fdeed1fbaacdfc3865d992` |
+| `patches/port-kpool-seed-stride-glm53.py` | `4959e5762f97c70ed074397e09c6835fdfcb4768c2002ea5d0670ea42ddec624` |
+| `patches/port-kpool-spec-ring-glm53.py` | `5a72fae2a48e67bce8953c76c0b2b78aafca8e663389d695910790cc6eac53f5` |
+
 ## Published v0.8.0 release artifacts
 
-`v0.8.0` and `latest` resolve to the same OCI index, built from recipe commit
+At publication, `v0.8.0` and `latest` resolved to the same OCI index, built from recipe commit
 `48927a5c4e358c9b74faa41dc5627db635f5d45c`; no image input (Dockerfile,
 patches, container scripts, template, vendored sources) changed after it.
 
@@ -63,7 +91,7 @@ v0.8.0 fail the four upstream regression tests for them in `tests/kernels/test_k
   draft tokens once context exceeds `index_topk`. The ring now holds `kpool * next_power_of_2(cdiv(kpool + num_spec,
   kpool))` slots (8 for 3 drafts, 16 for 5-7, unchanged at 4 without speculation). Slot mapping, cache shape, allocator
   and page size all derive from the spec's `block_size`; the larger ring fits inside the existing page padding, so KV
-  capacity is unchanged (4,707,515 tokens before and after on v0.8.0 defaults).
+  capacity was unchanged in the contributor's K3.25 run (4,707,515 tokens before and after).
 
 ## v0.8.0 runtime changes
 

@@ -2,11 +2,16 @@
 
 A two-GPU daily driver: Brandon's higher-quality uniform-K4 checkpoint, a
 **2M-token KV pool with 1M-token requests**, and faster reasoning-coding decode
-than the previous release on the same checkpoint.
+than v0.7.1 on the same checkpoint.
 
 This recipe serves [`brandonmusic/GLM-5.3-Flash-tr3-4bpw`](https://huggingface.co/brandonmusic/GLM-5.3-Flash-tr3-4bpw)
 (formerly `GLM-5.3-Flash-EXL3-4bpw`) with the [`incoai/GLM-5.3-Flash-DFlash2`](https://huggingface.co/incoai/GLM-5.3-Flash-DFlash2)
 drafter on two PCIe-connected SM120 GPUs.
+
+`v0.9.0` fixes kpool tail-cache addressing and speculative ring corruption,
+reports cached prompt tokens in API usage, and adds opt-in aligned DFlash2
+prefix-cache lookup. See the [release notes](benchmarks/v0.9.0/RELEASE-NOTES.md).
+The performance and quality tables below are the v0.8.0 baseline.
 
 `v0.8.0` replaces decode-context parallelism with **per-layer MLA ownership**,
 moves to the current [SparkInfer/B12x fork](https://github.com/tpurtell/sparkinfer-glmrt),
@@ -15,7 +20,7 @@ the per-request block waste in vLLM's hybrid KV pool.
 
 ## The numbers
 
-All measurements use the release image on two RTX PRO 6000 Blackwell GPUs at a
+All measurements below use the v0.8.0 release image on two RTX PRO 6000 Blackwell GPUs at a
 **400 W limit each**. The v0.7.1 column is the published v0.7.1 image serving
 the same K4 checkpoint with its defaults (DCP2, EP2, DFlash2 K5, 256K limit).
 
@@ -29,7 +34,7 @@ the same K4 checkpoint with its defaults (DCP2, EP2, DFlash2 K5, 256K limit).
 | Seven-workload C1 blend | not measured | 149.8 tok/s |
 | 1M-token six-needle retrieval | not supported | **6/6** |
 
-The **reasoning-coding score** is this release's decision metric: four
+The **reasoning-coding score** is v0.8.0's decision metric: four
 realistic coding prompts with thinking enabled, temperature 1.0, 2,048 output
 tokens, measured at one, two and four concurrent requests. Every default below
 was chosen by it. Full tables, ranges and raw receipts are in
@@ -99,7 +104,7 @@ short prompts overlapped all 16 streams.
 
 ## Launch options
 
-These are validated for startup, sanity answers, teacher-forced NLL and 8K/240K
+The v0.8.0 options below were validated for startup, sanity answers, teacher-forced NLL and 8K/240K
 needle retrieval; only the default received the full benchmark battery.
 
 ```bash
@@ -127,7 +132,11 @@ TP2/DCP2 profile, repeated 31K and 62K prompts reused 28,672 and 57,344
 tokens instead of 21,504 and 50,176; cached TTFT fell from 2.37 s to 0.93 s
 and from 2.72 s to 1.35 s. Hits still land on the DCP2 grid (7,168 tokens).
 Greedy outputs stayed correct, and draft acceptance did not drop on cached
-requests.
+requests. These measurements were reported by the PR author on the downstream
+DCP2 profile; they are not benchmarks of this recipe's default MLA ownership.
+
+API usage includes `prompt_tokens_details.cached_tokens` by default, so clients
+can see how many input tokens were reused from the prefix cache.
 
 `MODEL_PROFILE=k3` and `MODEL_PROFILE=k4` pin both the repository and its
 revision. For another checkpoint, set `MODEL_ID` and `MODEL_REVISION` together;

@@ -1,0 +1,44 @@
+{
+  "schema": "glm53-prefix-replay.v1",
+  "passed": true,
+  "target_prompt_tokens": 32768,
+  "cache_salt": "30861ebe52de482a8c9cba91b0b7c168",
+  "prefix_cache_hits_before": 0.0,
+  "prefix_cache_hits_after": 26112.0,
+  "prefix_cache_hit_delta": 26112.0,
+  "passes": [
+    {
+      "pass": 1,
+      "passed": true,
+      "request_seconds": 8.26437533495482,
+      "usage": {
+        "prompt_tokens": 32768,
+        "total_tokens": 32832,
+        "completion_tokens": 64,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "created_cache_tokens": null,
+          "multimodal_tokens": null
+        }
+      },
+      "output": " SPARK-B12X-5.3-128K-7429\nThe following material is distractor text.\nSlate rivers cross quiet valleys while copper clocks mark patient hours. This sentence contains no secret code and is only ordinary filler.\nSlate rivers cross quiet valleys while copper clocks mark patient hours. This"
+    },
+    {
+      "pass": 2,
+      "passed": true,
+      "request_seconds": 1.8468258320353925,
+      "usage": {
+        "prompt_tokens": 32768,
+        "total_tokens": 32802,
+        "completion_tokens": 34,
+        "prompt_tokens_details": {
+          "cached_tokens": 26112,
+          "created_cache_tokens": null,
+          "multimodal_tokens": null
+        }
+      },
+      "output": " SPARK-B12X-5.3-128K-7429</think>SPARK-B12X-5.3-128K-7429"
+    }
+  ],
+  "high_recycled_page_rationale": "The identical second pass exercises the production allocator/cache replay path that previously exposed 32-bit pool-offset overflow; focused B12x tests separately force page IDs past the exact 2^31/stride boundary."
+}
