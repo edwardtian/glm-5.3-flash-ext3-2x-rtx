@@ -58,6 +58,7 @@ v0.9.0 file hashes:
 | `patches/port-dflash2-boundary-prefix-cache.py` | `c6d7a149199bb73ad641b3f26f50f536a96d74db93fdeed1fbaacdfc3865d992` |
 | `patches/port-kpool-seed-stride-glm53.py` | `4959e5762f97c70ed074397e09c6835fdfcb4768c2002ea5d0670ea42ddec624` |
 | `patches/port-kpool-spec-ring-glm53.py` | `5a72fae2a48e67bce8953c76c0b2b78aafca8e663389d695910790cc6eac53f5` |
+| `patches/port-dcp1-kpool-tail-glm53.py` | `388f2b664fca7add857f314bfb0af8b5edaa72a6b3210e8fd1c15ee0f3917498` |
 
 ## Published v0.8.0 release artifacts
 
@@ -92,6 +93,17 @@ v0.8.0 fail the four upstream regression tests for them in `tests/kernels/test_k
   kpool))` slots (8 for 3 drafts, 16 for 5-7, unchanged at 4 without speculation). Slot mapping, cache shape, allocator
   and page size all derive from the spec's `block_size`; the larger ring fits inside the existing page padding, so KV
   capacity was unchanged in the contributor's K3.25 run (4,707,515 tokens before and after).
+- `port-dcp1-kpool-tail-glm53.py` keeps the kpool tail in DCP1 sparse-MLA selections. The indexer writes the selected
+  pools to columns `0..2043` and the request's incomplete trailing pool (the newest 1-3 tokens) to the fixed columns
+  `2044..2046`; the DCP1 branch of `B12xMLASparseImpl.forward_mqa` then masks every column at or past
+  `min(causal length, 2048)`. Below ~2,044 tokens of context, whenever the length is not a multiple of 4, the newest
+  1-3 tokens were dropped from every MLA layer (the same applies to sparse-path prefill rows in a batch whose longest
+  prefill exceeds 2,048 tokens). DCP2 compacts its selection and is not affected. The patch adds one Triton kernel, run
+  just before the existing mask, that stable-compacts a row's valid entries to the front only when the mask would drop
+  one; every other row is untouched (byte-identical selections). It refuses unless the target file matches the expected
+  hash. Measured on K3.25, 6 GPQA prompts x 2,600 decoded tokens, speculation off: decode-vs-prefill KL on the same
+  token ids fell from 0.066 to 0.010 for positions below 2,044, and from 0.031 to 0.019 beyond 2,048, where tokens
+  decoded under the bug still sit in the cache.
 
 ## v0.8.0 runtime changes
 
