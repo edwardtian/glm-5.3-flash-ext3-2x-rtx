@@ -8,6 +8,11 @@ This recipe serves [`brandonmusic/GLM-5.3-Flash-tr3-4bpw`](https://huggingface.c
 (formerly `GLM-5.3-Flash-EXL3-4bpw`) with the [`incoai/GLM-5.3-Flash-DFlash2`](https://huggingface.co/incoai/GLM-5.3-Flash-DFlash2)
 drafter on two PCIe-connected SM120 GPUs.
 
+`v0.9.1` keeps the newest one to three tokens in DCP1 sparse-MLA selections
+below 2,044 tokens of context. This fixes short-context decode and early
+sparse-prefill rows under the default MLA ownership profile. See the
+[release notes](benchmarks/v0.9.1/RELEASE-NOTES.md).
+
 `v0.9.0` fixes kpool tail-cache addressing and speculative ring corruption,
 reports cached prompt tokens in API usage, and adds opt-in aligned DFlash2
 prefix-cache lookup. See the [release notes](benchmarks/v0.9.0/RELEASE-NOTES.md).
@@ -262,6 +267,9 @@ The K3 and K3.25 profiles remain selectable but were not requalified for
 v0.8.0; their receipts under `benchmarks/v0.7.0-k325/` describe v0.7.x.
 
 ## Thank you
+
+Thanks to **Michael M. (@UrbanAstroLA)** for the kpool cache fixes and the
+DCP1 sparse-MLA tail investigation, reproductions, and validation.
 
 Huge thanks to **Brandon** for the K4 quant, his teacher-logit dataset and KLD
 receipts, and his public recipe. Thanks to **Inco AI / Z-Lab** for DFlash2,

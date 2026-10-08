@@ -1,0 +1,35 @@
+{
+  "schema": "glm53-release-validation.v1",
+  "version": "v0.9.1",
+  "merged_prs": [
+    6
+  ],
+  "image_index": "sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07",
+  "image_source_revision": "84572a81e0092796d396acf4c3f22d6aabc3724b",
+  "checks": {
+    "full_docker_build": true,
+    "embedded_compatibility_probe": true,
+    "embedded_structured_output_tests": true,
+    "patch_idempotence": true,
+    "v090_token_loss_reproduced": true,
+    "fixed_gpu_row_checks": 54,
+    "fixed_gpu_modes": [
+      "contiguous",
+      "strided",
+      "cuda-graph"
+    ],
+    "dense_rows_unchanged": true,
+    "unaffected_rows_unchanged": true,
+    "shell_syntax": true
+  },
+  "live_default": {
+    "healthy": true,
+    "tool_constraints_passed": 16,
+    "cached_tokens_on_32768_token_replay": 26112,
+    "chat_and_completion_usage_details": true,
+    "token_weighted_mean_nll": 1.178469799609335,
+    "v090_baseline_nll": 1.178930245136628,
+    "nll_delta": -0.00046044552729296306,
+    "runtime_receipt": "runtime-default.json"
+  }
+}

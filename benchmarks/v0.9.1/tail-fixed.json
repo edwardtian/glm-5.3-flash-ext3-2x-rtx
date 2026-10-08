@@ -1,0 +1,240 @@
+{
+  "schema": "glm53-dcp1-kpool-tail.v1",
+  "passed": true,
+  "expect_unpatched": false,
+  "gpu": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+  "checks": [
+    {
+      "mode": "contiguous",
+      "rows": [
+        {
+          "context_length": 1,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 3,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 4,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 5,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1001,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1002,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1003,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1004,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2041,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2042,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2043,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2044,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2045,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2046,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2047,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2048,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2050,
+          "missing_tokens": 0
+        }
+      ]
+    },
+    {
+      "mode": "strided",
+      "rows": [
+        {
+          "context_length": 1,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 3,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 4,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 5,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1001,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1002,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1003,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1004,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2041,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2042,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2043,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2044,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2045,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2046,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2047,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2048,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2050,
+          "missing_tokens": 0
+        }
+      ]
+    },
+    {
+      "mode": "cuda-graph",
+      "rows": [
+        {
+          "context_length": 1,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 3,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 4,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 5,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1001,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1002,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1003,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 1004,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2041,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2042,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2043,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2044,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2045,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2046,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2047,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2048,
+          "missing_tokens": 0
+        },
+        {
+          "context_length": 2050,
+          "missing_tokens": 0
+        }
+      ]
+    }
+  ],
+  "dense_rows_unchanged": true
+}

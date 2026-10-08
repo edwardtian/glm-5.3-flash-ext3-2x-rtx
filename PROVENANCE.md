@@ -31,6 +31,34 @@ This recipe consumes finished Hugging Face target and draft checkpoints and comp
 | Dynamic-MTP graph fix | vLLM PR `#49652`, ported onto the pinned vLLM commit |
 | Runtime stack | Torch 2.13, CUDA 13, CUTLASS DSL 4.6.2 |
 
+## Published v0.9.1 release artifacts
+
+The v0.9.1 image is built from PR #6 merge commit
+`84572a81e0092796d396acf4c3f22d6aabc3724b`. No image input changed after
+that commit; the release follow-up updates the launcher, regression gate,
+and documentation.
+
+| Artifact | Immutable identity |
+|---|---|
+| Image index | `ghcr.io/tpurtell/glm-5.3-flash-exl3-4bpw-2x-rtx@sha256:a9e985c09885710601b32ac86e81256aa1279b542caa345233ce331a816d7e07` |
+| Linux/amd64 manifest | `sha256:0be9045a2ae51c624d567ec916763eef62f7f8207fd1f5fc92253d328e123668` |
+| Image source revision | `84572a81e0092796d396acf4c3f22d6aabc3724b` |
+
+The actual kpool expansion and DCP1 selection/masking pipeline reproduced
+the newest-token loss in v0.9.0. With the patch, all 54 row checks passed
+across 18 context lengths in contiguous, strided, and CUDA graph modes.
+Release evidence and contributor measurements are recorded separately in
+[benchmarks/v0.9.1/RELEASE-NOTES.md](benchmarks/v0.9.1/RELEASE-NOTES.md).
+
+v0.9.1 file hashes:
+
+| File | SHA-256 |
+|---|---|
+| `Dockerfile` | `563d95c7affaeffbd491675bd04718c97daef472bfd2c49b7c11efadc07d3799` |
+| `start.sh` | `15b3629743140aa87a9285994b456ec5febc5359608523f366490c890978c283` |
+| `patches/port-dcp1-kpool-tail-glm53.py` | `388f2b664fca7add857f314bfb0af8b5edaa72a6b3210e8fd1c15ee0f3917498` |
+| `scripts/test-dcp1-kpool-tail.py` | `eaa559e83f74b83e88c4cac0426a88bb0ba6bae2a64ad7e3758dfbb587f11271` |
+
 ## Published v0.9.0 release artifacts
 
 The v0.9.0 image is built from the combined PR merge commit
@@ -58,7 +86,6 @@ v0.9.0 file hashes:
 | `patches/port-dflash2-boundary-prefix-cache.py` | `c6d7a149199bb73ad641b3f26f50f536a96d74db93fdeed1fbaacdfc3865d992` |
 | `patches/port-kpool-seed-stride-glm53.py` | `4959e5762f97c70ed074397e09c6835fdfcb4768c2002ea5d0670ea42ddec624` |
 | `patches/port-kpool-spec-ring-glm53.py` | `5a72fae2a48e67bce8953c76c0b2b78aafca8e663389d695910790cc6eac53f5` |
-| `patches/port-dcp1-kpool-tail-glm53.py` | `388f2b664fca7add857f314bfb0af8b5edaa72a6b3210e8fd1c15ee0f3917498` |
 
 ## Published v0.8.0 release artifacts
 
